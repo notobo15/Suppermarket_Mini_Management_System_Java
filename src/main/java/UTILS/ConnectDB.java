@@ -1,3 +1,4 @@
+package UTILS;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class ConnectDB {
     ResultSet rs = null;
     Connection conn = null;
     String server = "localhost:3306";
-    String dbName = "sieuthi_mini";
+    String dbName = "db_sieuthi_mini";
     String userName = "root";
     String pass = "";
 
@@ -26,49 +27,49 @@ public class ConnectDB {
         checkDriver();
         setupConnection();
     }
-    public ConnectDB(String dbName) {
-        checkDriver();
-        server = "localhost:3306";
-        this.dbName = dbName;
-        userName = "FuelAdmin";
-        this.pass = "";
-        setupConnection();
-    }
+//    public ConnectDB(String dbName) {
+//        checkDriver();
+//        server = "localhost:3306";
+//        this.dbName = dbName;
+//        userName = "FuelAdmin";
+//        this.pass = "";
+//        setupConnection();
+//    }
+//
+//    public ConnectDB(String dbName, String userName, String pass, String server) {
+//        checkDriver();
+//        this.dbName = dbName;
+//        this.userName = userName;
+//        this.pass = pass;
+//        this.server = server;
+//        setupConnection();
+//    }
+//
+//    public ConnectDB(String dbName, String userName, String pass) {
+//        checkDriver();
+//        this.dbName = dbName;
+//        this.userName = userName;
+//        this.pass = pass;
+//        setupConnection();
+//    }
 
-    public ConnectDB(String dbName, String userName, String pass, String server) {
-        checkDriver();
-        this.dbName = dbName;
-        this.userName = userName;
-        this.pass = pass;
-        this.server = server;
-        setupConnection();
-    }
+//    public void logIn(String userName, String pass) {
+//        this.userName = userName;
+//        this.pass = pass;
+//        setupConnection();
+//    }
 
-    public ConnectDB(String dbName, String userName, String pass) {
-        checkDriver();
-        this.dbName = dbName;
-        this.userName = userName;
-        this.pass = pass;
-        setupConnection();
-    }
-
-    public void logIn(String userName, String pass) {
-        this.userName = userName;
-        this.pass = pass;
-        setupConnection();
-    }
-
-    public boolean setupConnection() {
+    public Connection setupConnection() {
         try {
             String url = "jdbc:mysql://" + server + "/" + dbName;
             conn = DriverManager.getConnection(url, userName, pass);
-            return conn.isValid(1000);
+            return conn;
 //            JOptionPane.showMessageDialog(null, "Ket noi database " + dbName + " thanh cong");
 
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Khong the ket noi toi " + dbName);
-            return false;
+            return null;
         }
     }
   
@@ -100,23 +101,6 @@ public class ConnectDB {
         }
         return false;
     }
-//
-//    public ArrayList<String> getHeaders(String tableName) {
-//        ArrayList<String> headers = new ArrayList<>();
-//        if (checkConnection()) {
-//            try {
-//                Statement stm = conn.createStatement();
-//                rs = stm.executeQuery("SELECT 1 FROM " + tableName + ";");
-//                ResultSetMetaData rsMetaData = rs.getMetaData();
-//                for (int i = 1; i <= rsMetaData.getColumnCount(); i++) {
-//                    headers.add(rsMetaData.getColumnName(i));
-//                }
-//            } catch (SQLException e) {
-//                JOptionPane.showMessageDialog(null, "Khong the lay ten cac cot!!");
-//            }
-//        }
-//        return headers;
-//    }
 
     public Boolean checkConnection() {
         try {
@@ -132,7 +116,7 @@ public class ConnectDB {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Khong tim thay Driver mysql !!");
+            JOptionPane.showMessageDialog(null, "Khong tim thay Driver mysql !!!");
         }
     }
     
