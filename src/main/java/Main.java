@@ -28,9 +28,9 @@ public class Main {
 		
 		
 
-		DTO_Account acc1 = new DTO_Account(5, "11111", "Test1", "Chris", "012334234", "HCM", "nu", "1999-11-1");
-		System.out.println(acc1.toString());
-		System.out.println(dao_acc.updateById(8, acc1));
+//		DTO_Account acc1 = new DTO_Account(5, "11111", "Test1", "Chris", "012334234", "HCM", "nu", "1999-11-1");
+//		System.out.println(acc1.toString());
+//		System.out.println(dao_acc.updateById(8, acc1));
 //		System.out.println(dao_acc.create(new DTO_Account(1, 1, "test", "123", "Test", "Nguyễn", "0123455678", "LA", "nam", "2000-1-1", true)));
 
 //        ConnectDB con = new ConnectDB();
