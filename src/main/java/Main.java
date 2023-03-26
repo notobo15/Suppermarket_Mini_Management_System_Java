@@ -8,6 +8,7 @@ import DAO.DAO_Account;
 import DAO.DAO_Product;
 import DTO.DTO_Account;
 import DTO.DTO_Product;
+import GUI.Table;
 
 public class Main {
 	public static void main(String[] args) throws SQLException {
@@ -18,11 +19,12 @@ public class Main {
 		ArrayList<DTO_Account> list = dao_acc.findAll();
 		ArrayList<DTO_Product> listPorduct = dao_product.findAll();
 		
-		for (DTO_Product item : listPorduct) {
+		for (DTO_Account item : list) {
 			System.out.println(item.toString());
 		}
+                new Table().setVisible(true);
 		////////comment text
-		System.out.println("-------------------");
+//		System.out.println("-------------------");
 //		String str = dao_acc.findById(1).toString();
 //		System.out.println(str);
 		

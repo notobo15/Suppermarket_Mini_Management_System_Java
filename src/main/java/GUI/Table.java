@@ -28,13 +28,16 @@ public class Table extends javax.swing.JFrame {
         ArrayList<DTO.DTO_Account> list = dao_acc.findAll();
         
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        Object rowData[] = new Object[4];
+        Object rowData[] = new Object[7];
         
         for (int i = 0; i < list.size(); i++) {
             rowData[0] = list.get(i).getAccountId();
             rowData[1] = list.get(i).getAccountName();
             rowData[2] = list.get(i).getPasssword();
-            rowData[3] = list.get(i).getFirstName();
+            rowData[3] = list.get(i).getGender();
+            rowData[4] = list.get(i).getFirstName();
+            rowData[5] = list.get(i).getLastName();
+            rowData[6] = list.get(i).getAddress();
             model.addRow(rowData);
         }
                 
@@ -53,14 +56,14 @@ public class Table extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 400));
+        setPreferredSize(new java.awt.Dimension(1200, 700));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "ten account", "password", "gioi tinh", "ho", "ten", "dia chi"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -78,7 +81,7 @@ public class Table extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -113,15 +116,7 @@ public class Table extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new Table().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Table.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
