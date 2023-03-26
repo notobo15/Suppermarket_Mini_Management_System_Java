@@ -139,5 +139,25 @@ public class DAO_Account {
 		}
 		return false;
 	}
-	
+    public boolean checkExistById(int id) throws SQLException {
+        boolean isExist = false;
+        ConnectDB con = new ConnectDB();
+        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account;");
+        ResultSet rs = psm.executeQuery();
+        if (rs.next()) {
+            isExist = true;
+        }
+        return isExist;
+    }
+	public boolean checkExistByName(String name) throws SQLException {
+        boolean isExist = false;
+        ConnectDB con = new ConnectDB();
+        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_name = ?;");
+        psm.setString(1, name);
+        ResultSet rs = psm.executeQuery();
+        if (rs.next()) {
+            isExist = true;
+        }
+        return isExist;
+    }
 }
