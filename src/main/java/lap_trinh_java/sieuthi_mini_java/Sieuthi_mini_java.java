@@ -24,9 +24,16 @@ import javax.swing.JOptionPane;
 public class Sieuthi_mini_java {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello World!");
-        new Table().setVisible(true);
-        new AlertMessageYN("ban co chan mon xoa").setVisible(true);
+        
+        BUS_Account bus_account = new BUS_Account();
+        System.out.println(bus_account.getAccountById(22));
+//        new AlertWarning("Không tìm thấy account Id = ").setVisible(true);
+//        System.out.println("Hello World!");
+//        new Table().setVisible(true);
+//        new AlertMessageYN("ban co chan mon xoa").setVisible(true);
+            
+        
+
 //		DAO_Account dao_acc = new DAO_Account();
 //		DAO_Product dao_product = new DAO_Product();
 //		BUS_Account bus_account = new BUS_Account();

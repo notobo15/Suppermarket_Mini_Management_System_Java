@@ -142,7 +142,8 @@ public class DAO_Account {
     public boolean checkExistById(int id) throws SQLException {
         boolean isExist = false;
         ConnectDB con = new ConnectDB();
-        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account;");
+        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_id = ?;");
+        psm.setInt(1, id);
         ResultSet rs = psm.executeQuery();
         if (rs.next()) {
             isExist = true;
