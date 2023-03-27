@@ -53,11 +53,11 @@ public class AlertMessageYN extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\notobo\\Documents\\NetBeansProjects\\sieuthi_mini_java\\src\\main\\java\\IMAGES\\question-mark.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/question-mark.png"))); // NOI18N
         jLabel1.setText("XÁC NHẬN");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\notobo\\Documents\\NetBeansProjects\\sieuthi_mini_java\\src\\main\\java\\IMAGES\\yes.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/yes.png"))); // NOI18N
         jLabel2.setText("YES");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -66,7 +66,7 @@ public class AlertMessageYN extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\notobo\\Documents\\NetBeansProjects\\sieuthi_mini_java\\src\\main\\java\\IMAGES\\no.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/no.png"))); // NOI18N
         jLabel3.setText("NO");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
