@@ -10,11 +10,11 @@ import DTO.DTO_OrderDetail;
 import UTILS.ConnectDB;
 
 public class DAO_OrderDetail {
-	private ConnectDB con = new ConnectDB();
 
 	public ArrayList<DTO_OrderDetail> findAll() throws SQLException {
 		ArrayList<DTO_OrderDetail> list = new ArrayList<>();
 		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order_detail WHERE status = 1");
 			rs = ptm.executeQuery();
@@ -39,6 +39,7 @@ public class DAO_OrderDetail {
 
 	public DTO_OrderDetail findById(int id) throws SQLException {
 		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		DTO_OrderDetail detail = null;
 		try {
 			PreparedStatement ptm = con.getConnection()
@@ -122,6 +123,7 @@ public class DAO_OrderDetail {
 
 	public boolean checkExistById(int id) throws SQLException {
 		boolean isExist = false;
+		ConnectDB con = new ConnectDB();
 		PreparedStatement psm = con.getConnection()
 				.prepareStatement("SELECT * FROM order_detail WHERE order_det_id = ? AND status = 1;");
 		psm.setInt(1, id);
@@ -134,6 +136,7 @@ public class DAO_OrderDetail {
 
 	public boolean unDeteleById(int id) {
 		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
 					.prepareStatement("UPDATE order_detail SET status = 1 WHERE order_det_id = ?");

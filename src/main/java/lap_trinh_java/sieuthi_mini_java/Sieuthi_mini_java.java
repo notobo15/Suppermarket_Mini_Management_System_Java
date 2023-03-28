@@ -28,11 +28,18 @@ public class Sieuthi_mini_java {
     public static void main(String[] args) throws Exception {
         
         BUS_Account bus_account = new BUS_Account();
-        DTO_Account acc = new DTO_Account();
         BUS_Product bus_product = new BUS_Product();
+        
+        System.out.println(bus_account.getList());
+        for(DTO_Product i: bus_product.getList()) {
+        	System.out.println(i.toString());
+        }
+        
+//        DTO_Account acc = new DTO_Account();
+//        BUS_Product bus_product = new BUS_Product();
 //        System.out.println(bus_product.);
-        acc.setAccountName("admin1");
-        System.out.println(bus_account.addAccount(acc));
+//        acc.setAccountName("admin1");
+//        System.out.println(bus_account.add(acc));
 //        System.out.println(bus_account.getList());
 //        System.out.println(bus_account.deleteAccount(7));
         

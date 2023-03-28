@@ -15,6 +15,7 @@ public class DAO_Product {
 	public ArrayList<DTO_Product> findAll() throws SQLException {
 		ArrayList<DTO_Product> list = new ArrayList<>();
 		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM product where status = 1");
 			rs = ptm.executeQuery();
@@ -27,7 +28,7 @@ public class DAO_Product {
 				String img = rs.getString("img");
 				String mass = rs.getString("mass");
 				String expireDate = rs.getString("expire_date");
-				String makeIn = rs.getString("make_in");
+				String makeIn = rs.getString("trademark");
 				Boolean status = rs.getBoolean("status");
 				int categoryId = rs.getInt("cate_id");
 
@@ -60,11 +61,11 @@ public class DAO_Product {
 				String img = rs.getString("img");
 				String mass = rs.getString("mass");
 				String expireDate = rs.getString("expireDate");
-				String makeIn = rs.getString("makeIn");
+				String trademark = rs.getString("trademark");
 				Boolean status = rs.getBoolean("status");
 				int categoryId = rs.getInt("category_id");
 
-				product = new DTO_Product(ProductId, categoryId, name, desc, img, mass, makeIn, expireDate, quantity,
+				product = new DTO_Product(ProductId, categoryId, name, desc, img, mass, trademark, expireDate, quantity,
 						price, status);
 
 			}
@@ -78,7 +79,7 @@ public class DAO_Product {
 	public boolean create(DTO_Product newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO product(name, description, img, mass, makeIn, expireDate, quantity, price, cate_id)"
+			String query = "INSERT INTO product(name, description, img, mass, trademark, expireDate, quantity, price, cate_id)"
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
@@ -86,7 +87,7 @@ public class DAO_Product {
 			ptm.setString(2, newObj.getDescription());
 			ptm.setString(3, newObj.getImg());
 			ptm.setString(4, newObj.getMass());
-			ptm.setString(5, newObj.getMakeIn());
+			ptm.setString(5, newObj.gettrademark());
 			ptm.setString(6, newObj.getExpireDate());
 			ptm.setFloat(7, newObj.getQuantity());
 			ptm.setFloat(8, newObj.getPrice());
@@ -105,13 +106,13 @@ public class DAO_Product {
 	public boolean updateById(DTO_Product newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, description = ?, img = ?, mass = ?, make_in = ?, expire_date = ?, quantity = ?, price = ?, cate_id = ? where id = ? and status = 1;";
+			String query = "UPDATE account SET name = ?, description = ?, img = ?, mass = ?, trademark = ?, expire_date = ?, quantity = ?, price = ?, cate_id = ? where id = ? and status = 1;";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getDescription());
 			ptm.setString(3, newObj.getImg());
 			ptm.setString(4, newObj.getMass());
-			ptm.setString(5, newObj.getMakeIn());
+			ptm.setString(5, newObj.gettrademark());
 			ptm.setString(6, newObj.getExpireDate());
 			ptm.setFloat(7, newObj.getQuantity());
 			ptm.setFloat(8, newObj.getPrice());
@@ -148,6 +149,7 @@ public class DAO_Product {
 
 	public boolean checkExistById(int id) throws SQLException {
 		boolean isExist = false;
+		ConnectDB con = new ConnectDB();
 		PreparedStatement psm = con.getConnection()
 				.prepareStatement("SELECT * FROM product WHERE product_id = ? AND status = 1;");
 		psm.setInt(1, id);
@@ -160,6 +162,7 @@ public class DAO_Product {
 
 	public boolean unDeteleById(int id) {
 		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
 					.prepareStatement("UPDATE product SET status = 1 WHERE product_id = ?");

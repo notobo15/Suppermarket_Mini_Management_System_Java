@@ -9,9 +9,8 @@ import DTO.DTO_CategoryProduct;
 import UTILS.ConnectDB;
 
 public class DAO_CategoryProduct {
-	private ConnectDB con = new ConnectDB();
-	
 	public ArrayList<DTO_CategoryProduct> findAll() throws SQLException {
+		ConnectDB con = new ConnectDB();
 		ArrayList<DTO_CategoryProduct> list = new ArrayList<>();
 		 ResultSet rs = null;
 		try {
@@ -36,7 +35,7 @@ public class DAO_CategoryProduct {
 	
 	
 	public DTO_CategoryProduct findById(int id) throws SQLException {
-		 ResultSet rs = null;
+		 ResultSet rs = null;ConnectDB con = new ConnectDB();
 		 DTO_CategoryProduct category = null;
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE category_id = ? AND status = 1");
@@ -79,7 +78,7 @@ public class DAO_CategoryProduct {
 		return false;
 	}
 	
-	public boolean updateById(int id, DTO_CategoryProduct newObj) throws SQLException {
+	public boolean updateById(DTO_CategoryProduct newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
 			String query = "UPDATE account SET name = ?, desc = ?, status = ? where id = ? and status = 1";
@@ -87,7 +86,7 @@ public class DAO_CategoryProduct {
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getDesc());
 			ptm.setBoolean(3, newObj.getStatus());
-			ptm.setInt(4, id);
+			ptm.setInt(4, newObj.getId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();
@@ -99,7 +98,7 @@ public class DAO_CategoryProduct {
 	}
 	
 	public boolean deteleById(int id) throws SQLException {
-		 int rs;
+		 int rs;ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE category_product SET status = 0 WHERE category_id = ?");
 			ptm.setInt(1, id);
@@ -113,7 +112,7 @@ public class DAO_CategoryProduct {
 		return false;
 	}
 	public boolean checkExistById(int id) throws SQLException {
-		boolean isExist = false;
+		boolean isExist = false;ConnectDB con = new ConnectDB();
 		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE category_id = ? AND status = 1;");
 		psm.setInt(1, id);
 		ResultSet rs = psm.executeQuery();
@@ -123,7 +122,7 @@ public class DAO_CategoryProduct {
 		return isExist;
 	}
 	public boolean unDeteleById(int id) {
-		 int rs;
+		 int rs;ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE category_product SET status = 1 WHERE category_id = ?");
 			ptm.setInt(1, id);

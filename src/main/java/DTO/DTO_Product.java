@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class DTO_Product {
 	private int productId, categoryId;
-	private String name, description, img, mass, makeIn;
+	private String name, description, img, mass, trademark;
 	private String expireDate;
 	private float quantity, price;
 	private boolean status;
-	
+
 	public DTO_Product() {
 		super();
 	}
 
 	public DTO_Product(int productId, int categoryId, String name, String description, String img, String mass,
-			String makeIn, String expireDate, float quantity, float price, boolean status) {
+			String trademark, String expireDate, float quantity, float price, boolean status) {
 		super();
 		this.productId = productId;
 		this.categoryId = categoryId;
@@ -22,7 +22,7 @@ public class DTO_Product {
 		this.description = description;
 		this.img = img;
 		this.mass = mass;
-		this.makeIn = makeIn;
+		this.trademark = trademark;
 		this.expireDate = expireDate;
 		this.quantity = quantity;
 		this.price = price;
@@ -77,12 +77,12 @@ public class DTO_Product {
 		this.mass = mass;
 	}
 
-	public String getMakeIn() {
-		return makeIn;
+	public String gettrademark() {
+		return trademark;
 	}
 
-	public void setMakeIn(String makeIn) {
-		this.makeIn = makeIn;
+	public void settrademark(String trademark) {
+		this.trademark = trademark;
 	}
 
 	public String getExpireDate() {
@@ -120,11 +120,10 @@ public class DTO_Product {
 	@Override
 	public String toString() {
 		return "DTO_Product [productId=" + productId + ", categoryId=" + categoryId + ", name=" + name
-				+ ", description=" + description + ", img=" + img + ", mass=" + mass + ", makeIn=" + makeIn
+				+ ", description=" + description + ", img=" + img + ", mass=" + mass + ", trademark=" + trademark
 				+ ", expireDate=" + expireDate + ", quantity=" + quantity + ", price=" + price + ", status=" + status
 				+ "]";
 	}
-	
-	
-	
+
+
 }

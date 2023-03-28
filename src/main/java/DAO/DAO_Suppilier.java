@@ -9,23 +9,22 @@ import DTO.DTO_Suppilier;
 import UTILS.ConnectDB;
 
 public class DAO_Suppilier {
-	private ConnectDB con = new ConnectDB();
-	
 	public ArrayList<DTO_Suppilier> findAll() throws SQLException {
 		ArrayList<DTO_Suppilier> list = new ArrayList<>();
-		 ResultSet rs = null;
+		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM suppilier WHERE status = 1");
 			rs = ptm.executeQuery();
-			while( rs.next()) {
+			while (rs.next()) {
 				int suppilierId = rs.getInt("suppilier_id");
 				String name = rs.getString("name");
 				String address = rs.getString("address");
 				String phone = rs.getString("phone");
 				Boolean status = rs.getBoolean("status");
-				
+
 				DTO_Suppilier suppilier = new DTO_Suppilier(suppilierId, name, phone, address, status);
-			
+
 				list.add(suppilier);
 			}
 			con.closeConnection();
@@ -34,22 +33,23 @@ public class DAO_Suppilier {
 		}
 		return list;
 	}
-	
-	
+
 	public DTO_Suppilier findById(int id) throws SQLException {
-		 ResultSet rs = null;
-		 DTO_Suppilier suppilier = null;
+		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
+		DTO_Suppilier suppilier = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM suppilier WHERE suppilier_id = ? and status = 1");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("SELECT * FROM suppilier WHERE suppilier_id = ? and status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
-			while( rs.next()) {
+			while (rs.next()) {
 				int suppilierId = rs.getInt("suppilier_id");
 				String name = rs.getString("name");
 				String address = rs.getString("address");
 				String phone = rs.getString("phone");
 				Boolean status = rs.getBoolean("status");
-				
+
 				suppilier = new DTO_Suppilier(suppilierId, name, phone, address, status);
 			}
 			con.closeConnection();
@@ -58,30 +58,29 @@ public class DAO_Suppilier {
 		}
 		return suppilier;
 	}
-	
+
 	public boolean create(DTO_Suppilier newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
+		ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO suppilier(name, address, phone)"
-							+ "VALUES (?, ?, ?);";
-			
+			String query = "INSERT INTO suppilier(name, address, phone)" + "VALUES (?, ?, ?);";
+
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getAddress());
 			ptm.setString(3, newObj.getPhone());
-			
+
 			int result = ptm.executeUpdate();
 			con.closeConnection();
 			return result > 0;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
-	public boolean updateById(int id, DTO_Suppilier newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
+
+	public boolean updateById(DTO_Suppilier newObj) throws SQLException {
+		ConnectDB con = new ConnectDB();
 		try {
 			String query = "UPDATE account SET name = ?, address = ?, phone = ? where id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
@@ -89,9 +88,9 @@ public class DAO_Suppilier {
 			ptm.setString(2, newObj.getAddress());
 			ptm.setString(3, newObj.getPhone());
 
-			ptm.setInt(4, id);
+			ptm.setInt(4, newObj.getSuppilierId());
 			int result = ptm.executeUpdate();
-			
+
 			con.closeConnection();
 			return result > 0;
 		} catch (Exception e) {
@@ -99,15 +98,16 @@ public class DAO_Suppilier {
 		}
 		return false;
 	}
-	
+
 	public boolean deteleById(int id) throws SQLException {
-		 int rs;
-		 ConnectDB con = new ConnectDB();
+		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE suppilier SET status = 0 WHERE suppilier_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE suppilier SET status = 0 WHERE suppilier_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
-			
+
 			con.closeConnection();
 			return rs > 0;
 		} catch (Exception e) {
@@ -115,9 +115,12 @@ public class DAO_Suppilier {
 		}
 		return false;
 	}
+
 	public boolean checkExistById(int id) throws SQLException {
 		boolean isExist = false;
-		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM suppilier WHERE suppilier_id = ? AND status = 1;");
+		ConnectDB con = new ConnectDB();
+		PreparedStatement psm = con.getConnection()
+				.prepareStatement("SELECT * FROM suppilier WHERE suppilier_id = ? AND status = 1;");
 		psm.setInt(1, id);
 		ResultSet rs = psm.executeQuery();
 		if (rs.next()) {
@@ -125,13 +128,16 @@ public class DAO_Suppilier {
 		}
 		return isExist;
 	}
+
 	public boolean unDeteleById(int id) {
-		 int rs;
+		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE suppilier SET status = 1 WHERE suppilier_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE suppilier SET status = 1 WHERE suppilier_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
-			
+
 			con.closeConnection();
 			return rs > 0;
 		} catch (Exception e) {

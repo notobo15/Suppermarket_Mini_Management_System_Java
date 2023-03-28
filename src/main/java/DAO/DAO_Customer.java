@@ -9,11 +9,11 @@ import DTO.DTO_Customer;
 import UTILS.ConnectDB;
 
 public class DAO_Customer {
-	private ConnectDB con = new ConnectDB();
 
 	public ArrayList<DTO_Customer> findAll() throws SQLException {
 		ArrayList<DTO_Customer> list = new ArrayList<>();
 		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM customer WHERE status = 1");
 			rs = ptm.executeQuery();
@@ -39,6 +39,7 @@ public class DAO_Customer {
 
 	public DTO_Customer findById(int id) throws SQLException {
 		ResultSet rs = null;
+		ConnectDB con = new ConnectDB();
 		DTO_Customer newObj = null;
 		try {
 			PreparedStatement ptm = con.getConnection()
@@ -64,6 +65,7 @@ public class DAO_Customer {
 	}
 
 	public boolean create(DTO_Customer newObj) throws SQLException {
+		ConnectDB con = new ConnectDB();
 		try {
 			String query = "INSERT INTO account(name, phone, gender, birth_date, address)" + "VALUES (?, ?, ?, ?, ?);";
 
@@ -86,8 +88,10 @@ public class DAO_Customer {
 
 	public boolean deteleById(int id) throws SQLException {
 		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE customer SET status = 0 WHERE account_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE customer SET status = 0 WHERE account_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 
@@ -98,13 +102,16 @@ public class DAO_Customer {
 		}
 		return false;
 	}
+
 	public boolean unDeteleById(int id) {
-		 int rs;
+		int rs;
+		ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE customer SET status = 1 WHERE account_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE customer SET status = 1 WHERE account_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
-			
+
 			con.closeConnection();
 			return rs > 0;
 		} catch (Exception e) {
@@ -112,6 +119,7 @@ public class DAO_Customer {
 		}
 		return false;
 	}
+
 	public boolean updateById(DTO_Customer newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
@@ -135,7 +143,9 @@ public class DAO_Customer {
 
 	public boolean checkExistById(int id) throws SQLException {
 		boolean isExist = false;
-		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM customer WHERE customer_id = ? AND status = 1;");
+		ConnectDB con = new ConnectDB();
+		PreparedStatement psm = con.getConnection()
+				.prepareStatement("SELECT * FROM customer WHERE customer_id = ? AND status = 1;");
 		psm.setInt(1, id);
 		ResultSet rs = psm.executeQuery();
 		if (rs.next()) {

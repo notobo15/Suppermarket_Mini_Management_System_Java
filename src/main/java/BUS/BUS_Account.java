@@ -2,21 +2,19 @@ package BUS;
 
 import DAO.DAO_Account;
 import DTO.DTO_Account;
-import GUI.AlertMessageYN;
 import GUI.AlertWarning;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class BUS_Account {
 
     DAO_Account dao_account = new DAO_Account();
 
-    public ArrayList<DTO.DTO_Account> getList() throws SQLException {
+    public ArrayList<DTO_Account> getList() throws SQLException {
         return dao_account.findAll();
     }
 
-    public DTO_Account getAccountById(int id) throws SQLException {
+    public DTO_Account getSingleById(int id) throws SQLException {
         boolean isSuccess = dao_account.checkExistById(id);
         System.out.println(isSuccess);
          AlertWarning alert = new AlertWarning("Không tìm thấy account Id = " + id);
@@ -29,7 +27,7 @@ public class BUS_Account {
 
     }
 
-    public String addAccount(DTO_Account acc) throws SQLException {
+    public String add(DTO_Account acc) throws SQLException {
     	boolean isExist = dao_account.checkExistByName(acc.getAccountName());
         if (!isExist) {
             boolean isSuccess = dao_account.create(acc);
@@ -46,7 +44,7 @@ public class BUS_Account {
         }
     }
 
-    public String updateAccount(DTO_Account acc) throws SQLException {
+    public String update(DTO_Account acc) throws SQLException {
     	boolean isExist = dao_account.checkExistById(acc.getAccountId());
         if (isExist) {
             boolean isSuccess = dao_account.updateById(acc);
@@ -63,7 +61,7 @@ public class BUS_Account {
         }
     }
     
-    public String deleteAccount(int id) throws SQLException {
+    public String delete(int id) throws SQLException {
     	boolean isExist = dao_account.checkExistById(id);
         if (isExist) {
             boolean isDeleted = dao_account.deteleById(id);
@@ -80,7 +78,7 @@ public class BUS_Account {
         }
     }
 
-    public String unDeleteAccount(int id) throws SQLException {
+    public String undelete(int id) throws SQLException {
     	boolean isExist = dao_account.checkExistById(id);
         if (isExist) {
             boolean isDeleted = dao_account.unDeteleById(id);
