@@ -20,6 +20,7 @@ public class AlertWarning extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
         jLabel2.setText(text);
+        this.setTitle("Warning");
     }
     /** This method is called from within the constructor to
      * initialize the form.

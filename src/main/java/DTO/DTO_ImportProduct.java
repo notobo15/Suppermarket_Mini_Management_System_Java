@@ -5,6 +5,9 @@ public class DTO_ImportProduct {
 	private String importDate;
 	private boolean status;
 	
+	public DTO_ImportProduct() {
+		super();
+	}
 	public DTO_ImportProduct(int id, int suppilierId, int accountId, String importDate, boolean status) {
 		super();
 		this.id = id;

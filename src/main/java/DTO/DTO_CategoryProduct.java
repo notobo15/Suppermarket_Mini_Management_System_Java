@@ -4,6 +4,10 @@ public class DTO_CategoryProduct {
 	private int id;
 	private boolean status;
 	private String name, desc;
+	
+	public DTO_CategoryProduct() {
+		super();
+	}
 	public DTO_CategoryProduct(int id, String name, String desc, boolean status) {
 		super();
 		this.id = id;

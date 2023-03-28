@@ -4,6 +4,8 @@
 package lap_trinh_java.sieuthi_mini_java;
 
 import BUS.BUS_Account;
+import BUS.BUS_Product;
+
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,7 +28,18 @@ public class Sieuthi_mini_java {
     public static void main(String[] args) throws Exception {
         
         BUS_Account bus_account = new BUS_Account();
-        System.out.println(bus_account.getAccountById(22));
+        DTO_Account acc = new DTO_Account();
+        BUS_Product bus_product = new BUS_Product();
+//        System.out.println(bus_product.);
+        acc.setAccountName("admin1");
+        System.out.println(bus_account.addAccount(acc));
+//        System.out.println(bus_account.getList());
+//        System.out.println(bus_account.deleteAccount(7));
+        
+//        System.out.println(bus_account.deleteAccount(8));
+//        System.out.println(bus_account.addAccount(acc));
+        
+//        System.out.println(bus_account.getAccountById(1));
 //        new AlertWarning("Không tìm thấy account Id = ").setVisible(true);
 //        System.out.println("Hello World!");
 //        new Table().setVisible(true);

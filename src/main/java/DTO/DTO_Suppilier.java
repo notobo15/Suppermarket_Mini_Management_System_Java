@@ -5,6 +5,11 @@ public class DTO_Suppilier {
 	
 	private String name, phone, address;
 	private boolean status;
+	
+	public DTO_Suppilier() {
+		super();
+	}
+
 	public DTO_Suppilier(int suppilierId, String name, String phone, String address, boolean status) {
 		super();
 		this.suppilierId = suppilierId;
@@ -13,6 +18,7 @@ public class DTO_Suppilier {
 		this.address = address;
 		this.status = status;
 	}
+	
 	public int getSuppilierId() {
 		return suppilierId;
 	}

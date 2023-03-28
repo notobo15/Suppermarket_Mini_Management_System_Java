@@ -30,30 +30,72 @@ public class BUS_Account {
     }
 
     public String addAccount(DTO_Account acc) throws SQLException {
-        if (dao_account.checkExistByName(acc.getAccountName())) {
+    	boolean isExist = dao_account.checkExistByName(acc.getAccountName());
+        if (!isExist) {
             boolean isSuccess = dao_account.create(acc);
             if (isSuccess) {
-
+            	new AlertWarning("Tạo account thành công").setVisible(true);
                 return "tao thanh cong";
             } else {
+            	new AlertWarning("Tạo account không thành công").setVisible(true);
                 return "tao khong thanh cong";
             }
         } else {
-            return "khong tim thay";
+        	new AlertWarning("Account Name đã có trong hệ thống!").setVisible(true);
+            return "name da duoc tim thay trong db";
         }
     }
 
-    public String deleteAccount(int id) throws SQLException {
-        if (dao_account.checkExistById(id)) {
-            boolean isDeleted = dao_account.deteleById(id);
-            if (isDeleted) {
+    public String updateAccount(DTO_Account acc) throws SQLException {
+    	boolean isExist = dao_account.checkExistById(acc.getAccountId());
+        if (isExist) {
+            boolean isSuccess = dao_account.updateById(acc);
+            if (isSuccess) {
+            	new AlertWarning("Cập nhật account id " + acc.getAccountId() + " thành công!").setVisible(true);
                 return "Delete thanh cong";
             } else {
+            	new AlertWarning("Cập nhật account id " + acc.getAccountId() + "không thành công!").setVisible(true);
                 return "Delete khong thanh cong";
             }
         } else {
+        	new AlertWarning("id = "+ acc.getAccountId() + " đã không được tìm thấy").setVisible(true);
+            return "khong tim thay";
+        }
+    }
+    
+    public String deleteAccount(int id) throws SQLException {
+    	boolean isExist = dao_account.checkExistById(id);
+        if (isExist) {
+            boolean isDeleted = dao_account.deteleById(id);
+            if (isDeleted) {
+            	new AlertWarning("Đã xóa account id " + id + " thành công!").setVisible(true);
+                return "Delete thanh cong";
+            } else {
+            	new AlertWarning("Xóa account id " + id + "không thành công!").setVisible(true);
+                return "Delete khong thanh cong";
+            }
+        } else {
+        	new AlertWarning("id = "+ id + " đã không được tìm thấy").setVisible(true);
             return "khong tim thay";
         }
     }
 
+    public String unDeleteAccount(int id) throws SQLException {
+    	boolean isExist = dao_account.checkExistById(id);
+        if (isExist) {
+            boolean isDeleted = dao_account.unDeteleById(id);
+            if (isDeleted) {
+            	new AlertWarning("Đã khôi phục account id " + id + " thành công!").setVisible(true);
+                return "Delete thanh cong";
+            } else {
+            	new AlertWarning("khôi phục account id " + id + "không thành công!").setVisible(true);
+                return "Delete khong thanh cong";
+            }
+        } else {
+        	new AlertWarning("id = "+ id + " đã không được tìm thấy").setVisible(true);
+            return "khong tim thay";
+        }
+    }
+    
+    
 }

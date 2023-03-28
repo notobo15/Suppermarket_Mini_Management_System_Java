@@ -9,13 +9,13 @@ import DTO.DTO_ImportDetail;
 import UTILS.ConnectDB;
 
 public class DAO_ImportDetail {
+	private ConnectDB con = new ConnectDB();
 	
 	public ArrayList<DTO_ImportDetail> findAll() throws SQLException {
 		ArrayList<DTO_ImportDetail> list = new ArrayList<>();
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_detail");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_detail WHERE status = 1");
 			rs = ptm.executeQuery();
 			while( rs.next()) {
 				int id = rs.getInt("id");
@@ -32,7 +32,6 @@ public class DAO_ImportDetail {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi findAll suppilier");
 		}
 		return list;
 	}
@@ -40,10 +39,9 @@ public class DAO_ImportDetail {
 	
 	public DTO_ImportDetail findById(int id) throws SQLException {
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		 DTO_ImportDetail importDetail = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM suppilier WHERE suppilier_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_detail WHERE id = ? and status = 1;");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while( rs.next()) {
@@ -60,13 +58,11 @@ public class DAO_ImportDetail {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao suppilier where id = " + id);
 		}
 		return importDetail;
 	}
 	
 	public boolean create(DTO_ImportDetail newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
 		try {
 			String query = "INSERT INTO import_detail(import_id, product_id, quantity, price)"
 							+ "VALUES (?, ?, ?, ?);";
@@ -83,20 +79,17 @@ public class DAO_ImportDetail {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao suppilier khong tao dc");
 		}
 		return false;
 	}
 	
 	public boolean updateById(int id, DTO_ImportDetail newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, address = ?, phone = ?, status = ? where id = ?";
+			String query = "UPDATE account SET name = ?, address = ?, phone = ? where id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 //			ptm.setString(1, newObj.getName());
 //			ptm.setString(2, newObj.getAddress());
 //			ptm.setString(3, newObj.getPhone());
-			ptm.setBoolean(4, newObj.isStatus());
 
 			ptm.setInt(5, id);
 			int result = ptm.executeUpdate();
@@ -105,16 +98,14 @@ public class DAO_ImportDetail {
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update category where id = " + id);
 		}
 		return false;
 	}
 	
 	public boolean deteleById(int id) throws SQLException {
 		 int rs;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM category_product WHERE product_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE import_detail SET status = 0 WHERE id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 			
@@ -122,7 +113,30 @@ public class DAO_ImportDetail {
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+	public boolean checkExistById(int id) throws SQLException {
+		boolean isExist = false;
+		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM import_detail WHERE id = ? AND status = 1;");
+		psm.setInt(1, id);
+		ResultSet rs = psm.executeQuery();
+		if (rs.next()) {
+			isExist = true;
+		}
+		return isExist;
+	}
+	public boolean unDeteleById(int id) {
+		 int rs;
+		try {
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE import_detail SET status = 1 WHERE id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+			
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

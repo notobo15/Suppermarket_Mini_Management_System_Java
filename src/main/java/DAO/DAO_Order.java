@@ -10,12 +10,13 @@ import UTILS.ConnectDB;
 
 public class DAO_Order {
 	
+	private ConnectDB con = new ConnectDB();
+	
 	public ArrayList<DTO_Order> findAll() throws SQLException {
 		ArrayList<DTO_Order> list = new ArrayList<>();
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order where status = 1");
 			rs = ptm.executeQuery();
 			while( rs.next()) {
 				int id = rs.getInt("order_id");
@@ -31,7 +32,6 @@ public class DAO_Order {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi findAll order");
 		}
 		return list;
 	}
@@ -42,7 +42,7 @@ public class DAO_Order {
 		 ConnectDB con = new ConnectDB();
 		 DTO_Order suppilier = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order WHERE order_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order WHERE order_id = ? where status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while( rs.next()) {
@@ -57,7 +57,6 @@ public class DAO_Order {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao suppilier where id = " + id);
 		}
 		return suppilier;
 	}
@@ -84,7 +83,7 @@ public class DAO_Order {
 		return false;
 	}
 	
-	public boolean updateById(int id, DTO_Order newObj) throws SQLException {
+	public boolean updateById(DTO_Order newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
 			String query = "UPDATE account SET status = ? WHERE order_id = ?";
@@ -92,14 +91,13 @@ public class DAO_Order {
 			ptm.setBoolean(1, newObj.isStatus());
 			ptm.setString(2, newObj.getOrderDate());
 
-			ptm.setInt(5, id);
+			ptm.setInt(5, newObj.getOrderId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update category where id = " + id);
 		}
 		return false;
 	}
@@ -108,7 +106,7 @@ public class DAO_Order {
 		 int rs;
 		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM category_product WHERE product_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE order SET status = 0 WHERE order_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 			
@@ -116,7 +114,31 @@ public class DAO_Order {
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+	
+	public boolean checkExistById(int id) throws SQLException {
+		boolean isExist = false;
+		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM order WHERE order_id = ? AND status = 1;");
+		psm.setInt(1, id);
+		ResultSet rs = psm.executeQuery();
+		if (rs.next()) {
+			isExist = true;
+		}
+		return isExist;
+	}
+	public boolean unDeteleById(int id) {
+		 int rs;
+		try {
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE order SET status = 1 WHERE order_id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+			
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

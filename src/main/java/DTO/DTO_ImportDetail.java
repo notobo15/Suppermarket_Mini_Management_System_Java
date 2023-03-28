@@ -5,6 +5,10 @@ public class DTO_ImportDetail {
 	private float price, quanity;
 	private int importId;
 	private boolean status;
+	
+	public DTO_ImportDetail() {
+		super();
+	}
 	public DTO_ImportDetail(int id, int productId, float price, float quanity, int importId, boolean status) {
 		super();
 		this.id = id;

@@ -9,105 +9,125 @@ import DTO.DTO_Role;
 import UTILS.ConnectDB;
 
 public class DAO_Role {
-	
+	private ConnectDB con = new ConnectDB();
+
 	public ArrayList<DTO_Role> findAll() throws SQLException {
 		ArrayList<DTO_Role> list = new ArrayList<>();
-		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
+		ResultSet rs = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM role");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM role where status = 1");
 			rs = ptm.executeQuery();
-			while( rs.next()) {
+			while (rs.next()) {
 				int id = rs.getInt("role_id");
 				String name = rs.getString("name");
-				
-				DTO_Role role = new DTO_Role(id, name);
-			
+				boolean status = rs.getBoolean("status");
+				DTO_Role role = new DTO_Role(id, name, status);
+
 				list.add(role);
 			}
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi findAll role");
 		}
 		return list;
 	}
-	
-	
+
 	public DTO_Role findById(int id) throws SQLException {
-		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
-		 DTO_Role suppilier = null;
+		ResultSet rs = null;
+		DTO_Role suppilier = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM role WHERE role_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("SELECT * FROM role WHERE role_id = ? and status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
-			while( rs.next()) {
+			while (rs.next()) {
 				int role_id = rs.getInt("role_id");
 				String name = rs.getString("name");
-				
-				suppilier = new DTO_Role(role_id, name);
+				boolean status = rs.getBoolean("status");
+				suppilier = new DTO_Role(role_id, name, status);
 			}
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao role where id = " + id);
 		}
 		return suppilier;
 	}
-	
+
 	public boolean create(DTO_Role newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO role(name)"
-							+ "VALUES (?);";
-			
-			PreparedStatement ptm = con.getConnection().prepareStatement(query);
-			ptm.setString(1, newObj.getName());
-			
-			int result = ptm.executeUpdate();
-			con.closeConnection();
-			return result > 0;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("loi dao role khong tao dc");
-		}
-		return false;
-	}
-	
-	public boolean updateById(int id, DTO_Role newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
-		try {
-			String query = "UPDATE role SET name = ? where id = ?";
+			String query = "INSERT INTO role(name)" + "VALUES (?);";
+
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 
-			ptm.setInt(5, id);
 			int result = ptm.executeUpdate();
-			
+			con.closeConnection();
+			return result > 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return false;
+	}
+
+	public boolean updateById(DTO_Role newObj) throws SQLException {
+		try {
+			String query = "UPDATE role SET name = ? where role_id = ? and status = 1";
+			PreparedStatement ptm = con.getConnection().prepareStatement(query);
+			ptm.setString(1, newObj.getName());
+
+			ptm.setInt(5, newObj.getRoleId());
+			int result = ptm.executeUpdate();
+
 			con.closeConnection();
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update role where id = " + id);
 		}
 		return false;
 	}
-	
+
 	public boolean deteleById(int id) throws SQLException {
-		 int rs;
-		 ConnectDB con = new ConnectDB();
+		int rs;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM category_product WHERE product_id = ?");
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE role SET status = 0 WHERE role_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
-			
+
 			con.closeConnection();
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+
+	public boolean checkExistById(int id) throws SQLException {
+		boolean isExist = false;
+		PreparedStatement psm = con.getConnection()
+				.prepareStatement("SELECT * FROM role WHERE role_id = ? AND status = 1;");
+		psm.setInt(1, id);
+		ResultSet rs = psm.executeQuery();
+		if (rs.next()) {
+			isExist = true;
+		}
+		return isExist;
+	}
+
+	public boolean unDeteleById(int id) {
+		int rs;
+		try {
+			PreparedStatement ptm = con.getConnection()
+					.prepareStatement("UPDATE role SET status = 1 WHERE role_id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

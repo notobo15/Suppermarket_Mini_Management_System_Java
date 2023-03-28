@@ -9,13 +9,12 @@ import DTO.DTO_Account;
 import UTILS.ConnectDB;
 
 public class DAO_Account {
-	
-	public ArrayList<DTO_Account> findAll() throws SQLException {
+	private ConnectDB con = new ConnectDB();
+	public ArrayList<DTO_Account> findAll() {
 		ArrayList<DTO_Account> list = new ArrayList<>();
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM account");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM account WHERE status = 1");
 			rs = ptm.executeQuery();
 			while( rs.next()) {
 				int account_id = rs.getInt("account_id");
@@ -36,18 +35,16 @@ public class DAO_Account {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account");
 		}
 		return list;
 	}
 	
 	
-	public DTO_Account findById(int id) throws SQLException {
+	public DTO_Account findById(int id) {
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		 DTO_Account dto_acc = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_id = ? and status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while( rs.next()) {
@@ -67,16 +64,14 @@ public class DAO_Account {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
 		}
 		return dto_acc;
 	}
 	
-	public boolean create(DTO_Account accNew) throws SQLException {
-		 ConnectDB con = new ConnectDB();
+	public boolean create(DTO_Account accNew) {
 		try {
 			String query = "INSERT INTO account(account_name, password, first_name, last_name, phone, birth_date, address, gender)"
-							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			System.out.println(accNew.toString());
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
@@ -94,16 +89,15 @@ public class DAO_Account {
 			return result > 0;
 			
 		} catch (Exception e) {
-			System.out.println("loi dao account khong tao dc");
+			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public boolean deteleById(int id) throws SQLException {
+	public boolean unDeteleById(int id) {
 		 int rs;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM account WHERE account_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE account SET status = 1 WHERE account_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 			
@@ -111,15 +105,28 @@ public class DAO_Account {
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+	public boolean deteleById(int id) {
+		 int rs;
+		try {
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE account SET status = 0 WHERE account_id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+			
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public boolean updateById(int id, DTO_Account accNew) throws SQLException {
-		 ConnectDB con = new ConnectDB();
+	
+	public boolean updateById(DTO_Account accNew) {
 		try {
-			String query = "UPDATE account SET password = ?, first_name = ?, last_name = ?, phone = ?,birth_date = ?, address = ?, gender = ?  where account_id = ?";
+			String query = "UPDATE account SET password = ?, first_name = ?, last_name = ?, phone = ?,birth_date = ?, address = ?, gender = ?  where account_id = ? AND status = 1;";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, accNew.getPasssword());
 			ptm.setString(2, accNew.getFirstName());
@@ -128,21 +135,19 @@ public class DAO_Account {
 			ptm.setString(5, accNew.getBirthDate());
 			ptm.setString(6, accNew.getAddress());
 			ptm.setString(7, accNew.getGender());
-			ptm.setInt(8, id);
+			ptm.setInt(8, accNew.getAccountId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update account where id = " + id);
 		}
 		return false;
 	}
     public boolean checkExistById(int id) throws SQLException {
         boolean isExist = false;
-        ConnectDB con = new ConnectDB();
-        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_id = ?;");
+        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_id = ? AND status = 1;");
         psm.setInt(1, id);
         ResultSet rs = psm.executeQuery();
         if (rs.next()) {
@@ -152,8 +157,7 @@ public class DAO_Account {
     }
 	public boolean checkExistByName(String name) throws SQLException {
         boolean isExist = false;
-        ConnectDB con = new ConnectDB();
-        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_name = ?;");
+        PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM account WHERE account_name = ? AND status = 1;");
         psm.setString(1, name);
         ResultSet rs = psm.executeQuery();
         if (rs.next()) {

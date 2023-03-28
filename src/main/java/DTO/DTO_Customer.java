@@ -8,6 +8,9 @@ public class DTO_Customer {
 	private String birthDate;
 	private boolean status;
 
+	public DTO_Customer() {
+		super();
+	}
 	public DTO_Customer(int customerId,  String name, String phone, String address, String gender,
 			String birth_date, boolean status) {
 		super();

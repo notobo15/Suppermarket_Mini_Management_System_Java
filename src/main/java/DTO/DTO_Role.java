@@ -1,18 +1,24 @@
 package DTO;
 
 public class DTO_Role {
-	private int role_id;
+	private int roleId;
 	private String name;
-	public DTO_Role(int role_id, String name) {
+	private boolean status;
+	public DTO_Role() {
 		super();
-		this.role_id = role_id;
+	}
+	public DTO_Role(int roleId, String name, boolean status) {
+		super();
+		this.roleId = roleId;
 		this.name = name;
+		this.status = status;
 	}
-	public int getRole_id() {
-		return role_id;
+
+	public int getRoleId() {
+		return roleId;
 	}
-	public void setRole_id(int role_id) {
-		this.role_id = role_id;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	public String getName() {
 		return name;
@@ -20,9 +26,15 @@ public class DTO_Role {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "DTO_Role [role_id=" + role_id + ", name=" + name + "]";
+		return "DTO_Role [role_id=" + roleId + ", name=" + name + ", status=" + status + "]";
 	}
 	
 }

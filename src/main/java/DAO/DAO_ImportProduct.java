@@ -9,13 +9,13 @@ import DTO.DTO_ImportProduct;
 import UTILS.ConnectDB;
 
 public class DAO_ImportProduct {
+	private ConnectDB con = new ConnectDB();
 	
 	public ArrayList<DTO_ImportProduct> findAll() throws SQLException {
 		ArrayList<DTO_ImportProduct> list = new ArrayList<>();
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_product");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_product where status = 1");
 			rs = ptm.executeQuery();
 			while( rs.next()) {
 				int id = rs.getInt("order_id");
@@ -31,7 +31,6 @@ public class DAO_ImportProduct {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi findAll suppilier");
 		}
 		return list;
 	}
@@ -39,10 +38,9 @@ public class DAO_ImportProduct {
 	
 	public DTO_ImportProduct findById(int id) throws SQLException {
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		 DTO_ImportProduct importProduct = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import WHERE import_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM import_product WHERE import_id = ? and status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while( rs.next()) {
@@ -56,13 +54,11 @@ public class DAO_ImportProduct {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao suppilier where id = " + id);
 		}
 		return importProduct;
 	}
 	
 	public boolean create(DTO_ImportProduct newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
 		try {
 			String query = "INSERT INTO import_product(suppilier_id, import_date, account_id)"
 							+ "VALUES (?, ?, ?);";
@@ -78,29 +74,25 @@ public class DAO_ImportProduct {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao suppilier khong tao dc");
 		}
 		return false;
 	}
 	
-	public boolean updateById(int id, DTO_ImportProduct newObj) throws SQLException {
-		 ConnectDB con = new ConnectDB();
+	public boolean updateById(DTO_ImportProduct newObj) throws SQLException {
 		try {
-			String query = "UPDATE account SET name = ?, address = ?, phone = ?, status = ? where id = ?";
+			String query = "UPDATE import_product SET suppilier_id = ?, import_date = ?, account_id = ? where import_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
-//			ptm.setString(1, newObj.getName());
-//			ptm.setString(2, newObj.getAddress());
-//			ptm.setString(3, newObj.getPhone());
-//			ptm.setBoolean(4, newObj.isStatus());
+			ptm.setInt(1, newObj.getSuppilierId());
+			ptm.setString(2, newObj.getImportDate());
+			ptm.setInt(3, newObj.getAccountId());
 
-			ptm.setInt(5, id);
+			ptm.setInt(4, newObj.getId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update category where id = " + id);
 		}
 		return false;
 	}
@@ -109,7 +101,7 @@ public class DAO_ImportProduct {
 		 int rs;
 		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM category_product WHERE product_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE import_product SET status = 0 WHERE import_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 			
@@ -117,7 +109,30 @@ public class DAO_ImportProduct {
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+	public boolean checkExistById(int id) throws SQLException {
+		boolean isExist = false;
+		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM import_product WHERE import_id = ? AND status = 1;");
+		psm.setInt(1, id);
+		ResultSet rs = psm.executeQuery();
+		if (rs.next()) {
+			isExist = true;
+		}
+		return isExist;
+	}
+	public boolean unDeteleById(int id) {
+		 int rs;
+		try {
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE import_product SET status = 1 WHERE import_id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+			
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

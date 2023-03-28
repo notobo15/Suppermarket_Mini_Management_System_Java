@@ -8,10 +8,16 @@ import java.sql.Date;
  */
 public class DTO_Account {
 
-    private int accountId, roleId;
+    private int accountId ;
     private String accountName, passsword, firstName, lastName, phone, address, gender;
     private String birthDate;
     private Boolean status;
+    private int roleId;
+    
+	public DTO_Account() {
+		super();
+	}
+
 	public DTO_Account(int accountId, int roleId, String accountName, String passsword, String firstName,
 			String lastName, String phone, String address, String gender, String birthDate, Boolean status) {
 		super();

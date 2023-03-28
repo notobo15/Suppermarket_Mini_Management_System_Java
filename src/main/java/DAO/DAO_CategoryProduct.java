@@ -9,13 +9,13 @@ import DTO.DTO_CategoryProduct;
 import UTILS.ConnectDB;
 
 public class DAO_CategoryProduct {
+	private ConnectDB con = new ConnectDB();
 	
 	public ArrayList<DTO_CategoryProduct> findAll() throws SQLException {
 		ArrayList<DTO_CategoryProduct> list = new ArrayList<>();
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM category_product");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE status = 1");
 			rs = ptm.executeQuery();
 			while( rs.next()) {
 				int category_id = rs.getInt("category_id");
@@ -30,7 +30,6 @@ public class DAO_CategoryProduct {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi findAll category");
 		}
 		return list;
 	}
@@ -38,10 +37,9 @@ public class DAO_CategoryProduct {
 	
 	public DTO_CategoryProduct findById(int id) throws SQLException {
 		 ResultSet rs = null;
-		 ConnectDB con = new ConnectDB();
 		 DTO_CategoryProduct category = null;
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE category_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE category_id = ? AND status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while( rs.next()) {
@@ -55,7 +53,6 @@ public class DAO_CategoryProduct {
 			con.closeConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
 		}
 		return category;
 	}
@@ -78,7 +75,6 @@ public class DAO_CategoryProduct {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao category khong tao dc");
 		}
 		return false;
 	}
@@ -86,7 +82,7 @@ public class DAO_CategoryProduct {
 	public boolean updateById(int id, DTO_CategoryProduct newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, desc = ?, status = ? where id = ?";
+			String query = "UPDATE account SET name = ?, desc = ?, status = ? where id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getDesc());
@@ -98,16 +94,14 @@ public class DAO_CategoryProduct {
 			return result > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi update category where id = " + id);
 		}
 		return false;
 	}
 	
 	public boolean deteleById(int id) throws SQLException {
 		 int rs;
-		 ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("DELETE FROM category_product WHERE product_id = ?");
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE category_product SET status = 0 WHERE category_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 			
@@ -115,7 +109,30 @@ public class DAO_CategoryProduct {
 			return rs > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("loi dao account where id = " + id);
+		}
+		return false;
+	}
+	public boolean checkExistById(int id) throws SQLException {
+		boolean isExist = false;
+		PreparedStatement psm = con.getConnection().prepareStatement("SELECT * FROM category_product WHERE category_id = ? AND status = 1;");
+		psm.setInt(1, id);
+		ResultSet rs = psm.executeQuery();
+		if (rs.next()) {
+			isExist = true;
+		}
+		return isExist;
+	}
+	public boolean unDeteleById(int id) {
+		 int rs;
+		try {
+			PreparedStatement ptm = con.getConnection().prepareStatement("UPDATE category_product SET status = 1 WHERE category_id = ?");
+			ptm.setInt(1, id);
+			rs = ptm.executeUpdate();
+			
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

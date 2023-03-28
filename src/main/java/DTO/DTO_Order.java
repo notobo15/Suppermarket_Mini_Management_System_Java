@@ -5,6 +5,10 @@ public class DTO_Order {
 	private String orderDate;
 	private int customerId;
 	private boolean status;
+	
+	public DTO_Order() {
+		super();
+	}
 	public DTO_Order(int orderId, int accountId, String orderDate, int customerId, boolean status) {
 		super();
 		this.orderId = orderId;
