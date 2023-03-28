@@ -55,15 +55,15 @@ public class DAO_Product {
 			rs = ptm.executeQuery();
 			while (rs.next()) {
 				String name = rs.getString("name");
-				String desc = rs.getString("desc");
+				String desc = rs.getString("description");
 				float price = rs.getFloat("price");
 				float quantity = rs.getFloat("quantity");
 				String img = rs.getString("img");
 				String mass = rs.getString("mass");
-				String expireDate = rs.getString("expireDate");
+				String expireDate = rs.getString("expire_date");
 				String trademark = rs.getString("trademark");
 				Boolean status = rs.getBoolean("status");
-				int categoryId = rs.getInt("category_id");
+				int categoryId = rs.getInt("cate_id");
 
 				product = new DTO_Product(ProductId, categoryId, name, desc, img, mass, trademark, expireDate, quantity,
 						price, status);

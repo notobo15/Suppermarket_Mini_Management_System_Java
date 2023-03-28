@@ -29,11 +29,11 @@ public class Sieuthi_mini_java {
         
         BUS_Account bus_account = new BUS_Account();
         BUS_Product bus_product = new BUS_Product();
-        
-        System.out.println(bus_account.getList());
-        for(DTO_Product i: bus_product.getList()) {
-        	System.out.println(i.toString());
-        }
+        System.out.println(bus_product.getSingleById(1));
+//        System.out.println(bus_account.getList());
+//        for(DTO_Product i: bus_product.getList()) {
+//        	System.out.println(i.toString());
+//        }
         
 //        DTO_Account acc = new DTO_Account();
 //        BUS_Product bus_product = new BUS_Product();
