@@ -78,8 +78,8 @@ public class DAO_Role {
 			String query = "UPDATE role SET name = ? where role_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
+			ptm.setInt(2, newObj.getRoleId());
 
-			ptm.setInt(5, newObj.getRoleId());
 			int result = ptm.executeUpdate();
 
 			con.closeConnection();

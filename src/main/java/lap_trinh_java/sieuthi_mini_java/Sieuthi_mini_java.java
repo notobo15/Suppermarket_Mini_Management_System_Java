@@ -5,6 +5,7 @@ package lap_trinh_java.sieuthi_mini_java;
 
 import BUS.BUS_Account;
 import BUS.BUS_Product;
+import BUS.BUS_Role;
 
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import DAO.DAO_Account;
 import DAO.DAO_Product;
 import DTO.DTO_Account;
 import DTO.DTO_Product;
+import DTO.DTO_Role;
 import GUI.AlertMessageYN;
 import GUI.*;
 import javax.swing.JOptionPane;
@@ -29,7 +31,17 @@ public class Sieuthi_mini_java {
         
         BUS_Account bus_account = new BUS_Account();
         BUS_Product bus_product = new BUS_Product();
-        System.out.println(bus_product.getSingleById(1));
+        BUS_Role bus_role = new BUS_Role();
+        System.out.println(bus_role.getList());
+        DTO_Role role = new DTO_Role(0, "bản vệ", true);
+
+        DTO_Role role2 = new DTO_Role(0, "bản vệ", true);
+        bus_role.add(role);
+        bus_role.add(role2);
+//        System.out.println(bus_product.getSingleById(1));
+//        DTO_Product pro = new DTO_Product();
+//        pro.setProductId(1);
+//        System.out.println(bus_product.add(pro));
 //        System.out.println(bus_account.getList());
 //        for(DTO_Product i: bus_product.getList()) {
 //        	System.out.println(i.toString());

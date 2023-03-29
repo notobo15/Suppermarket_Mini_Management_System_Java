@@ -39,27 +39,28 @@ public class BUS_Suppilier {
 				return "tao khong thanh cong";
 			}
 		} else {
-			new AlertWarning("suppilier Name đã có trong hệ thống!").setVisible(true);
+			new AlertWarning("suppilier đã có trong hệ thống!").setVisible(true);
 			return "name da duoc tim thay trong db";
 		}
 	}
 
 	public String update(DTO_Suppilier acc) throws SQLException {
-    	boolean isExist = dao.checkExistById(acc.getSuppilierId());
-        if (isExist) {
-            boolean isSuccess = dao.updateById(acc);
-            if (isSuccess) {
-            	new AlertWarning("Cập nhật suppilier id " + acc.getSuppilierId() + " thành công!").setVisible(true);
-                return "Delete thanh cong";
-            } else {
-            	new AlertWarning("Cập nhật suppilier id " + acc.getSuppilierId() + "không thành công!").setVisible(true);
-                return "Delete khong thanh cong";
-            }
-        } else {
-        	new AlertWarning("id = "+ acc.getSuppilierId() + " đã không được tìm thấy").setVisible(true);
-            return "khong tim thay";
-        }
-    }
+		boolean isExist = dao.checkExistById(acc.getSuppilierId());
+		if (isExist) {
+			boolean isSuccess = dao.updateById(acc);
+			if (isSuccess) {
+				new AlertWarning("Cập nhật suppilier id " + acc.getSuppilierId() + " thành công!").setVisible(true);
+				return "Delete thanh cong";
+			} else {
+				new AlertWarning("Cập nhật suppilier id " + acc.getSuppilierId() + "không thành công!")
+						.setVisible(true);
+				return "Delete khong thanh cong";
+			}
+		} else {
+			new AlertWarning("id = " + acc.getSuppilierId() + " đã không được tìm thấy").setVisible(true);
+			return "khong tim thay";
+		}
+	}
 
 	public String delete(int id) throws SQLException {
 		boolean isExist = dao.checkExistById(id);
@@ -78,21 +79,17 @@ public class BUS_Suppilier {
 		}
 	}
 
-	public String undelete(int id) throws SQLException {
-		boolean isExist = dao.checkExistById(id);
-		if (isExist) {
-			boolean isDeleted = dao.unDeteleById(id);
-			if (isDeleted) {
-				new AlertWarning("Đã khôi phục suppilier id " + id + " thành công!").setVisible(true);
-				return "Delete thanh cong";
-			} else {
-				new AlertWarning("khôi phục suppilier id " + id + "không thành công!").setVisible(true);
-				return "Delete khong thanh cong";
-			}
+	public String unDelete(int id) throws SQLException {
+
+		boolean isDeleted = dao.unDeteleById(id);
+		if (isDeleted) {
+			new AlertWarning("Đã khôi phục suppilier id " + id + " thành công!").setVisible(true);
+			return "Delete thanh cong";
 		} else {
-			new AlertWarning("id = " + id + " đã không được tìm thấy").setVisible(true);
-			return "khong tim thay";
+			new AlertWarning("khôi phục suppilier id " + id + "không thành công!").setVisible(true);
+			return "Delete khong thanh cong";
 		}
+
 	}
 
 }

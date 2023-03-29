@@ -40,7 +40,7 @@ public class BUS_ImportProduct {
                 return "tao khong thanh cong";
             }
         } else {
-        	new AlertWarning("import Name đã có trong hệ thống!").setVisible(true);
+        	new AlertWarning("import đã có trong hệ thống!").setVisible(true);
             return "name da duoc tim thay trong db";
         }
     }
@@ -79,9 +79,7 @@ public class BUS_ImportProduct {
         }
     }
 
-    public String undelete(int id) throws SQLException {
-    	boolean isExist = dao.checkExistById(id);
-        if (isExist) {
+    public String unDelete(int id) throws SQLException {
             boolean isDeleted = dao.unDeteleById(id);
             if (isDeleted) {
             	new AlertWarning("Đã khôi phục import id " + id + " thành công!").setVisible(true);
@@ -90,10 +88,7 @@ public class BUS_ImportProduct {
             	new AlertWarning("khôi phục import id " + id + "không thành công!").setVisible(true);
                 return "Delete khong thanh cong";
             }
-        } else {
-        	new AlertWarning("id = "+ id + " đã không được tìm thấy").setVisible(true);
-            return "khong tim thay";
-        }
+
     }
     
     

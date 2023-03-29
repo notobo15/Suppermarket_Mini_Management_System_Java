@@ -40,7 +40,7 @@ public class BUS_CategoryProduct {
 				return "tao khong thanh cong";
 			}
 		} else {
-			new AlertWarning("category Name đã có trong hệ thống!").setVisible(true);
+			new AlertWarning("category đã có trong hệ thống!").setVisible(true);
 			return "name da duoc tim thay trong db";
 		}
 	}
@@ -79,21 +79,16 @@ public class BUS_CategoryProduct {
 		}
 	}
 
-	public String undelete(int id) throws SQLException {
-		boolean isExist = dao.checkExistById(id);
-		if (isExist) {
-			boolean isDeleted = dao.unDeteleById(id);
-			if (isDeleted) {
-				new AlertWarning("Đã khôi phục category id " + id + " thành công!").setVisible(true);
-				return "Delete thanh cong";
-			} else {
-				new AlertWarning("khôi phục category id " + id + "không thành công!").setVisible(true);
-				return "Delete khong thanh cong";
-			}
+	public String unDelete(int id) throws SQLException {
+		boolean isDeleted = dao.unDeteleById(id);
+		if (isDeleted) {
+			new AlertWarning("Đã khôi phục category id " + id + " thành công!").setVisible(true);
+			return "Delete thanh cong";
 		} else {
-			new AlertWarning("id = " + id + " đã không được tìm thấy").setVisible(true);
-			return "khong tim thay";
+			new AlertWarning("khôi phục category id " + id + "không thành công!").setVisible(true);
+			return "Delete khong thanh cong";
 		}
+
 	}
 
 }
