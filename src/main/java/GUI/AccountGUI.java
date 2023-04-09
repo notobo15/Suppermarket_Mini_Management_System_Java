@@ -4,12 +4,16 @@
  */
 package GUI;
 
-
+import BUS.BUS_Account;
+import DTO.DTO_Account;
+import DTO.DTO_Customer;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,12 +25,39 @@ public class AccountGUI extends javax.swing.JFrame {
      * Creates new form AccountGUI
      */
     public AccountGUI() {
-        initComponents();
-        
+        initComponents();  
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
+        try {
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Clock clock = new Clock(jLBdate);
+        clock.start();     
     }
-
+    public void addRowToJTable() throws SQLException {
+        BUS_Account bus_account = new BUS_Account();
+        ArrayList<DTO_Account> list = bus_account.getList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object rowData[] = new Object[10];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getBirthDate());
+            rowData[0] = list.get(i).getAccountId();
+            rowData[1] = list.get(i).getAccountName();
+            rowData[2] = list.get(i).getPasssword();
+            rowData[3] = list.get(i).getFirstName();
+            rowData[4] = list.get(i).getLastName();
+            rowData[5] = list.get(i).getPhone();
+            rowData[6] = list.get(i).getBirthDate();
+            rowData[7] = list.get(i).getAddress();
+            rowData[8] = list.get(i).getGender();
+            rowData[9] = list.get(i).getRoleId();
+            model.addRow(rowData);
+        }
+                
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,28 +229,38 @@ public class AccountGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Account name", "Password", "First_name", "Last_name", "Phone", "Birh_date", "Address", "Gender", "Role_id"
+                "ID", "Account name", "Password", "First_name", "Last_name", "Phone", "Birh_date", "Address", "Gender", "Role_id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
@@ -526,6 +567,21 @@ public class AccountGUI extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int  i=jTable1.getSelectedRow();
+        System.out.println(i);
+        jTextField1.setText(jTable1.getModel().getValueAt(i, 1).toString());
+        jTextField2.setText(jTable1.getModel().getValueAt(i, 2).toString());
+        jTextField3.setText(jTable1.getModel().getValueAt(i, 3).toString());
+        jTextField4.setText(jTable1.getModel().getValueAt(i, 4).toString());
+        jTextField5.setText(jTable1.getModel().getValueAt(i, 5).toString());
+        jTextField6.setText(jTable1.getModel().getValueAt(i, 6).toString());
+        jTextField7.setText(jTable1.getModel().getValueAt(i, 7).toString());
+        jTextField8.setText(jTable1.getModel().getValueAt(i, 8).toString());
+        jTextField9.setText(jTable1.getModel().getValueAt(i, 9).toString());
+        jTextField10.setText(jTable1.getModel().getValueAt(i, 10).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

@@ -233,9 +233,10 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="3">
-                <Column editable="true" title="Account name" type="java.lang.Integer"/>
-                <Column editable="true" title="Password" type="java.lang.Integer"/>
+              <Table columnCount="10" rowCount="0">
+                <Column editable="false" title="ID" type="java.lang.Object"/>
+                <Column editable="true" title="Account name" type="java.lang.Object"/>
+                <Column editable="true" title="Password" type="java.lang.Object"/>
                 <Column editable="true" title="First_name" type="java.lang.String"/>
                 <Column editable="true" title="Last_name" type="java.lang.String"/>
                 <Column editable="true" title="Phone" type="java.lang.String"/>
@@ -247,6 +248,11 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
@@ -298,6 +304,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -4,7 +4,15 @@
  */
 package GUI;
 
+
+import BUS.BUS_Suppilier;
+import DTO.DTO_Suppilier;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,10 +27,30 @@ public class SuppilierGUI extends javax.swing.JFrame {
         initComponents();
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
-        Clock c = new Clock(this.jLBdate);
-        c.start();
+        try {
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Clock clock = new Clock(jLBdate);
+        clock.start();
     }
-
+    public void addRowToJTable() throws SQLException {
+        BUS_Suppilier bus_suppilier = new BUS_Suppilier();
+        ArrayList<DTO_Suppilier> list = bus_suppilier.getList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object rowData[] = new Object[4];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getName());
+            rowData[0] = list.get(i).getSuppilierId();
+            rowData[1] = list.get(i).getName();
+            rowData[2] = list.get(i).getAddress();
+            rowData[3] = list.get(i).getPhone();
+            model.addRow(rowData);
+        }
+                
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,18 +210,30 @@ public class SuppilierGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+
             },
             new String [] {
-                "Suppilier name", "Address", "Phone"
+                "ID", "Suppilier name", "Address", "Phone"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -444,6 +484,16 @@ public class SuppilierGUI extends javax.swing.JFrame {
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int  i=jTable1.getSelectedRow();
+        System.out.println(i);
+        jTextField13.setText(jTable1.getModel().getValueAt(i, 1).toString());
+        jTextField10.setText(jTable1.getModel().getValueAt(i, 2).toString());
+        jTextField17.setText(jTable1.getModel().getValueAt(i, 3).toString());
+       
+    
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
