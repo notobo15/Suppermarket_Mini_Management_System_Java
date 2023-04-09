@@ -1,6 +1,5 @@
 package DTO;
 
-import java.sql.Date;
 
 public class DTO_Customer {
 	private int customerId;
@@ -20,7 +19,7 @@ public class DTO_Customer {
 		this.phone = phone;
 		this.address = address;
 		this.gender = gender;
-		this.birthDate = birthDate;
+		this.birthDate = birth_date;
 	}
 	public int getCustomerId() {
 		return customerId;

@@ -19,6 +19,8 @@ public class SuppilierGUI extends javax.swing.JFrame {
         initComponents();
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
+        Clock c = new Clock(this.jLBdate);
+        c.start();
     }
 
     /**
@@ -115,6 +117,12 @@ public class SuppilierGUI extends javax.swing.JFrame {
         jButton15.setText("Đơn hàng");
 
         jButton16.setText("Tạo đơn hàng");
+        jButton16.setBorder(null);
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
 
         jButton17.setText("Thống kê");
 
@@ -174,8 +182,6 @@ public class SuppilierGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
                 {null, null, null}
             },
             new String [] {
@@ -434,6 +440,10 @@ public class SuppilierGUI extends javax.swing.JFrame {
     private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField17ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton16ActionPerformed
 
     /**
      * @param args the command line arguments

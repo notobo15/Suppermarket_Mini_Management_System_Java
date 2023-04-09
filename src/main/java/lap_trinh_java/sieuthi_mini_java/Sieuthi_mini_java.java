@@ -4,6 +4,7 @@
 package lap_trinh_java.sieuthi_mini_java;
 
 import BUS.BUS_Account;
+import BUS.BUS_Customer;
 import BUS.BUS_Product;
 import BUS.BUS_Role;
 
@@ -29,15 +30,18 @@ public class Sieuthi_mini_java {
 
     public static void main(String[] args) throws Exception {
         
-        BUS_Account bus_account = new BUS_Account();
-        BUS_Product bus_product = new BUS_Product();
-        BUS_Role bus_role = new BUS_Role();
-        System.out.println(bus_role.getList());
-        DTO_Role role = new DTO_Role(0, "bản vệ", true);
-
-        DTO_Role role2 = new DTO_Role(0, "bản vệ", true);
-        bus_role.add(role);
-        bus_role.add(role2);
+         BUS_Customer bus_customer = new BUS_Customer();
+         System.out.println(bus_customer.getList());
+         new CustomerGUI().setVisible(true);
+//        BUS_Account bus_account = new BUS_Account();
+//        BUS_Product bus_product = new BUS_Product();
+//        BUS_Role bus_role = new BUS_Role();
+//        System.out.println(bus_role.getList());
+//        DTO_Role role = new DTO_Role(0, "bản vệ", true);
+//
+//        DTO_Role role2 = new DTO_Role(0, "bản vệ", true);
+//        bus_role.add(role);
+//        bus_role.add(role2);
 //        System.out.println(bus_product.getSingleById(1));
 //        DTO_Product pro = new DTO_Product();
 //        pro.setProductId(1);

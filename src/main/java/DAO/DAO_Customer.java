@@ -25,7 +25,6 @@ public class DAO_Customer {
 				String birth_date = rs.getString("birth_date");
 				String address = rs.getString("address");
 				Boolean status = rs.getBoolean("status");
-
 				DTO_Customer newObj = new DTO_Customer(id, name, phone, address, gender, birth_date, status);
 
 				list.add(newObj);

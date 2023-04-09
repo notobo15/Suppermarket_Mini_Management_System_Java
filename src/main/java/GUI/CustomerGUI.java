@@ -4,7 +4,15 @@
  */
 package GUI;
 
+import BUS.BUS_Customer;
+import DAO.DAO_Account;
+import DTO.DTO_Customer;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,8 +27,32 @@ public class CustomerGUI extends javax.swing.JFrame {
         initComponents();
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
+        try {
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Clock clock = new Clock(jLBdate);
+        clock.start();
     }
-
+ public void addRowToJTable() throws SQLException {
+        BUS_Customer bus_customer = new BUS_Customer();
+        ArrayList<DTO_Customer> list = bus_customer.getList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object rowData[] = new Object[6];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getBirthDate());
+            rowData[0] = list.get(i).getCustomerId();
+            rowData[1] = list.get(i).getName();
+            rowData[2] = list.get(i).getPhone();
+            rowData[3] = list.get(i).getGender();
+            rowData[4] = list.get(i).getBirthDate();
+            rowData[5] = list.get(i).getAddress();
+            model.addRow(rowData);
+        }
+                
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -178,20 +210,23 @@ public class CustomerGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Customer name", "Phone", "Gender", "Birh_date", "Address"
+                "Customer name", "Name", "Phone", "Gender", "Birh_date", "Address"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -304,10 +339,11 @@ public class CustomerGUI extends javax.swing.JFrame {
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -371,6 +407,7 @@ public class CustomerGUI extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(204, 255, 204));
 
         jLBdate.setBackground(new java.awt.Color(102, 255, 255));
+        jLBdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLBdate.setText("Đồng hồ");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -460,6 +497,18 @@ public class CustomerGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField17ActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int  i=jTable1.getSelectedRow();
+        System.out.println(i);
+        jTextField10.setText(jTable1.getModel().getValueAt(i, 1).toString());
+        jTextField13.setText(jTable1.getModel().getValueAt(i, 2).toString());
+        jTextField17.setText(jTable1.getModel().getValueAt(i, 3).toString());
+        jTextField14.setText(jTable1.getModel().getValueAt(i, 4).toString());
+        jTextField16.setText(jTable1.getModel().getValueAt(i, 5).toString());
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -511,56 +560,32 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLBdate;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

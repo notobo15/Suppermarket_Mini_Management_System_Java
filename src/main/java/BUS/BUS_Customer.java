@@ -60,7 +60,7 @@ public class BUS_Customer {
 			new AlertWarning("id = " + acc.getCustomerId() + " đã không được tìm thấy").setVisible(true);
 			return "khong tim thay";
 		}
-	}
+	}   
 
 	public String delete(int id) throws SQLException {
 		boolean isExist = dao_customer.checkExistById(id);
