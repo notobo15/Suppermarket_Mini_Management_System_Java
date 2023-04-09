@@ -10,12 +10,12 @@ import java.util.Date;
  *
  * @author ADMIN
  */
-public class CustomerGUI extends javax.swing.JFrame {
+public class OrderGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form CustomerGUI
      */
-    public CustomerGUI() {
+    public OrderGUI() {
         initComponents();
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
@@ -70,6 +70,8 @@ public class CustomerGUI extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jTextField19 = new javax.swing.JTextField();
         jTextField20 = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jTextField21 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLBdate = new javax.swing.JLabel();
 
@@ -174,7 +176,7 @@ public class CustomerGUI extends javax.swing.JFrame {
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Khách hàng");
+        jLabel1.setText("Đơn hàng");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,11 +185,11 @@ public class CustomerGUI extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Customer name", "Phone", "Gender", "Birh_date", "Address"
+                "Order ID", "Account ID", "Order date", "Status", "Customer ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -216,20 +218,20 @@ public class CustomerGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Customer name");
+        jLabel12.setText("Order ID");
 
-        jLabel15.setText("Birth date");
+        jLabel15.setText("Status");
 
-        jLabel16.setText("Phone");
+        jLabel16.setText("Account ID");
 
-        jLabel17.setText("Address");
+        jLabel17.setText("Customer ID");
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 51, 51));
         jLabel19.setText("Thông tin");
 
-        jLabel20.setText("Gender");
+        jLabel20.setText("Order date");
 
         jTextField17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,9 +326,11 @@ public class CustomerGUI extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(255, 0, 51));
         jLabel22.setText("Tìm kiếm");
 
-        jLabel23.setText("Customer name");
+        jLabel23.setText("Order ID");
 
-        jLabel26.setText("Phone");
+        jLabel26.setText("Account ID");
+
+        jLabel27.setText("Customer ID");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -338,6 +342,10 @@ public class CustomerGUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField21))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -366,6 +374,10 @@ public class CustomerGUI extends javax.swing.JFrame {
                     .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -478,20 +490,21 @@ public class CustomerGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CustomerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CustomerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CustomerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CustomerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerGUI().setVisible(true);
+                new OrderGUI().setVisible(true);
             }
         });
     }
@@ -526,6 +539,7 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -539,5 +553,6 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField17;
     private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField20;
+    private javax.swing.JTextField jTextField21;
     // End of variables declaration//GEN-END:variables
 }
