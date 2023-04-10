@@ -52,6 +52,10 @@ public class DTO_Order {
 		return "DTO_Order [orderId=" + orderId + ", accountId=" + accountId + ", orderDate=" + orderDate + ", status="
 				+ status + ", customerId=" + customerId + "]";
 	}
+
+    public Object getStatus() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 	
 	
 }

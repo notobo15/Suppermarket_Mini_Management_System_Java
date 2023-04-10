@@ -4,13 +4,23 @@
  */
 package GUI;
 
+import BUS.BUS_Order;
+import BUS.BUS_OrderDetail;
+import DTO.DTO_Order;
+import DTO.DTO_OrderDetail;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ADMIN
  */
-public class OrderGUI extends javax.swing.JFrame {
+public final class OrderGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form CustomerGUI
@@ -19,6 +29,29 @@ public class OrderGUI extends javax.swing.JFrame {
         initComponents();
         Date date= java.util.Calendar.getInstance().getTime();  
         jLBdate.setText("" + date);
+        try {
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Clock clock = new Clock(jLBdate);
+        clock.start();     
+    }
+    public void addRowToJTable() throws SQLException {
+        BUS_Order bus_order = new BUS_Order();
+        ArrayList<DTO_Order> list = bus_order.getList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Object rowData[] = new Object[4];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getOrderId());
+            rowData[0] = list.get(i).getOrderId();
+            rowData[1] = list.get(i).getAccountId();
+            rowData[2] = list.get(i).getOrderDate();
+            rowData[3] = list.get(i).getStatus();
+            rowData[4] = list.get(i).getCustomerId();
+            model.addRow(rowData);
+        }
     }
 
     /**
@@ -88,6 +121,11 @@ public class OrderGUI extends javax.swing.JFrame {
         });
 
         jButton6.setText("Log out");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Giảm giá");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +157,11 @@ public class OrderGUI extends javax.swing.JFrame {
         jButton14.setText("Nhập hàng");
 
         jButton15.setText("Đơn hàng");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
 
         jButton16.setText("Tạo đơn hàng");
 
@@ -180,9 +223,7 @@ public class OrderGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Order ID", "Account ID", "Order date", "Status", "Customer ID"
@@ -472,6 +513,14 @@ public class OrderGUI extends javax.swing.JFrame {
     private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField17ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
