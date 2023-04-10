@@ -61,6 +61,11 @@ public class LoginGUI extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
         jButton1.setText("Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
         jLabel4.setText("Don't have account?");
@@ -123,13 +128,17 @@ public class LoginGUI extends javax.swing.JFrame {
         );
 
         getContentPane().add(pnLoginForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 125, 500, 400));
-
-        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/kl_42.jpg"))); // NOI18N
         getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1200, 700));
 
         setSize(new java.awt.Dimension(1214, 707));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new HomeGUI().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
