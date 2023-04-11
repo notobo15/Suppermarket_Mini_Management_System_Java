@@ -14,8 +14,8 @@ class Clock {
     private int mSecondsPassed = 0;
      public Clock(JLabel jl) {
           this.jl = jl;
-    }
-    private TimerTask mTask = new TimerTask() {
+            }
+            private TimerTask mTask = new TimerTask() {
         @Override
         public void run() {
             mSecondsPassed++;

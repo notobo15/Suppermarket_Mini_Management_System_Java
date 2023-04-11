@@ -32,7 +32,8 @@ public class Sieuthi_mini_java {
         
          BUS_Customer bus_customer = new BUS_Customer();
          System.out.println(bus_customer.getList());
-         new CustomerGUI().setVisible(true);
+//         new CustomerGUI().setVisible(true);
+//         new LoginGUI().setVisible(true);
 //        BUS_Account bus_account = new BUS_Account();
 //        BUS_Product bus_product = new BUS_Product();
 //        BUS_Role bus_role = new BUS_Role();
