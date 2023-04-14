@@ -1,0 +1,26 @@
+-classpath
+'C:/Users/notobo/.m2/repository/com/mysql/mysql-connector-j/8.0.32/mysql-connector-j-8.0.32.jar;C:/Users/notobo/.m2/repository/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar;C:/Users/notobo/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE170/AbsoluteLayout-RELEASE170.jar;C:/Users/notobo/.m2/repository/com/formdev/flatlaf/3.1/flatlaf-3.1.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'1.8'
+-sourcepath
+'C:/Users/notobo/Desktop/sieuthi_mini_java/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/notobo/Desktop/sieuthi_mini_java/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'sieuthi_mini_java 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' 'C:/Users/notobo/Desktop/sieuthi_mini_java/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'sieuthi_mini_java 1.0-SNAPSHOT API'

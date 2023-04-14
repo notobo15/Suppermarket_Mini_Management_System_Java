@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.Components.Clock;
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
 import DTO.DTO_Order;

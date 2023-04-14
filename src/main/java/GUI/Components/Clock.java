@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Components;
 
 import java.text.SimpleDateFormat;
 
@@ -17,12 +17,12 @@ class Clock {
             }
             private TimerTask mTask = new TimerTask() {
         @Override
-        public void run() {
+        public void run() { 
             mSecondsPassed++;
             Date now = new Date();
             String format2 = new SimpleDateFormat("EEE, dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).format(now);
             jl.setText(format2);
-           System.out.println("Seconds passed: " + format2);
+//           System.out.println("Seconds passed: " + format2);
         }
     };
 

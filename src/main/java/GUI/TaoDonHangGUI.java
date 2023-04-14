@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import GUI.Components.Clock;
 import BUS.BUS_Customer;
 import DAO.DAO_Account;
 import DTO.DTO_Customer;

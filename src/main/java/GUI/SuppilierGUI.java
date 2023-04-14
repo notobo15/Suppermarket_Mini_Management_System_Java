@@ -32,8 +32,6 @@ public class SuppilierGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Clock clock = new Clock(jLBdate);
-        clock.start();
     }
     public void addRowToJTable() throws SQLException {
         BUS_Suppilier bus_suppilier = new BUS_Suppilier();

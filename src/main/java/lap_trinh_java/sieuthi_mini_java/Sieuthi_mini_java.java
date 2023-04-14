@@ -20,7 +20,12 @@ import DTO.DTO_Product;
 import DTO.DTO_Role;
 import GUI.AlertMessageYN;
 import GUI.*;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -30,8 +35,13 @@ public class Sieuthi_mini_java {
 
     public static void main(String[] args) throws Exception {
         
-         BUS_Customer bus_customer = new BUS_Customer();
-         System.out.println(bus_customer.getList());
+         try {
+             UIManager.setLookAndFeel(new FlatMacLightLaf() );
+             new LoginGUI().setVisible(true);
+
+             
+        } catch (Exception e) {
+        }
 //         new CustomerGUI().setVisible(true);
 //         new LoginGUI().setVisible(true);
 //        BUS_Account bus_account = new BUS_Account();
