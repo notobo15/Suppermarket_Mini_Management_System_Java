@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author minht
@@ -282,7 +285,11 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKhachHangActionPerformed
 
     private void btnTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaiKhoanActionPerformed
-        new AccountGUI().setVisible(true);
+        try {
+            new AccountGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_btnTaiKhoanActionPerformed
 
