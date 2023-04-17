@@ -9,13 +9,15 @@ import DTO.DTO_Order;
 import UTILS.ConnectDB;
 
 public class DAO_Order {
+    private String table_name = "orders";
 
+ 
 	public ArrayList<DTO_Order> findAll() throws SQLException {
 		ArrayList<DTO_Order> list = new ArrayList<>();
 		ResultSet rs = null;
 		ConnectDB con = new ConnectDB();
 		try {
-			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM order where status = 1");
+			PreparedStatement ptm = con.getConnection().prepareStatement("SELECT * FROM " + this.table_name + " where status = 1");
 			rs = ptm.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("order_id");
@@ -41,7 +43,7 @@ public class DAO_Order {
 		DTO_Order suppilier = null;
 		try {
 			PreparedStatement ptm = con.getConnection()
-					.prepareStatement("SELECT * FROM order WHERE order_id = ? where status = 1");
+					.prepareStatement("SELECT * FROM " + this.table_name +" WHERE order_id = ? where status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
 			while (rs.next()) {
@@ -63,7 +65,7 @@ public class DAO_Order {
 	public boolean create(DTO_Order newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO order(account_id, order_date, customer_id)" + "VALUES (?, ?, ?);";
+			String query = "INSERT INTO " + this.table_name +"(account_id, order_date, customer_id)" + "VALUES (?, ?, ?);";
 
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setInt(1, newObj.getAccountId());
@@ -105,7 +107,7 @@ public class DAO_Order {
 		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
-					.prepareStatement("UPDATE order SET status = 0 WHERE order_id = ?");
+					.prepareStatement("UPDATE " + this.table_name +" SET status = 0 WHERE order_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 
@@ -121,7 +123,7 @@ public class DAO_Order {
 		boolean isExist = false;
 		ConnectDB con = new ConnectDB();
 		PreparedStatement psm = con.getConnection()
-				.prepareStatement("SELECT * FROM order WHERE order_id = ? AND status = 1;");
+				.prepareStatement("SELECT * FROM " + this.table_name +" WHERE order_id = ? AND status = 1;");
 		psm.setInt(1, id);
 		ResultSet rs = psm.executeQuery();
 		if (rs.next()) {
@@ -135,7 +137,7 @@ public class DAO_Order {
 		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
-					.prepareStatement("UPDATE order SET status = 1 WHERE order_id = ?");
+					.prepareStatement("UPDATE " + this.table_name +" SET status = 1 WHERE order_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 
