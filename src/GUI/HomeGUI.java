@@ -280,7 +280,11 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDonHangActionPerformed
 
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
-        new CustomerGUI().setVisible(true);
+       try {
+            new CustomerGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_btnKhachHangActionPerformed
 
