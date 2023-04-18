@@ -50,7 +50,7 @@ public class HomeGUI extends javax.swing.JFrame {
         btnLoaiHangHoa = new javax.swing.JButton();
         btnThongKe = new javax.swing.JButton();
         btnNhaCungCap = new javax.swing.JButton();
-        lblDate = new javax.swing.JLabel();
+        clockGUI1 = new GUI.Components.ClockGUI();
         pnFooter = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -71,32 +71,34 @@ public class HomeGUI extends javax.swing.JFrame {
         pnHeader.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/icons8-customer-96.png"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnHeader.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 8, 96, 96));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("ID       :");
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel2.setText("ID         :");
         pnHeader.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 8, 60, 30));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Name :");
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel3.setText("Tên      :");
         pnHeader.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 44, 60, 30));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Role   :");
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setText("Vai trò :");
         pnHeader.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 80, 60, 30));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("129313241234");
-        pnHeader.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 8, 200, 30));
+        pnHeader.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 8, 200, 30));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("129313241234");
-        pnHeader.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 44, 200, 30));
+        pnHeader.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 44, 200, 30));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("129313241234");
-        pnHeader.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 200, 30));
+        pnHeader.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 80, 200, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -104,7 +106,7 @@ public class HomeGUI extends javax.swing.JFrame {
         pnHeader.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 500, 115));
 
         lblLogout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogout.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/icons8-log-out-50.png"))); // NOI18N
         lblLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -118,9 +120,14 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.setOpaque(false);
         pnBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnTaoDonHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnTaoDonHang.setText("Tạo đơn hàng");
+        btnTaoDonHang.setBackground(new java.awt.Color(51, 0, 102));
+        btnTaoDonHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnTaoDonHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoDonHang.setText("TẠO ĐƠN HÀNG");
         btnTaoDonHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTaoDonHang.setFocusable(false);
+        btnTaoDonHang.setRequestFocusEnabled(false);
+        btnTaoDonHang.setVerifyInputWhenFocusTarget(false);
         btnTaoDonHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaoDonHangActionPerformed(evt);
@@ -128,9 +135,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnTaoDonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 50, 200, 100));
 
-        btnDonHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnDonHang.setText("Đơn hàng");
+        btnDonHang.setBackground(new java.awt.Color(51, 0, 102));
+        btnDonHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnDonHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnDonHang.setText("ĐƠN HÀNG");
         btnDonHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDonHang.setFocusable(false);
+        btnDonHang.setRequestFocusEnabled(false);
+        btnDonHang.setVerifyInputWhenFocusTarget(false);
         btnDonHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDonHangActionPerformed(evt);
@@ -138,9 +150,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnDonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 50, 200, 100));
 
-        btnKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnKhachHang.setText("Khách hàng");
+        btnKhachHang.setBackground(new java.awt.Color(51, 0, 102));
+        btnKhachHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnKhachHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhachHang.setText("KHÁCH HÀNG");
         btnKhachHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnKhachHang.setFocusable(false);
+        btnKhachHang.setRequestFocusEnabled(false);
+        btnKhachHang.setVerifyInputWhenFocusTarget(false);
         btnKhachHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKhachHangActionPerformed(evt);
@@ -148,9 +165,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 50, 200, 100));
 
-        btnTaiKhoan.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnTaiKhoan.setText("Tài khoản");
+        btnTaiKhoan.setBackground(new java.awt.Color(51, 0, 102));
+        btnTaiKhoan.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnTaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaiKhoan.setText("TÀI KHOẢN");
         btnTaiKhoan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTaiKhoan.setFocusable(false);
+        btnTaiKhoan.setRequestFocusEnabled(false);
+        btnTaiKhoan.setVerifyInputWhenFocusTarget(false);
         btnTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaiKhoanActionPerformed(evt);
@@ -158,9 +180,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 50, 200, 100));
 
-        btnNhapHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnNhapHang.setText("Nhập hàng");
+        btnNhapHang.setBackground(new java.awt.Color(51, 0, 102));
+        btnNhapHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnNhapHang.setText("NHẬP HÀNG");
         btnNhapHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNhapHang.setFocusable(false);
+        btnNhapHang.setRequestFocusEnabled(false);
+        btnNhapHang.setVerifyInputWhenFocusTarget(false);
         btnNhapHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNhapHangActionPerformed(evt);
@@ -168,9 +195,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 200, 200, 100));
 
-        btnKhuyenMai.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnKhuyenMai.setText("Khuyến mãi");
+        btnKhuyenMai.setBackground(new java.awt.Color(51, 0, 102));
+        btnKhuyenMai.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnKhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhuyenMai.setText("KHUYẾN MÃI");
         btnKhuyenMai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnKhuyenMai.setFocusable(false);
+        btnKhuyenMai.setRequestFocusEnabled(false);
+        btnKhuyenMai.setVerifyInputWhenFocusTarget(false);
         btnKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKhuyenMaiActionPerformed(evt);
@@ -178,9 +210,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 200, 200, 100));
 
-        btnHangHoa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnHangHoa.setText("Hàng hóa");
+        btnHangHoa.setBackground(new java.awt.Color(51, 0, 102));
+        btnHangHoa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnHangHoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnHangHoa.setText("HÀNG HÓA");
         btnHangHoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHangHoa.setFocusable(false);
+        btnHangHoa.setRequestFocusEnabled(false);
+        btnHangHoa.setVerifyInputWhenFocusTarget(false);
         btnHangHoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHangHoaActionPerformed(evt);
@@ -188,9 +225,14 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnHangHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 200, 200, 100));
 
-        btnLoaiHangHoa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnLoaiHangHoa.setText("Loại hàng hóa");
+        btnLoaiHangHoa.setBackground(new java.awt.Color(51, 0, 102));
+        btnLoaiHangHoa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnLoaiHangHoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoaiHangHoa.setText("LOẠI HÀNG HÓA");
         btnLoaiHangHoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoaiHangHoa.setFocusable(false);
+        btnLoaiHangHoa.setRequestFocusEnabled(false);
+        btnLoaiHangHoa.setVerifyInputWhenFocusTarget(false);
         btnLoaiHangHoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoaiHangHoaActionPerformed(evt);
@@ -198,25 +240,31 @@ public class HomeGUI extends javax.swing.JFrame {
         });
         pnBody.add(btnLoaiHangHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 200, 200, 100));
 
-        btnThongKe.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnThongKe.setText("Thống kê");
+        btnThongKe.setBackground(new java.awt.Color(51, 0, 102));
+        btnThongKe.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnThongKe.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKe.setText("THỐNG KÊ");
         btnThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThongKe.setFocusable(false);
+        btnThongKe.setRequestFocusEnabled(false);
+        btnThongKe.setVerifyInputWhenFocusTarget(false);
         pnBody.add(btnThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 350, 200, 100));
 
-        btnNhaCungCap.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnNhaCungCap.setText("Nhà cung cấp");
+        btnNhaCungCap.setBackground(new java.awt.Color(51, 0, 102));
+        btnNhaCungCap.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnNhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
+        btnNhaCungCap.setText("NHÀ CUNG CẤP");
         btnNhaCungCap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNhaCungCap.setFocusable(false);
+        btnNhaCungCap.setRequestFocusEnabled(false);
+        btnNhaCungCap.setVerifyInputWhenFocusTarget(false);
         btnNhaCungCap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNhaCungCapActionPerformed(evt);
             }
         });
         pnBody.add(btnNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 350, 200, 100));
-
-        lblDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDate.setText("Date dd-mm-yyyy hh-mm-ss");
-        pnBody.add(lblDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, 200, 30));
+        pnBody.add(clockGUI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 10, -1, -1));
 
         getContentPane().add(pnBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 115, 1200, 500));
 
@@ -224,39 +272,50 @@ public class HomeGUI extends javax.swing.JFrame {
         pnFooter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pnFooter.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel9.setText("Member: Nguyễn Thanh Bình");
         pnFooter.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 200, 25));
 
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel10.setText("Mssv: 3121410082");
         pnFooter.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 200, 25));
 
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel11.setText("Member: Kim Hỷ Nhật");
         pnFooter.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 10, 200, 25));
 
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel12.setText("Mssv: 3121410363");
         pnFooter.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 40, 200, 25));
 
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel13.setText("Member: Nguyễn Đặng Vũ Tiến");
         pnFooter.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 200, 25));
 
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel14.setText("Mssv: 3121410499");
         pnFooter.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 200, 25));
 
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel15.setText("Member: Tràn Phan Minh Thông");
         pnFooter.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, 200, 25));
 
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel16.setText("Mssv: 3121410015");
         pnFooter.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 200, 25));
 
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel17.setText("Member: Thân Trọng Hoài Nam");
         pnFooter.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 10, 200, 25));
 
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel18.setText("Mssv: 3121410082");
         pnFooter.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 40, 200, 25));
 
         getContentPane().add(pnFooter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 615, 1200, 85));
 
         lblBackground.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/background.png"))); // NOI18N
         getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 
         setSize(new java.awt.Dimension(1214, 707));
@@ -318,7 +377,11 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoaiHangHoaActionPerformed
 
     private void btnNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhaCungCapActionPerformed
-        new SuppilierGUI().setVisible(true);
+        try {
+            new SuppilierGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_btnNhaCungCapActionPerformed
 
@@ -333,7 +396,7 @@ public class HomeGUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("FlatLaf Light".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -368,6 +431,7 @@ public class HomeGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnTaiKhoan;
     private javax.swing.JButton btnTaoDonHang;
     private javax.swing.JButton btnThongKe;
+    private GUI.Components.ClockGUI clockGUI1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -387,7 +451,6 @@ public class HomeGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblBackground;
-    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JPanel pnBody;
     private javax.swing.JPanel pnFooter;
