@@ -240,7 +240,7 @@ public class TestExportImoprtExcel extends javax.swing.JFrame {
             if (seleted == JFileChooser.APPROVE_OPTION) {
                 String FilePath = jfile.getSelectedFile().getPath();
 
-                FileInputStream fis = new FileInputStream(new File("D://account.xls"));
+                FileInputStream fis = new FileInputStream(new File(FilePath));
                 HSSFWorkbook workbook = new HSSFWorkbook(fis);
                 HSSFSheet sheet = workbook.getSheetAt(0);
                 sheet.setRowBreak(0);
