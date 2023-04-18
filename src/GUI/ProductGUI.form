@@ -236,10 +236,10 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jTextField5" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextField10" alignment="0" max="32767" attributes="0"/>
+                          <Component id="input_masanpham" alignment="0" max="32767" attributes="0"/>
+                          <Component id="input_ten" alignment="0" max="32767" attributes="0"/>
                           <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jTextField3" pref="167" max="32767" attributes="0"/>
+                          <Component id="input_hinh" pref="167" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -254,14 +254,14 @@
                       </Group>
                       <EmptySpace pref="12" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jComboBox1" pref="167" max="32767" attributes="0"/>
-                          <Component id="jTextField7" max="32767" attributes="0"/>
-                          <Component id="jTextField9" max="32767" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
-                          <Component id="jTextField15" max="32767" attributes="0"/>
-                          <Component id="jDateChooser1" max="32767" attributes="0"/>
-                          <Component id="jDateChooser2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jComboBox3" max="32767" attributes="0"/>
+                          <Component id="input_maloai" pref="167" max="32767" attributes="0"/>
+                          <Component id="input_gia" max="32767" attributes="0"/>
+                          <Component id="input_trongluong" max="32767" attributes="0"/>
+                          <Component id="input_noiban" max="32767" attributes="0"/>
+                          <Component id="input_soluong" max="32767" attributes="0"/>
+                          <Component id="input_ngaysanxuat" max="32767" attributes="0"/>
+                          <Component id="input_hansudung" alignment="0" max="32767" attributes="0"/>
+                          <Component id="input_tinhtrang" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
@@ -279,48 +279,48 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextField5" alignment="0" pref="30" max="32767" attributes="0"/>
+                          <Component id="input_masanpham" alignment="0" pref="30" max="32767" attributes="0"/>
                           <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextField7" alignment="0" max="32767" attributes="0"/>
+                          <Component id="input_gia" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jTextField10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="input_ten" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jLabel10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jTextField9" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="input_trongluong" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel11" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="input_noiban" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel12" pref="30" max="32767" attributes="0"/>
-                                  <Component id="jComboBox1" max="32767" attributes="0"/>
+                                  <Component id="input_maloai" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel13" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jTextField15" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="input_soluong" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel9" pref="30" max="32767" attributes="0"/>
-                                  <Component id="jComboBox3" max="32767" attributes="0"/>
+                                  <Component id="input_tinhtrang" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jDateChooser1" max="32767" attributes="0"/>
+                                  <Component id="input_ngaysanxuat" max="32767" attributes="0"/>
                                   <Component id="jLabel20" pref="30" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel21" pref="30" max="32767" attributes="0"/>
-                                  <Component id="jDateChooser2" max="32767" attributes="0"/>
+                                  <Component id="input_hansudung" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -331,7 +331,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel22" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="input_hinh" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -349,7 +349,7 @@
                 <Property name="text" type="java.lang.String" value="M&#xe3; s&#x1ea3;n ph&#x1ea9;m"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField5">
+            <Component class="javax.swing.JTextField" name="input_masanpham">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
@@ -375,7 +375,7 @@
                 <Property name="text" type="java.lang.String" value="Gi&#xe1;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField7">
+            <Component class="javax.swing.JTextField" name="input_gia">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
@@ -393,11 +393,11 @@
                 <Property name="text" type="java.lang.String" value="Tr&#x1ecd;ng l&#x1b0;&#x1ee3;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField9">
+            <Component class="javax.swing.JTextField" name="input_trongluong">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField10">
+            <Component class="javax.swing.JTextField" name="input_ten">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField10ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="input_tenActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">
@@ -424,9 +424,9 @@
                 <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="input_noiban">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="input_noibanActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
@@ -444,7 +444,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea1">
+                <Component class="javax.swing.JTextArea" name="input_mota">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
@@ -452,7 +452,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JTextField" name="jTextField15">
+            <Component class="javax.swing.JTextField" name="input_soluong">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel20">
               <Properties>
@@ -478,9 +478,9 @@
                 <Property name="text" type="java.lang.String" value="H&#xec;nh"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
+            <Component class="javax.swing.JTextField" name="input_hinh">
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
+            <Component class="javax.swing.JComboBox" name="input_maloai">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -492,17 +492,17 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="input_maloaiActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+            <Component class="com.toedter.calendar.JDateChooser" name="input_ngaysanxuat">
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+            <Component class="com.toedter.calendar.JDateChooser" name="input_hansudung">
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox3">
+            <Component class="javax.swing.JComboBox" name="input_tinhtrang">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -627,10 +627,10 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextField8" max="32767" attributes="0"/>
-                      <Component id="jComboBox2" pref="200" max="32767" attributes="0"/>
-                      <Component id="jTextField13" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jComboBox4" max="32767" attributes="0"/>
+                      <Component id="input_timkiemten" max="32767" attributes="0"/>
+                      <Component id="input_timkiemmaloai" pref="200" max="32767" attributes="0"/>
+                      <Component id="input_timkiemma" alignment="0" max="32767" attributes="0"/>
+                      <Component id="input_timkiemtinhtrang" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -650,23 +650,23 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField13" pref="30" max="32767" attributes="0"/>
+                              <Component id="input_timkiemma" pref="30" max="32767" attributes="0"/>
                               <Component id="jLabel16" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField8" pref="30" max="32767" attributes="0"/>
+                              <Component id="input_timkiemten" pref="30" max="32767" attributes="0"/>
                               <Component id="jLabel14" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jComboBox2" pref="30" max="32767" attributes="0"/>
+                              <Component id="input_timkiemmaloai" pref="30" max="32767" attributes="0"/>
                               <Component id="jLabel15" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel17" pref="30" max="32767" attributes="0"/>
-                              <Component id="jComboBox4" max="32767" attributes="0"/>
+                              <Component id="input_timkiemtinhtrang" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -721,14 +721,14 @@
             <Property name="text" type="java.lang.String" value="T&#xec;nh tr&#x1ea1;ng"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField13">
+        <Component class="javax.swing.JTextField" name="input_timkiemma">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField8">
+        <Component class="javax.swing.JTextField" name="input_timkiemten">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField8ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="input_timkiemtenActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="input_timkiemmaloai">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -774,7 +774,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_huytimkiemsanphamActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox4">
+        <Component class="javax.swing.JComboBox" name="input_timkiemtinhtrang">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">

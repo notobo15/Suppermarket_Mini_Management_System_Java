@@ -148,10 +148,10 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTextField2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="input_tenloai" alignment="0" max="32767" attributes="0"/>
                       <Component id="jScrollPane2" pref="276" max="32767" attributes="0"/>
-                      <Component id="jComboBox1" max="32767" attributes="0"/>
-                      <Component id="jComboBox2" max="32767" attributes="0"/>
+                      <Component id="input_maloai" max="32767" attributes="0"/>
+                      <Component id="input_tinhtrang" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -174,17 +174,17 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel1" pref="30" max="32767" attributes="0"/>
-                              <Component id="jComboBox1" max="32767" attributes="0"/>
+                              <Component id="input_maloai" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField2" pref="30" max="32767" attributes="0"/>
+                              <Component id="input_tenloai" pref="30" max="32767" attributes="0"/>
                               <Component id="jLabel2" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel3" pref="30" max="32767" attributes="0"/>
-                              <Component id="jComboBox2" max="32767" attributes="0"/>
+                              <Component id="input_tinhtrang" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -241,7 +241,7 @@
             <Property name="text" type="java.lang.String" value="T&#xec;nh tr&#x1ea1;ng"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="input_tenloai">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -317,7 +317,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
+            <Component class="javax.swing.JTextArea" name="input_mota">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
@@ -325,7 +325,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="input_maloai">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -340,7 +340,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox2">
+        <Component class="javax.swing.JComboBox" name="input_tinhtrang">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -380,9 +380,9 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextField6" pref="200" max="32767" attributes="0"/>
-                      <Component id="jComboBox3" max="32767" attributes="0"/>
-                      <Component id="jComboBox4" max="32767" attributes="0"/>
+                      <Component id="input_timkiemtenloai" pref="200" max="32767" attributes="0"/>
+                      <Component id="input_timkiemtinhtrang" max="32767" attributes="0"/>
+                      <Component id="input_timkiemmaloai" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -403,17 +403,17 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel7" pref="30" max="32767" attributes="0"/>
-                              <Component id="jComboBox4" max="32767" attributes="0"/>
+                              <Component id="input_timkiemmaloai" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextField6" pref="30" max="32767" attributes="0"/>
+                              <Component id="input_timkiemtenloai" pref="30" max="32767" attributes="0"/>
                               <Component id="jLabel8" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jComboBox3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="input_timkiemtinhtrang" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -460,7 +460,7 @@
             <Property name="text" type="java.lang.String" value="T&#xec;nh tr&#x1ea1;ng"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField6">
+        <Component class="javax.swing.JTextField" name="input_timkiemtenloai">
         </Component>
         <Component class="javax.swing.JButton" name="btn_timkiemloaisanpham">
           <Properties>
@@ -490,7 +490,7 @@
             <Property name="text" type="java.lang.String" value="H&#x1ee7;y t&#xec;m ki&#x1ebf;m"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox3">
+        <Component class="javax.swing.JComboBox" name="input_timkiemtinhtrang">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -505,7 +505,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox4">
+        <Component class="javax.swing.JComboBox" name="input_timkiemmaloai">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
