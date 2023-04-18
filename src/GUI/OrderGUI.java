@@ -533,8 +533,11 @@ public final class OrderGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-        new CustomerGUI().setVisible(true);
+        try {
+            new CustomerGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
