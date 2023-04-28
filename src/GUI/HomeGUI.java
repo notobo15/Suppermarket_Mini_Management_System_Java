@@ -121,8 +121,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnTaoDonHang.setBackground(new java.awt.Color(51, 0, 102));
-        btnTaoDonHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnTaoDonHang.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnTaoDonHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoDonHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/purchase-order-white-48.png"))); // NOI18N
         btnTaoDonHang.setText("TẠO ĐƠN HÀNG");
         btnTaoDonHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTaoDonHang.setFocusable(false);
@@ -136,8 +137,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnTaoDonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 50, 200, 100));
 
         btnDonHang.setBackground(new java.awt.Color(51, 0, 102));
-        btnDonHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnDonHang.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnDonHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnDonHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/order-history-white-48.png"))); // NOI18N
         btnDonHang.setText("ĐƠN HÀNG");
         btnDonHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDonHang.setFocusable(false);
@@ -151,8 +153,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnDonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 50, 200, 100));
 
         btnKhachHang.setBackground(new java.awt.Color(51, 0, 102));
-        btnKhachHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnKhachHang.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnKhachHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/customer-white-48.png"))); // NOI18N
         btnKhachHang.setText("KHÁCH HÀNG");
         btnKhachHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnKhachHang.setFocusable(false);
@@ -166,8 +169,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 50, 200, 100));
 
         btnTaiKhoan.setBackground(new java.awt.Color(51, 0, 102));
-        btnTaiKhoan.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnTaiKhoan.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnTaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaiKhoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/account-white-48.png"))); // NOI18N
         btnTaiKhoan.setText("TÀI KHOẢN");
         btnTaiKhoan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTaiKhoan.setFocusable(false);
@@ -181,8 +185,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 50, 200, 100));
 
         btnNhapHang.setBackground(new java.awt.Color(51, 0, 102));
-        btnNhapHang.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnNhapHang.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnNhapHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/create-order-white-48.png"))); // NOI18N
         btnNhapHang.setText("NHẬP HÀNG");
         btnNhapHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNhapHang.setFocusable(false);
@@ -196,8 +201,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 200, 200, 100));
 
         btnKhuyenMai.setBackground(new java.awt.Color(51, 0, 102));
-        btnKhuyenMai.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnKhuyenMai.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnKhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhuyenMai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/discount-white-48.png"))); // NOI18N
         btnKhuyenMai.setText("KHUYẾN MÃI");
         btnKhuyenMai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnKhuyenMai.setFocusable(false);
@@ -211,8 +217,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 200, 200, 100));
 
         btnHangHoa.setBackground(new java.awt.Color(51, 0, 102));
-        btnHangHoa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnHangHoa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnHangHoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnHangHoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/product-white-48.png"))); // NOI18N
         btnHangHoa.setText("HÀNG HÓA");
         btnHangHoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHangHoa.setFocusable(false);
@@ -226,8 +233,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnHangHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 200, 200, 100));
 
         btnLoaiHangHoa.setBackground(new java.awt.Color(51, 0, 102));
-        btnLoaiHangHoa.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnLoaiHangHoa.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnLoaiHangHoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoaiHangHoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/product-type-white-48.png"))); // NOI18N
         btnLoaiHangHoa.setText("LOẠI HÀNG HÓA");
         btnLoaiHangHoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLoaiHangHoa.setFocusable(false);
@@ -241,8 +249,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnLoaiHangHoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 200, 200, 100));
 
         btnThongKe.setBackground(new java.awt.Color(51, 0, 102));
-        btnThongKe.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnThongKe.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnThongKe.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/statistics-white-48.png"))); // NOI18N
         btnThongKe.setText("THỐNG KÊ");
         btnThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThongKe.setFocusable(false);
@@ -251,8 +260,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 350, 200, 100));
 
         btnNhaCungCap.setBackground(new java.awt.Color(51, 0, 102));
-        btnNhaCungCap.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnNhaCungCap.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnNhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
+        btnNhaCungCap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/supplier-white-48.png"))); // NOI18N
         btnNhaCungCap.setText("NHÀ CUNG CẤP");
         btnNhaCungCap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNhaCungCap.setFocusable(false);
@@ -318,7 +328,7 @@ public class HomeGUI extends javax.swing.JFrame {
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/background.png"))); // NOI18N
         getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 
-        setSize(new java.awt.Dimension(1214, 707));
+        setSize(new java.awt.Dimension(1214, 717));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

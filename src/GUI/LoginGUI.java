@@ -4,6 +4,14 @@
  */
 package GUI;
 
+import BUS.BUS_Account;
+import DTO.DTO_Account;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author minht
@@ -17,6 +25,19 @@ public class LoginGUI extends javax.swing.JFrame {
         initComponents();
     }
 
+    public boolean ValidAccount(String username,char[] password) throws SQLException
+    {
+        BUS_Account bus_account = new BUS_Account();
+        ArrayList<DTO_Account> list = bus_account.getList();
+        
+          for (int i = 0; i < list.size(); i++)
+          {
+              char ch[]=list.get(i).getPasssword().toCharArray();
+              if(username.equals(list.get(i).getAccountName()) && Arrays.equals(password, ch))
+                  return true;
+          }
+          return false;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,9 +113,18 @@ public class LoginGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        new HomeGUI().setVisible(true);
-        this.setVisible(false);
+        String u=txtUsername.getText();
+        char[] p=txtPassword.getPassword();
+        try {
+            if(ValidAccount(u,p)==true)
+            {
+                new HomeGUI().setVisible(true);
+                this.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
