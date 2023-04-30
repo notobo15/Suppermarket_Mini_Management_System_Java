@@ -19,7 +19,7 @@ public class DAO_CategoryProduct {
 			while( rs.next()) {
 				int category_id = rs.getInt("category_id");
 				String name = rs.getString("name");
-				String desc = rs.getString("desc");
+				String desc = "";
 				Boolean status = rs.getBoolean("status");
 				
 				DTO_CategoryProduct category = new DTO_CategoryProduct(category_id, name, desc , status);
