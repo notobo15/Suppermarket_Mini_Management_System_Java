@@ -35,7 +35,17 @@ public final class AccountGUI extends javax.swing.JFrame {
         initComponents();  
         try {
             addRowToJTable();
-         
+            displayDate();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        getContentPane().setBackground(Color.WHITE);
+//        Clock clock = new Clock(jLBdate);
+//        clock.start();     
+    }
+    public void displayDate() throws ParseException
+    {
         Calendar ca = new GregorianCalendar();
         String day = ca.get(Calendar.DAY_OF_MONTH) + "";
         String month = ca.get(Calendar.MONTH) + 1 + "";
@@ -52,12 +62,24 @@ public final class AccountGUI extends javax.swing.JFrame {
 
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
         jDateChooser1.setDate(date);
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    public void clear()
+    {
+        tfAccountname.setText("");
+        tfPassword.setText("");
+        tfFirstname.setText("");
+        tfLastname.setText("");
+        tfPhone.setText("");
+        tfAddress.setText("");
+       
+        tfRoleID.setText("");
+        jRadioButtonNam.setSelected(true);
+        //JOptionPane.showMessageDialog(rootPane, "ban vua click");
+        try {
+            displayDate();
+        } catch (ParseException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        getContentPane().setBackground(Color.WHITE);
-//        Clock clock = new Clock(jLBdate);
-//        clock.start();     
     }
     public void addRowToJTable() throws SQLException {
         BUS_Account bus_account = new BUS_Account();
@@ -131,7 +153,7 @@ public final class AccountGUI extends javax.swing.JFrame {
         jTextField13 = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
         clockGUI1 = new GUI.Components.ClockGUI();
-        jButton1 = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 255, 255));
@@ -190,6 +212,7 @@ public final class AccountGUI extends javax.swing.JFrame {
         });
 
         btnXoa.setText("Xóa");
+        btnXoa.setEnabled(false);
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -197,6 +220,12 @@ public final class AccountGUI extends javax.swing.JFrame {
         });
 
         btnSua.setText("Sửa");
+        btnSua.setEnabled(false);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +445,7 @@ public final class AccountGUI extends javax.swing.JFrame {
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField13)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -446,8 +475,13 @@ public final class AccountGUI extends javax.swing.JFrame {
                 .addGap(0, 32, Short.MAX_VALUE))
         );
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset_32.png"))); // NOI18N
+        btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset_32.png"))); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -456,23 +490,21 @@ public final class AccountGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(header1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(436, 436, 436)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(12, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(436, 436, 436)
+                        .addComponent(jLabel1)
+                        .addGap(352, 352, 352)
+                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 6, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(header1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +515,7 @@ public final class AccountGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -497,6 +529,12 @@ public final class AccountGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //tfAccountname.setEnabled(false);
+        tfAccountname.setEditable(false);
+        btnThem.setEnabled(false);
+        btnSua.setEnabled(true);
+        btnXoa.setEnabled(true);
+      
         int  i=jTable1.getSelectedRow();
         System.out.println(i);
         tfAccountname.setText(jTable1.getModel().getValueAt(i, 1).toString());
@@ -504,9 +542,7 @@ public final class AccountGUI extends javax.swing.JFrame {
         tfFirstname.setText(jTable1.getModel().getValueAt(i, 3).toString());
         tfLastname.setText(jTable1.getModel().getValueAt(i, 4).toString());
         tfPhone.setText(jTable1.getModel().getValueAt(i, 5).toString());
-//        jTextField6.setText(jTable1.getModel().getValueAt(i, 6).toString());
         tfAddress.setText(jTable1.getModel().getValueAt(i, 7).toString());
-//        jTextField8.setText(jTable1.getModel().getValueAt(i, 8).toString());
        if (jTable1.getModel().getValueAt(i, 8).toString().equalsIgnoreCase("nam")) {
             jRadioButtonNam.setSelected(true);
         }else  {
@@ -523,43 +559,40 @@ public final class AccountGUI extends javax.swing.JFrame {
         }
         
         tfRoleID.setText(jTable1.getModel().getValueAt(i, 9).toString());
-        jTextField10.setText(jTable1.getModel().getValueAt(i, 10).toString());
+      
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        tfAccountname.setText("");
-        tfPassword.setText("");
-        tfFirstname.setText("");
-        tfLastname.setText("");
-        tfPhone.setText("");
-        tfAddress.setText("");
-        tfRoleID.setText("");
-        jRadioButtonNam.setSelected(true);
-        JOptionPane.showMessageDialog(rootPane, "ban vua click");
+        btnThem.setEnabled(true);
+        btnSua.setEnabled(false);
+        btnXoa.setEnabled(false);
+        
+        tfAccountname.setEditable(true);
+        
+        clear();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-       
         DTO_Account acc = new DTO_Account();
-        BUS_Account tmp = new BUS_Account();
-       
- 
+        BUS_Account tmp = new BUS_Account();   
+        
         acc.setAccountName(tfAccountname.getText());
         acc.setPasssword(tfPassword.getText());      
         acc.setFirstName(tfFirstname.getText());
         acc.setLastName(tfLastname.getText());
         acc.setPhone(tfPhone.getText());
-        acc.setBirthDate((jDateChooser1.getDate()).toString());
-        acc.setAddress(tfAddress.getText());
-       
+        
+        String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
+        acc.setBirthDate(temp);       
+        System.out.println("birst date :" + temp);
+        acc.setAddress(tfAddress.getText());   
         if(jRadioButtonNam.isSelected())
         {
             acc.setGender("nam");
         }
         else
             acc.setGender("nu");
-        //acc.setStatus(true);
-        acc.setRoleId(Integer.parseInt(tfRoleID.getText()));
+     
         try {
             tmp.add(acc);
         } catch (SQLException ex) {
@@ -576,12 +609,65 @@ public final class AccountGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonNuActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        BUS_Account tmp = new BUS_Account();      
+        int i = jTable1.getSelectedRow();
+        int id = (int) jTable1.getModel().getValueAt(i, 0);
+        try {
+            tmp.delete(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_btnXoaActionPerformed
-public static void main(String[] args) throws Exception {
-    
-    //System.out.print(jDateChooser1.getDate());
-}
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        clear();
+        btnThem.setEnabled(true);
+        btnSua.setEnabled(false);
+        btnXoa.setEnabled(false);
+        tfAccountname.setEditable(true);
+        try {          
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        DTO_Account acc = new DTO_Account();
+        BUS_Account tmp = new BUS_Account();   
+        
+        int a=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn sửa chứ!!");  
+        // new AlertMessageYN();
+        if(a == JOptionPane.YES_OPTION){  
+            //acc.setAccountName(tfAccountname.getText());
+            acc.setPasssword(tfPassword.getText());      
+            acc.setFirstName(tfFirstname.getText());
+            acc.setLastName(tfLastname.getText());
+            acc.setPhone(tfPhone.getText());
+            String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
+            acc.setBirthDate(temp);       
+            acc.setAddress(tfAddress.getText());   
+            if(jRadioButtonNam.isSelected())
+            {
+                acc.setGender("nam");
+            }
+            else
+                acc.setGender("nu");
+
+            int i = jTable1.getSelectedRow();
+            int id = (int) jTable1.getModel().getValueAt(i, 0);        
+            acc.setAccountId(id);
+
+            try {
+                tmp.update(acc);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -589,6 +675,7 @@ public static void main(String[] args) throws Exception {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
@@ -596,7 +683,6 @@ public static void main(String[] args) throws Exception {
     private javax.swing.ButtonGroup buttonGroupGenders;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
