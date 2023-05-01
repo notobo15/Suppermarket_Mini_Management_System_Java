@@ -39,10 +39,7 @@ public final class AccountGUI extends javax.swing.JFrame {
         
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//        getContentPane().setBackground(Color.WHITE);
-//        Clock clock = new Clock(jLBdate);
-//        clock.start();     
+        }  
     }
     public void displayDate() throws ParseException
     {
@@ -262,6 +259,11 @@ public final class AccountGUI extends javax.swing.JFrame {
         jLabel11.setText("Role ID");
 
         tfAccountname.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfAccountname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAccountnameActionPerformed(evt);
+            }
+        });
 
         tfPassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -498,7 +500,7 @@ public final class AccountGUI extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(352, 352, 352)
                         .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -575,28 +577,36 @@ public final class AccountGUI extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         DTO_Account acc = new DTO_Account();
         BUS_Account tmp = new BUS_Account();   
-        
-        acc.setAccountName(tfAccountname.getText());
-        acc.setPasssword(tfPassword.getText());      
-        acc.setFirstName(tfFirstname.getText());
-        acc.setLastName(tfLastname.getText());
-        acc.setPhone(tfPhone.getText());
-        
-        String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-        acc.setBirthDate(temp);       
-        System.out.println("birst date :" + temp);
-        acc.setAddress(tfAddress.getText());   
-        if(jRadioButtonNam.isSelected())
+        if(tfAccountname.getText().equals(""))
         {
-            acc.setGender("nam");
+            new AlertWarning("Vui lòng nhập tên tài khoản!!").setVisible(true);
         }
+        else if (tfPassword.getText().equals(""))
+            new AlertWarning("Vui lòng nhập mật khẩu!!").setVisible(true);
         else
-            acc.setGender("nu");
-     
-        try {
-            tmp.add(acc);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        {
+            acc.setAccountName(tfAccountname.getText());
+            acc.setPasssword(tfPassword.getText());      
+            acc.setFirstName(tfFirstname.getText());
+            acc.setLastName(tfLastname.getText());
+            acc.setPhone(tfPhone.getText());
+
+            String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
+            acc.setBirthDate(temp);       
+            System.out.println("birst date :" + temp);
+            acc.setAddress(tfAddress.getText());   
+            if(jRadioButtonNam.isSelected())
+            {
+                acc.setGender("nam");
+            }
+            else
+                acc.setGender("nu");
+
+            try {
+                tmp.add(acc);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -667,6 +677,10 @@ public final class AccountGUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void tfAccountnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAccountnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAccountnameActionPerformed
 
 
     /**
