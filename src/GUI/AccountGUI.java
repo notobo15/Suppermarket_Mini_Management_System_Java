@@ -6,9 +6,6 @@ package GUI;
 
 import BUS.BUS_Account;
 import DTO.DTO_Account;
-import DTO.DTO_Customer;
-import com.formdev.flatlaf.FlatLaf;
-import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +16,6 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,10 +23,6 @@ import javax.swing.table.DefaultTableModel;
  * @author ADMIN
  */
 public final class AccountGUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AccountGUI
-     */
     public AccountGUI() throws Exception{
         initComponents();  
         try {
@@ -38,7 +30,7 @@ public final class AccountGUI extends javax.swing.JFrame {
             displayDate();
         
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
         }  
     }
     public void displayDate() throws ParseException
@@ -583,6 +575,8 @@ public final class AccountGUI extends javax.swing.JFrame {
         }
         else if (tfPassword.getText().equals(""))
             new AlertWarning("Vui lòng nhập mật khẩu!!").setVisible(true);
+        else if (tfPhone.getText().equals(""))
+            new AlertWarning("Vui lòng số điện thoại!!").setVisible(true);
         else
         {
             acc.setAccountName(tfAccountname.getText());

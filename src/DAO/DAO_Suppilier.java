@@ -82,7 +82,7 @@ public class DAO_Suppilier {
 	public boolean updateById(DTO_Suppilier newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, address = ?, phone = ? where id = ? and status = 1";
+			String query = "UPDATE suppilier SET name = ?, address = ?, phone = ? where suppilier_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getAddress());

@@ -66,7 +66,7 @@ public class DAO_Customer {
 	public boolean create(DTO_Customer newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO account(name, phone, gender, birth_date, address)" + "VALUES (?, ?, ?, ?, ?);";
+			String query = "INSERT INTO customer(name, phone, gender, birth_date, address)" + "VALUES (?, ?, ?, ?, ?);";
 
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
@@ -90,7 +90,7 @@ public class DAO_Customer {
 		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
-					.prepareStatement("UPDATE customer SET status = 0 WHERE account_id = ?");
+					.prepareStatement("UPDATE customer SET status = 0 WHERE customer_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 
@@ -107,7 +107,7 @@ public class DAO_Customer {
 		ConnectDB con = new ConnectDB();
 		try {
 			PreparedStatement ptm = con.getConnection()
-					.prepareStatement("UPDATE customer SET status = 1 WHERE account_id = ?");
+					.prepareStatement("UPDATE customer SET status = 1 WHERE customer_id = ?");
 			ptm.setInt(1, id);
 			rs = ptm.executeUpdate();
 
@@ -122,7 +122,7 @@ public class DAO_Customer {
 	public boolean updateById(DTO_Customer newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, phone = ?, gender = ?, birth_date = ?, address = ? where account_id = ? and status = 1";
+			String query = "UPDATE customer SET name = ?, phone = ?, gender = ?, birth_date = ?, address = ? where customer_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getPhone());

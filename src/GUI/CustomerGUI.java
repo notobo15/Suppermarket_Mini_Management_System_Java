@@ -24,50 +24,45 @@ import javax.swing.table.DefaultTableModel;
  * @author ADMIN
  */
 public class CustomerGUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CustomerGUI
-     */
     public CustomerGUI() throws Exception{
         initComponents();
-         try {
-            displayDate();
+        try {
+            
             addRowToJTable();
+            displayDate();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public void displayDate() throws ParseException
+    public void displayDate() throws ParseException
     {
         Calendar ca = new GregorianCalendar();
         String day = ca.get(Calendar.DAY_OF_MONTH) + "";
         String month = ca.get(Calendar.MONTH) + 1 + "";
         String year = ca.get(Calendar.YEAR) + "";
-
         if (day.length() == 1) {
             day = "0" + day;
         }
         if (month.length() == 1) {
             month = "0" + month;
         }
-
         String dd = year + "-" + month + "-" + day;
-
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
         jDateChooser1.setDate(date);
     }
-     public void clear()
+    public void clear()
     {
         tfCustomername.setText("");
         tfPhone.setText("");
         tfAddress.setText(""); 
         jRadioButtonNam.setSelected(true);
         //JOptionPane.showMessageDialog(rootPane, "ban vua click");
-        try {
+        try {        
             displayDate();
         } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     public void addRowToJTable() throws SQLException {
         BUS_Customer bus_customer = new BUS_Customer();
@@ -140,16 +135,9 @@ public class CustomerGUI extends javax.swing.JFrame {
                 "ID", "Customer name", "Phone", "Gender", "Birh_date", "Address"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, true, true, true, true, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -430,25 +418,27 @@ public class CustomerGUI extends javax.swing.JFrame {
         BUS_Customer tmp = new BUS_Customer();   
         if(tfCustomername.getText().equals(""))
             new AlertWarning("Vui lòng nhập tên khách hàng!!").setVisible(true);
-        else 
+        else if(tfPhone.getText().equals(""))
+            new AlertWarning("Vui lòng nhập số điện thoại!!").setVisible(true);
+        else
         {
             acc.setName(tfCustomername.getText());
-            acc.setPhone(tfPhone.getText());        
-            String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-            acc.setBirthDate(temp); 
-            acc.setAddress(tfAddress.getText());  
-
+            acc.setPhone(tfPhone.getText());   
             if(jRadioButtonNam.isSelected())
             {
                 acc.setGender("nam");
             }
             else
-                acc.setGender("nu");
+                acc.setGender("nu"); 
+            String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
+            acc.setBirthDate(temp); 
+            acc.setAddress(tfAddress.getText());  
+                       
             try {
                 tmp.addCustomer(acc);
             } catch (SQLException ex) {
-                Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }            
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -470,7 +460,7 @@ public class CustomerGUI extends javax.swing.JFrame {
         int a=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn sửa chứ!!");  
         // new AlertMessageYN();
         if(a == JOptionPane.YES_OPTION){  
-
+            acc.setName(tfCustomername.getText());
             acc.setPhone(tfPhone.getText());
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
             acc.setBirthDate(temp);       
