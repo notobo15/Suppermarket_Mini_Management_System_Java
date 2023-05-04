@@ -28,7 +28,7 @@
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="132" max="-2" attributes="0"/>
+                          <Component id="DonHangLbl" min="-2" pref="132" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="521" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -60,7 +60,7 @@
               <Component id="header1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="DonHangLbl" min="-2" pref="47" max="-2" attributes="0"/>
                   <Component id="clockGUI1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -76,7 +76,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="DonHangLbl">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="24" style="0"/>
@@ -91,7 +91,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="DonHangTable">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -100,11 +100,11 @@
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="true" title="Order ID" type="java.lang.Integer"/>
-                <Column editable="true" title="Account ID" type="java.lang.Integer"/>
+                <Column editable="true" title="Order ID" type="java.lang.String"/>
+                <Column editable="true" title="Account ID" type="java.lang.String"/>
                 <Column editable="true" title="Order date" type="java.lang.Object"/>
-                <Column editable="true" title="Status" type="java.lang.Object"/>
-                <Column editable="true" title="Customer ID" type="java.lang.Object"/>
+                <Column editable="true" title="Status" type="java.lang.String"/>
+                <Column editable="true" title="Customer ID" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -141,7 +141,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="DonHangTableMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
@@ -162,56 +162,55 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="jLabel19" min="-2" pref="96" max="-2" attributes="0"/>
+                  <Component id="ThongTinLbl" min="-2" pref="96" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="jLabel12" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="OrderIDLbl" min="-2" pref="90" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField10" max="32767" attributes="0"/>
+                                  <Component id="OrderIDTxt" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="jLabel16" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="AccIDLbl" min="-2" pref="90" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField13" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="AccIDTxt" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton18" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="ThemBtn" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                          <Component id="jButton19" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="XoaBtn" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                          <Component id="jButton20" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="SuaBtn" min="-2" pref="80" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jLabel15" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="StatusLbl" min="-2" pref="90" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField14" min="-2" pref="138" max="-2" attributes="0"/>
+                          <Component id="StatusTxt" min="-2" pref="138" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel17" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="CustomerIDLbl" min="-2" pref="90" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextField16" min="-2" pref="138" max="-2" attributes="0"/>
+                                  <Component id="CustomerIDTxt" min="-2" pref="138" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="jButton21" min="-2" pref="80" max="-2" attributes="0"/>
+                                  <Component id="ResetBtn" min="-2" pref="80" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -220,9 +219,9 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="jLabel20" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="OrderDateLbl" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jDateChooser1" min="-2" pref="155" max="-2" attributes="0"/>
+                  <Component id="OrderDateCal" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -231,41 +230,41 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                  <Component id="jLabel19" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="ThongTinLbl" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel12" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jTextField10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel15" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jTextField14" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="OrderIDLbl" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="OrderIDTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="StatusLbl" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="StatusTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField16" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel17" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="CustomerIDTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="CustomerIDLbl" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel16" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jTextField13" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="AccIDLbl" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="AccIDTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel20" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="OrderDateCal" min="-2" max="-2" attributes="0"/>
+                      <Component id="OrderDateLbl" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton18" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton19" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton20" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton21" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="ThemBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="XoaBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="SuaBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="ResetBtn" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="43" max="32767" attributes="0"/>
               </Group>
@@ -273,56 +272,59 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton18">
+        <Component class="javax.swing.JButton" name="ThemBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton18ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ThemBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton19">
+        <Component class="javax.swing.JButton" name="XoaBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="XoaBtnActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton20">
+        <Component class="javax.swing.JButton" name="SuaBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton20ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SuaBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton21">
+        <Component class="javax.swing.JButton" name="ResetBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reset"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton21ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel12">
+        <Component class="javax.swing.JLabel" name="OrderIDLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Order ID"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
+        <Component class="javax.swing.JLabel" name="StatusLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Status"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel16">
+        <Component class="javax.swing.JLabel" name="AccIDLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Account ID"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel17">
+        <Component class="javax.swing.JLabel" name="CustomerIDLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Customer ID"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel19">
+        <Component class="javax.swing.JLabel" name="ThongTinLbl">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -336,20 +338,23 @@
             <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel20">
+        <Component class="javax.swing.JLabel" name="OrderDateLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Order date"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField10">
+        <Component class="javax.swing.JTextField" name="OrderIDTxt">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField13">
+        <Component class="javax.swing.JTextField" name="AccIDTxt">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField14">
+        <Component class="javax.swing.JTextField" name="StatusTxt">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField16">
+        <Component class="javax.swing.JTextField" name="CustomerIDTxt">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CustomerIDTxtActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+        <Component class="com.toedter.calendar.JDateChooser" name="OrderDateCal">
         </Component>
       </SubComponents>
     </Container>
@@ -370,7 +375,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel22" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                      <Component id="TimKiemLbl" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -394,8 +399,8 @@
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButton22" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="HuyTimKiemBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="TimKiemBtn" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
@@ -404,17 +409,17 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabel22" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="TimKiemLbl" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel23" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jTextField19" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="TimKiemBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextField20" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton22" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="HuyTimKiemBtn" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="jLabel26" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -428,17 +433,17 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="TimKiemBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton22">
+        <Component class="javax.swing.JButton" name="HuyTimKiemBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="H&#x1ee7;y t&#xec;m ki&#x1ebf;m"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel22">
+        <Component class="javax.swing.JLabel" name="TimKiemLbl">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
