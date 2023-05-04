@@ -111,7 +111,7 @@ public class OrderGUI extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -389,14 +389,15 @@ public class OrderGUI extends javax.swing.JFrame {
         else if (CustomerIDTxt.getText().isEmpty())
             new AlertWarning("Nhập thiếu ID khách hàng!").setVisible(true);
         else {
-            dto.setAccountId(OrderIDTxt.getText().toString());
-            dto.setCustomerId(CustomerIDTxt.getText().toString());
+            dto.setOrderId(Integer.parseInt(OrderIDTxt.getText()));
+            dto.setAccountId(Integer.parseInt(AccIDTxt.getText()));
+            dto.setCustomerId(Integer.parseInt(CustomerIDTxt.getText()));
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
-            dto.getOrderDate(temp);
+            dto.setOrderDate(temp);
+            if ("true".equals(StatusTxt.getText())) dto.setStatus(true);
+            else dto.setStatus(false);  
             try {    
-                bus.add(dto);
-                int a=JOptionPane.showConfirmDialog(    null,"Thêm thành công!");
-            } catch (SQLException ex) {
+                bus.add(dto);            } catch (SQLException ex) {
                 Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -460,10 +461,11 @@ public class OrderGUI extends javax.swing.JFrame {
         // new AlertMessageYN();
         if(a == JOptionPane.YES_OPTION){  
             //acc.setAccountName(tfAccountname.getText());
-            dto.setAccountId(AccIDTxt.getText().toString());      
-            dto.setCustomerId(CustomerIDTxt.getText().toString());
-            dto.setOrderId(OrderIDTxt.getText().toString());
-            dto.setStatus(StatusTxt.getText().toString());
+            dto.setAccountId(Integer.parseInt(AccIDTxt.getText()));      
+            dto.setCustomerId(Integer.parseInt(CustomerIDTxt.getText()));
+            dto.setOrderId(Integer.parseInt(OrderIDTxt.getText()));
+            if ("true".equals(StatusTxt.getText())) dto.setStatus(true);
+            else dto.setStatus(false);
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
             dto.setOrderDate(temp);       
             int i = DonHangTable.getSelectedRow();
@@ -486,8 +488,9 @@ public class OrderGUI extends javax.swing.JFrame {
         try {
             odr.delete(id);
         } catch (SQLException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_XoaBtnActionPerformed
 
     private void CustomerIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDTxtActionPerformed

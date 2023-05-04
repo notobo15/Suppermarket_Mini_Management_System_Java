@@ -4,8 +4,24 @@
  */
 package GUI;
 
+import BUS.BUS_ImportDetail;
+import BUS.BUS_ImportProduct;
+import BUS.BUS_Order;
+import DTO.DTO_ImportDetail;
+import DTO.DTO_ImportProduct;
+import DTO.DTO_Order;
 import java.util.Date;
 import GUI.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author ADMIN
@@ -17,8 +33,46 @@ public class PhieuNhap extends javax.swing.JFrame {
      */
     public PhieuNhap() {
         initComponents();
+        try {
+            addRowToJTableThongTin();
+            addRowToJTableThongTinChiTiet();
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
-
+    public void addRowToJTableThongTin() throws SQLException {
+        BUS_ImportProduct bus_importproduct = new BUS_ImportProduct();
+        ArrayList<DTO_ImportProduct> list = bus_importproduct.getList();
+        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
+        Object rowData[] = new Object[5];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getId());
+            rowData[0] = list.get(i).getId();
+            rowData[1] = list.get(i).getSuppilierId();
+            rowData[2] = list.get(i).getAccountId();
+            rowData[3] = list.get(i).getImportDate();
+            rowData[4] = list.get(i).isStatus();
+            model.addRow(rowData);
+        }
+    }
+    public void addRowToJTableThongTinChiTiet() throws SQLException {
+        BUS_ImportDetail bus_importdetail = new BUS_ImportDetail();
+        ArrayList<DTO_ImportDetail> list = bus_importdetail.getList();
+        DefaultTableModel model = (DefaultTableModel) ChiTietTable.getModel();
+        Object rowData[] = new Object[5];
+        
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getId());
+            rowData[0] = list.get(i).getId();
+            rowData[1] = list.get(i).getProductId();
+            rowData[2] = list.get(i).getPrice();
+            rowData[3] = list.get(i).getQuanity();
+            rowData[4] = list.get(i).isStatus();
+            model.addRow(rowData);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,24 +110,28 @@ public class PhieuNhap extends javax.swing.JFrame {
         SoLuongLbl = new javax.swing.JLabel();
         GiaBanLbl = new javax.swing.JLabel();
         MaPNDetail = new javax.swing.JTextField();
-        MãSPDetail = new javax.swing.JTextField();
+        MaSPDetail = new javax.swing.JTextField();
         SoLuongDetail = new javax.swing.JTextField();
         GiaBanDetail = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         ChiTietTable = new javax.swing.JTable();
         ThemDetailBtn = new javax.swing.JButton();
         XoaDetailBtn = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        SuaChiTietBtn = new javax.swing.JButton();
+        TaomoiDetailBtn = new javax.swing.JButton();
         TimKiem = new javax.swing.JLabel();
         TimKiemTxt = new javax.swing.JTextField();
         TimKiemBtn = new javax.swing.JButton();
+        TinhTrang = new javax.swing.JLabel();
+        TinhTrangDetail = new javax.swing.JTextField();
+        TinhTrang1 = new javax.swing.JLabel();
+        MaNhapDetail = new javax.swing.JTextField();
         Title = new javax.swing.JLabel();
         clockGUI1 = new GUI.Components.ClockGUI();
         header1 = new GUI.Components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1200, 700));
+        setPreferredSize(new java.awt.Dimension(1200, 725));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -115,25 +173,16 @@ public class PhieuNhap extends javax.swing.JFrame {
         StatusLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         StatusLbl.setText("Tình trạng");
 
-        StatusTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StatusTxtActionPerformed(evt);
-            }
-        });
-
         ThongTinTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Mã HĐ", "Mã NV", "Mã KH", "Ngày nhập", "Tổng tiền"
+                "ID", "SupllierID", "AccountId", "ImportDate", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -143,12 +192,32 @@ public class PhieuNhap extends javax.swing.JFrame {
         jScrollPane1.setViewportView(ThongTinTable);
 
         ThemBtn.setText("Thêm");
+        ThemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemBtnActionPerformed(evt);
+            }
+        });
 
         XoaBtn.setText("Xóa");
+        XoaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                XoaBtnActionPerformed(evt);
+            }
+        });
 
         SuaBtn.setText("Sửa");
+        SuaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuaBtnActionPerformed(evt);
+            }
+        });
 
         TaoMoiBtn.setText("Tạo mới");
+        TaoMoiBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaoMoiBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -265,25 +334,16 @@ public class PhieuNhap extends javax.swing.JFrame {
         GiaBanLbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         GiaBanLbl.setText("Giá bán");
 
-        MãSPDetail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MãSPDetailActionPerformed(evt);
-            }
-        });
-
         ChiTietTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Mã SP", "Mã HĐ", "Số lượng", "Giá bán"
+                "ID", "ProductID", "Price", "Quannity", "ImportID", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -293,22 +353,43 @@ public class PhieuNhap extends javax.swing.JFrame {
         jScrollPane2.setViewportView(ChiTietTable);
 
         ThemDetailBtn.setText("Thêm");
+        ThemDetailBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThemDetailBtnActionPerformed(evt);
+            }
+        });
 
         XoaDetailBtn.setText("Xóa");
+        XoaDetailBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                XoaDetailBtnActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Sửa");
+        SuaChiTietBtn.setText("Sửa");
+        SuaChiTietBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuaChiTietBtnActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("Reset");
+        TaomoiDetailBtn.setText("Tạo mới");
+        TaomoiDetailBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaomoiDetailBtnActionPerformed(evt);
+            }
+        });
 
         TimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TimKiem.setText("Mã SP:");
 
         TimKiemBtn.setText("Tìm kiếm");
-        TimKiemBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TimKiemBtnActionPerformed(evt);
-            }
-        });
+
+        TinhTrang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        TinhTrang.setText("Tình trạng");
+
+        TinhTrang1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        TinhTrang1.setText("Mã nhập");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -317,16 +398,6 @@ public class PhieuNhap extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(ThemDetailBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(XoaDetailBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton8)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -343,7 +414,7 @@ public class PhieuNhap extends javax.swing.JFrame {
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(MaSPLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(MãSPDetail))
+                                        .addComponent(MaSPDetail))
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(MaPnLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -354,7 +425,27 @@ public class PhieuNhap extends javax.swing.JFrame {
                                     .addComponent(TimKiemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TimKiemBtn)))
                             .addComponent(jScrollPane2))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(ThemDetailBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(XoaDetailBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SuaChiTietBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TaomoiDetailBtn))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(TinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TinhTrangDetail)))
+                        .addGap(214, 214, 214))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(TinhTrang1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MaNhapDetail)
+                        .addGap(214, 214, 214))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,26 +462,34 @@ public class PhieuNhap extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(MaSPLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(MãSPDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(MaSPDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(TimKiemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SoLuongLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(SoLuongDetail)
-                        .addComponent(TimKiemBtn)))
+                        .addComponent(SoLuongLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SoLuongDetail))
+                    .addComponent(TimKiemBtn))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(GiaBanLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GiaBanDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(XoaDetailBtn)
+                    .addComponent(TinhTrang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(TinhTrangDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TinhTrang1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(MaNhapDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ThemDetailBtn)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(XoaDetailBtn)
+                    .addComponent(SuaChiTietBtn)
+                    .addComponent(TaomoiDetailBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -452,17 +551,184 @@ public class PhieuNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StatusTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatusTxtActionPerformed
+    private void XoaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_StatusTxtActionPerformed
+        BUS_ImportProduct ip= new BUS_ImportProduct();
+        int i = ThongTinTable.getSelectedRow();
+        int id = (int) ThongTinTable.getModel().getValueAt(i, 0);
+        try {
+            ip.delete(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }//GEN-LAST:event_XoaBtnActionPerformed
 
-    private void MãSPDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MãSPDetailActionPerformed
+    private void XoaDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaDetailBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MãSPDetailActionPerformed
+        BUS_ImportDetail ip= new BUS_ImportDetail();
+        int i = ChiTietTable.getSelectedRow();
+        int id = (int) ChiTietTable.getModel().getValueAt(i, 0);
+        try {
+            ip.delete(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_XoaDetailBtnActionPerformed
 
-    private void TimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimKiemBtnActionPerformed
+    public void displayDate() throws ParseException
+        {
+            Calendar ca = new GregorianCalendar();
+            String day = ca.get(Calendar.DAY_OF_MONTH) + "";
+            String month = ca.get(Calendar.MONTH) + 1 + "";
+            String year = ca.get(Calendar.YEAR) + "";
+
+            if (day.length() == 1) {
+                day = "0" + day;
+            }
+            if (month.length() == 1) {
+                month = "0" + month;
+            }
+
+            String dd = year + "-" + month + "-" + day;
+
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
+            NgayNhapCal.setDate(date);
+        }
+    private void TaoMoiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaoMoiBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TimKiemBtnActionPerformed
+        try {
+            MaPNTxt.setText("");
+            MaNCCTxt.setText("");
+            StatusTxt.setText("");
+            MaKHTxt.setText("");
+            displayDate();
+        } catch (ParseException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_TaoMoiBtnActionPerformed
+
+    private void TaomoiDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaomoiDetailBtnActionPerformed
+        // TODO add your handling code here:
+        try {
+            MaPNDetail.setText("");
+            MaNCCTxt.setText("");
+            StatusTxt.setText("");
+            MaKHTxt.setText("");
+            displayDate();
+        } catch (ParseException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_TaomoiDetailBtnActionPerformed
+
+    private void SuaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaBtnActionPerformed
+        // TODO add your handling code here:
+        BUS_ImportProduct bus= new BUS_ImportProduct();
+        DTO_ImportProduct dto= new DTO_ImportProduct();
+        int a=JOptionPane.showConfirmDialog(    null,"Bạn có chắc muốn sửa chứ!!");  
+        // new AlertMessageYN();
+        if(a == JOptionPane.YES_OPTION){  
+            //acc.setAccountName(tfAccountname.getText());
+            dto.setAccountId(Integer.parseInt(MaKHTxt.getText()));      
+            dto.setId(Integer.parseInt(MaPNTxt.getText()));
+            dto.setSuppilierId(Integer.parseInt(MaNCCTxt.getText()));
+            if ("true".equals(StatusTxt.getText())) dto.setStatus(true);
+            else dto.setStatus(false);
+            String temp = new SimpleDateFormat("yyyy-MM-dd").format(NgayNhapCal.getDate());
+            dto.setImportDate(temp);       
+            int i = ThongTinTable.getSelectedRow();
+            int id = (int) ThongTinTable.getModel().getValueAt(i, 0);        
+            dto.setId(id);
+            try {
+                bus.update(dto);
+            } catch (SQLException ex) {
+                Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_SuaBtnActionPerformed
+
+    private void SuaChiTietBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaChiTietBtnActionPerformed
+        // TODO add your handling code here:
+        BUS_ImportDetail bus= new BUS_ImportDetail();
+        DTO_ImportDetail dto= new DTO_ImportDetail();
+        int a=JOptionPane.showConfirmDialog(    null,"Bạn có chắc muốn sửa chứ!!");  
+        // new AlertMessageYN();
+        if(a == JOptionPane.YES_OPTION){  
+            //acc.setAccountName(tfAccountname.getText());
+            dto.setId(Integer.parseInt(MaPNDetail.getText()));      
+            dto.setImportId(Integer.parseInt(MaNhapDetail.getText()));
+            dto.setPrice(Integer.parseInt(GiaBanDetail.getText()));
+            dto.setProductId(Integer.parseInt(MaSPDetail.getText()));
+            dto.setQuanity(Integer.parseInt(SoLuongDetail.getText()));
+            if ("true".equals(StatusTxt.getText())) dto.setStatus(true);
+            else dto.setStatus(false);     
+            int i = ChiTietTable.getSelectedRow();
+            int id = (int) ChiTietTable.getModel().getValueAt(i, 0);        
+            dto.setId(id);
+            try {
+                bus.update(dto);
+            } catch (SQLException ex) {
+                Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_SuaChiTietBtnActionPerformed
+
+    private void ThemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemBtnActionPerformed
+        // TODO add your handling code here:
+        BUS_ImportProduct bus= new BUS_ImportProduct();
+        DTO_ImportProduct dto= new DTO_ImportProduct();
+        if (MaPNTxt.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID!").setVisible(true);
+        else if (MaKHTxt.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID tài khoản!").setVisible(true);
+        else if (StatusTxt.getText().isEmpty())
+            new AlertWarning("Nhập thiếu Status!").setVisible(true);
+        else if (MaNCCTxt.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID nhà cung cấp!").setVisible(true);
+        else {
+            dto.setId(Integer.parseInt(MaPNTxt.getText()));
+            dto.setAccountId(Integer.parseInt(MaKHTxt.getText()));
+            dto.setSuppilierId(Integer.parseInt(MaNCCTxt.getText()));
+            String temp = new SimpleDateFormat("yyyy-MM-dd").format(NgayNhapCal.getDate());
+            dto.setImportDate(temp);
+            if ("true".equals(StatusTxt.getText())) dto.setStatus(true);
+            else dto.setStatus(false);  
+            try {    
+                bus.add(dto);            } catch (SQLException ex) {
+                Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ThemBtnActionPerformed
+
+    private void ThemDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThemDetailBtnActionPerformed
+        // TODO add your handling code here:
+        BUS_ImportDetail bus= new BUS_ImportDetail();
+        DTO_ImportDetail dto= new DTO_ImportDetail();
+        if (MaPNDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID!").setVisible(true);
+        else if (MaSPDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID sản phẩm!").setVisible(true);
+        else if (GiaBanDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu giá bán!").setVisible(true);
+        else if (TinhTrangDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu Status!").setVisible(true);
+        else if (MaNhapDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu ID nhập!").setVisible(true);
+        else if (SoLuongDetail.getText().isEmpty())
+            new AlertWarning("Nhập thiếu số lượng!").setVisible(true);
+        else {
+            dto.setId(Integer.parseInt(MaPNDetail.getText()));
+            dto.setImportId(Integer.parseInt(MaNhapDetail.getText()));
+            dto.setPrice(Integer.parseInt(GiaBanDetail.getText()));
+            dto.setProductId(Integer.parseInt(MaSPDetail.getText()));
+            dto.setQuanity(Integer.parseInt(SoLuongDetail.getText()));
+            if ("true".equals(TinhTrangDetail.getText())) dto.setStatus(true);
+            else dto.setStatus(false);  
+            try {    
+                bus.add(dto);            } catch (SQLException ex) {
+                Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ThemDetailBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -470,31 +736,6 @@ public class PhieuNhap extends javax.swing.JFrame {
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PhieuNhap().setVisible(true);
@@ -510,12 +751,13 @@ public class PhieuNhap extends javax.swing.JFrame {
     private javax.swing.JTextField MaKHTxt;
     private javax.swing.JLabel MaNCCLbl;
     private javax.swing.JTextField MaNCCTxt;
+    private javax.swing.JTextField MaNhapDetail;
     private javax.swing.JTextField MaPNDetail;
     private javax.swing.JLabel MaPNLbl;
     private javax.swing.JTextField MaPNTxt;
     private javax.swing.JLabel MaPnLbl;
+    private javax.swing.JTextField MaSPDetail;
     private javax.swing.JLabel MaSPLbl;
-    private javax.swing.JTextField MãSPDetail;
     private com.toedter.calendar.JDateChooser NgayNhapCal;
     private javax.swing.JLabel NgayNhapLbl;
     private javax.swing.JTextField SoLuongDetail;
@@ -523,7 +765,9 @@ public class PhieuNhap extends javax.swing.JFrame {
     private javax.swing.JLabel StatusLbl;
     private javax.swing.JTextField StatusTxt;
     private javax.swing.JButton SuaBtn;
+    private javax.swing.JButton SuaChiTietBtn;
     private javax.swing.JButton TaoMoiBtn;
+    private javax.swing.JButton TaomoiDetailBtn;
     private javax.swing.JButton ThemBtn;
     private javax.swing.JButton ThemDetailBtn;
     private javax.swing.JLabel ThongTinLbl;
@@ -531,13 +775,14 @@ public class PhieuNhap extends javax.swing.JFrame {
     private javax.swing.JLabel TimKiem;
     private javax.swing.JButton TimKiemBtn;
     private javax.swing.JTextField TimKiemTxt;
+    private javax.swing.JLabel TinhTrang;
+    private javax.swing.JLabel TinhTrang1;
+    private javax.swing.JTextField TinhTrangDetail;
     private javax.swing.JLabel Title;
     private javax.swing.JButton XoaBtn;
     private javax.swing.JButton XoaDetailBtn;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

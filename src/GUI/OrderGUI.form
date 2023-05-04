@@ -103,7 +103,7 @@
                 <Column editable="true" title="Order ID" type="java.lang.String"/>
                 <Column editable="true" title="Account ID" type="java.lang.String"/>
                 <Column editable="true" title="Order date" type="java.lang.Object"/>
-                <Column editable="true" title="Status" type="java.lang.String"/>
+                <Column editable="true" title="Status" type="java.lang.Boolean"/>
                 <Column editable="true" title="Customer ID" type="java.lang.String"/>
               </Table>
             </Property>
