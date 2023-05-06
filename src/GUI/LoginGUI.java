@@ -158,8 +158,8 @@ public class LoginGUI extends javax.swing.JFrame {
             try {
             if(ValidAccount(u,p))
             {
+                this.dispose();
                 new HomeGUI().setVisible(true);
-                this.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
