@@ -489,7 +489,7 @@ public class OrderGUITest extends javax.swing.JFrame {
                     );
         }
         ta1.setText(ta1.getText()+"\n\n\t\t Tổng: "+s
-        +"\n======================================="
+        +"\n========================================="
         );
         
     }
