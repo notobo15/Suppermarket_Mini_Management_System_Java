@@ -67,7 +67,7 @@
                               <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" alignment="0" min="-2" pref="689" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="Title" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -86,7 +86,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Title" min="-2" max="-2" attributes="0"/>
                       <Component id="clockGUI1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="Title">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="24" style="0"/>
@@ -148,9 +148,9 @@
                       <EmptySpace pref="134" max="32767" attributes="0"/>
                       <Component id="jLabel8" min="-2" pref="142" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="TimKiemTxt" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="99" max="-2" attributes="0"/>
+                      <Component id="TimKiemBtn" min="-2" pref="99" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -161,8 +161,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" max="32767" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="TimKiemTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TimKiemBtn" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -183,17 +183,17 @@
                 <Property name="text" type="java.lang.String" value="&#x110;&#x1a1;n h&#xe0;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="TimKiemTxt">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TimKiemTxtActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="TimKiemBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -201,7 +201,7 @@
                 <Property name="text" type="java.lang.String" value="T&#xec;m"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TimKiemBtnActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -221,7 +221,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable2">
+            <Component class="javax.swing.JTable" name="DonHangTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="0">
@@ -298,14 +298,14 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField2" max="32767" attributes="0"/>
+                              <Component id="SoLuongTxt" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButton3" max="32767" attributes="0"/>
-                                  <Component id="jTextField3" max="32767" attributes="0"/>
+                                  <Component id="ThemGHBtn" max="32767" attributes="0"/>
+                                  <Component id="GiaTxt" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -319,15 +319,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="SoLuongTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="GiaTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="ThemGHBtn" min="-2" pref="31" max="-2" attributes="0"/>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -339,16 +339,16 @@
                 <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="SoLuongTxt">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Gi&#xe1;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
+            <Component class="javax.swing.JTextField" name="GiaTxt">
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="ThemGHBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -382,7 +382,7 @@
                           <Component id="jTextField6" max="32767" attributes="0"/>
                           <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ThemKHBtn" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
@@ -407,7 +407,7 @@
                           <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="ThemKHBtn" min="-2" pref="31" max="-2" attributes="0"/>
                       <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -462,7 +462,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField6">
             </Component>
-            <Component class="javax.swing.JButton" name="jButton4">
+            <Component class="javax.swing.JButton" name="ThemKHBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -526,7 +526,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="GioHangTable">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="6" rowCount="0">
@@ -603,13 +603,13 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jTextField4" min="-2" pref="209" max="-2" attributes="0"/>
+                                      <Component id="SoLuongGHTxt" min="-2" pref="209" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jTextField5" min="-2" pref="209" max="-2" attributes="0"/>
+                                      <Component id="TongTienTxt" min="-2" pref="209" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jButton5" alignment="0" min="-2" pref="201" max="-2" attributes="0"/>
-                                  <Component id="jButton7" alignment="0" min="-2" pref="201" max="-2" attributes="0"/>
-                                  <Component id="datHangBtn" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
+                                  <Component id="XoaGHBtn" alignment="0" min="-2" pref="201" max="-2" attributes="0"/>
+                                  <Component id="LamSachBtn" alignment="0" min="-2" pref="201" max="-2" attributes="0"/>
+                                  <Component id="DatHangBtn" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -627,15 +627,15 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField4" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="jTextField5" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="SoLuongGHTxt" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="TongTienTxt" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="XoaGHBtn" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton7" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="LamSachBtn" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="datHangBtn" min="-2" pref="52" max="-2" attributes="0"/>
+                      <Component id="DatHangBtn" min="-2" pref="52" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -651,9 +651,9 @@
                 <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField4">
+            <Component class="javax.swing.JTextField" name="SoLuongGHTxt">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SoLuongGHTxtActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
@@ -665,9 +665,9 @@
                 <Property name="text" type="java.lang.String" value="T&#x1ed5;ng s&#x1ed1; ti&#x1ec1;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField5">
+            <Component class="javax.swing.JTextField" name="TongTienTxt">
             </Component>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="XoaGHBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -675,7 +675,7 @@
                 <Property name="text" type="java.lang.String" value="Xo&#xe1; s&#x1ea3;n ph&#x1ea9;m gi&#x1ecf; h&#xe0;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton7">
+            <Component class="javax.swing.JButton" name="LamSachBtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -683,15 +683,15 @@
                 <Property name="text" type="java.lang.String" value="L&#xe0;m s&#x1ea1;ch gi&#x1ecf; h&#xe0;ng"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LamSachBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="datHangBtn">
+            <Component class="javax.swing.JButton" name="DatHangBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x1eb6;T H&#xc0;NG"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="datHangBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DatHangBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

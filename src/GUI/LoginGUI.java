@@ -17,7 +17,6 @@ import java.util.logging.Logger;
  * @author minht
  */
 public class LoginGUI extends javax.swing.JFrame {
-
     /**
      * Creates new form LoginGUI
      */
@@ -25,18 +24,52 @@ public class LoginGUI extends javax.swing.JFrame {
         initComponents();
     }
 
-    public boolean ValidAccount(String username,char[] password) throws SQLException
+    /**
+     *
+     * @param username
+     * @return
+     * @throws SQLException
+     */
+    public boolean ValidUsername(String username) throws SQLException
     {
         BUS_Account bus_account = new BUS_Account();
         ArrayList<DTO_Account> list = bus_account.getList();
-        
-          for (int i = 0; i < list.size(); i++)
+        for (int i = 0; i < list.size(); i++)
+          {
+              if(username.equals(list.get(i).getAccountName()))
+              {
+                  if(!list.get(i).getStatus()) 
+                  {
+                          AlertWarning aw=new AlertWarning("Tài khoản đã bị khóa!");
+                          aw.setVisible(true);
+                          return false;
+                  }
+                  Session session = new Session(list.get(i).getAccountId(),list.get(i).getLastName()+" "+list.get(i).getFirstName(),list.get(i).getRoleId());
+                  
+                  return true;                 
+              }
+          }
+         AlertWarning aw=new AlertWarning("Tên đăng nhập không tồn tại!");
+         aw.setVisible(true);
+        return false;
+    }
+    public boolean ValidPassword(char[] password) throws SQLException
+    {
+        BUS_Account bus_account = new BUS_Account();
+        ArrayList<DTO_Account> list = bus_account.getList();
+        for (int i = 0; i < list.size(); i++)
           {
               char ch[]=list.get(i).getPasssword().toCharArray();
-              if(username.equals(list.get(i).getAccountName()) && Arrays.equals(password, ch))
+              if(Arrays.equals(password, ch))
                   return true;
           }
-          return false;
+        AlertWarning aw=new AlertWarning("Mật khẩu không chính xác!");
+        aw.setVisible(true);
+         return false;
+    }
+    public boolean ValidAccount(String username,char[] password) throws SQLException
+    {
+        return ValidUsername(username) && ValidPassword(password);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +97,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 0, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -90,7 +123,7 @@ public class LoginGUI extends javax.swing.JFrame {
         jPanel1.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 300, 40));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 300, 40));
 
-        btnLogin.setBackground(new java.awt.Color(204, 0, 255));
+        btnLogin.setBackground(new java.awt.Color(0, 0, 51));
         btnLogin.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("ĐĂNG NHẬP");
@@ -104,7 +137,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 400, 500));
 
-        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/background.png"))); // NOI18N
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/background-blue.png"))); // NOI18N
         lblBackground.setText("jLabel5");
         getContentPane().add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 700));
 
@@ -115,15 +148,24 @@ public class LoginGUI extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String u=txtUsername.getText();
         char[] p=txtPassword.getPassword();
-        try {
-            if(ValidAccount(u,p)==true)
+        if(txtUsername.getText().isEmpty() || txtPassword.getPassword().length == 0)
+        {
+            AlertWarning aw=new AlertWarning("Tên đăng nhập hoặc mật khẩu trống");
+            aw.setVisible(true);
+        }
+        else
+        {
+            try {
+            if(ValidAccount(u,p))
             {
+                this.dispose();
                 new HomeGUI().setVisible(true);
-                this.setVisible(false);
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+        
         
     }//GEN-LAST:event_btnLoginActionPerformed
 

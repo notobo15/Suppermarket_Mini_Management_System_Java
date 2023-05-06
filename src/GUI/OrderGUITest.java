@@ -16,26 +16,28 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import GUI.*;
+import java.awt.print.PrinterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author ADMIN
  */
-public class OrderGUI extends javax.swing.JFrame {
+public class OrderGUITest extends javax.swing.JFrame {
 
     /**
      * Creates new form CustomerGUI
      */
-    public OrderGUI() {
+    public OrderGUITest() {
         initComponents();
         try {
             addRowToJTable();
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public void addRowToJTable() throws SQLException {
@@ -95,6 +97,9 @@ public class OrderGUI extends javax.swing.JFrame {
         jTextField21 = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
         clockGUI1 = new GUI.Components.ClockGUI();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ta1 = new javax.swing.JTextArea();
+        btnPrint = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -331,30 +336,47 @@ public class OrderGUI extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        ta1.setColumns(20);
+        ta1.setRows(5);
+        jScrollPane2.setViewportView(ta1);
+
+        btnPrint.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnPrint.setText("In");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1061, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(521, 521, 521))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(16, 16, 16)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(969, 969, 969)
+                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1170, Short.MAX_VALUE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(969, 969, 969)
-                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,7 +388,12 @@ public class OrderGUI extends javax.swing.JFrame {
                     .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -398,7 +425,7 @@ public class OrderGUI extends javax.swing.JFrame {
             else dto.setStatus(false);  
             try {    
                 bus.add(dto);            } catch (SQLException ex) {
-                Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_ThemBtnActionPerformed
@@ -430,10 +457,43 @@ public class OrderGUI extends javax.swing.JFrame {
             CustomerIDTxt.setText("");
             displayDate();
         } catch (ParseException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ResetBtnActionPerformed
 
+    private void writeDetail() throws SQLException
+    {
+        ta1.setText("");
+        BUS_OrderDetail bus_orderDetail = new BUS_OrderDetail();
+        ArrayList<DTO_OrderDetail> listDetail = bus_orderDetail.getList();
+        BUS_Order bus_order = new BUS_Order();
+        ArrayList<DTO_Order> list = bus_order.getList();
+        int  i=DonHangTable.getSelectedRow();
+        int t;
+        float s=0;
+         for(int j=0;j<listDetail.size();j++)
+            {
+                if(j==i)
+                {
+                    t=j;
+                }
+            }
+        ta1.setText(ta1.getText()+"============== Mã hóa đơn: "+DonHangTable.getModel().getValueAt(i, 0).toString()+" ==============\n");
+        for(int j=0;j<listDetail.size();j++)
+        {
+            s=s+listDetail.get(j).getPrice() * listDetail.get(j).getQuanity();
+            ta1.setText(ta1.getText()
+                        +"\nMã sản phẩm: "+listDetail.get(j).getProduct_id() +"\t Giá: "+listDetail.get(j).getPrice()
+                        +"\n\t\t Số lượng: "+listDetail.get(j).getQuanity()
+
+                    );
+        }
+        ta1.setText(ta1.getText()+"\n\n\t\t Tổng: "+s
+        +"\n========================================="
+        );
+        
+    }
+    
     private void DonHangTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonHangTableMouseClicked
         // TODO add your handling code here:
         int  i=DonHangTable.getSelectedRow();
@@ -446,11 +506,15 @@ public class OrderGUI extends javax.swing.JFrame {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(DonHangTable.getModel().getValueAt(i, 2).toString());
             OrderDateCal.setDate(date);
         } catch (ParseException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        jTextField14.setText(jTable1.getModel().getValueAt(i, 3).toString());
         CustomerIDTxt.setText(DonHangTable.getModel().getValueAt(i, 4).toString());
-
+        try {
+            writeDetail();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_DonHangTableMouseClicked
 
     private void SuaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaBtnActionPerformed
@@ -488,7 +552,7 @@ public class OrderGUI extends javax.swing.JFrame {
         try {
             odr.delete(id);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_XoaBtnActionPerformed
@@ -496,6 +560,21 @@ public class OrderGUI extends javax.swing.JFrame {
     private void CustomerIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CustomerIDTxtActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        if(ta1.getText().equals(""))
+        {
+            AlertWarning aw=new AlertWarning("Chưa chọn hóa đơn!");
+            aw.setVisible(true);
+        }
+        else
+        try {
+            
+            ta1.print();
+        } catch (PrinterException ex) {
+            Logger.getLogger(OrderGUITest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,27 +587,29 @@ public class OrderGUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("FlatLaf Light".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderGUITest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderGUI().setVisible(true);
+                new OrderGUITest().setVisible(true);
             }
         });
     }
@@ -554,6 +635,7 @@ public class OrderGUI extends javax.swing.JFrame {
     private javax.swing.JButton TimKiemBtn;
     private javax.swing.JLabel TimKiemLbl;
     private javax.swing.JButton XoaBtn;
+    private javax.swing.JButton btnPrint;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
     private javax.swing.JLabel jLabel23;
@@ -562,8 +644,10 @@ public class OrderGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
+    private javax.swing.JTextArea ta1;
     // End of variables declaration//GEN-END:variables
 }
