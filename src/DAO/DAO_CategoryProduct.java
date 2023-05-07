@@ -76,11 +76,10 @@ public class DAO_CategoryProduct {
 	public boolean updateById(DTO_CategoryProduct newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE category_product SET name = ?,  status = ? where category_id = ? and status = 1";
+			String query = "UPDATE category_product SET name = ? where category_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
-			ptm.setBoolean(2, newObj.getStatus());
-			ptm.setInt(3, newObj.getId());
+			ptm.setInt(2, newObj.getId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();

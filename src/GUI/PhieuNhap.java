@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -7,6 +7,7 @@ package GUI;
 import BUS.BUS_ImportDetail;
 import BUS.BUS_ImportProduct;
 import BUS.BUS_Order;
+import DTO.DTO_CategoryProduct;
 import DTO.DTO_ImportDetail;
 import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
@@ -178,7 +179,7 @@ public class PhieuNhap extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "SupllierID", "AccountId", "ImportDate", "Status"
+                "ID", "SupplierID", "AccountId", "ImportDate", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -339,7 +340,7 @@ public class PhieuNhap extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "ProductID", "Price", "Quannity", "ImportID", "Status"
+                "ID", "ProductID", "Price", "Quantity", "ImportID", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -384,6 +385,11 @@ public class PhieuNhap extends javax.swing.JFrame {
         TimKiem.setText("Mã SP:");
 
         TimKiemBtn.setText("Tìm kiếm");
+        TimKiemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TimKiemBtnActionPerformed(evt);
+            }
+        });
 
         TinhTrang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TinhTrang.setText("Tình trạng");
@@ -729,6 +735,40 @@ public class PhieuNhap extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ThemDetailBtnActionPerformed
+
+    private void TimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimKiemBtnActionPerformed
+        // TODO add your handling code here:
+        BUS_ImportDetail bus= new BUS_ImportDetail();
+        DTO_ImportDetail dto= new DTO_ImportDetail();
+        DefaultTableModel model = (DefaultTableModel) ChiTietTable.getModel();
+        model.setRowCount(0);
+        ArrayList<DTO_ImportDetail> list = null;
+        try {
+            list = bus.getList();
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int search = Integer.parseInt(TimKiemTxt.getText().toString());
+        DefaultTableModel model2 = (DefaultTableModel) ChiTietTable.getModel();
+        Object rowData[] = new Object[12];
+        try {
+            bus.getSingleById(search);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == search) {
+                System.out.println(list.get(i).getId());
+                rowData[0] = list.get(i).getId();
+                rowData[1] = list.get(i).getProductId();
+                rowData[2] = list.get(i).getPrice();
+                rowData[3] = list.get(i).getQuanity();
+                rowData[4] = list.get(i).getImportId();
+                rowData[4] = list.get(i).isStatus();
+                model2.addRow(rowData);
+            }
+        }
+    }//GEN-LAST:event_TimKiemBtnActionPerformed
 
     /**
      * @param args the command line arguments

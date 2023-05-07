@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import DTO.DTO_Order;
 import UTILS.ConnectDB;
+import java.sql.Statement;
 
 public class DAO_Order {
     private String table_name = "orders";
@@ -46,6 +47,7 @@ public class DAO_Order {
 					.prepareStatement("SELECT * FROM " + this.table_name +" WHERE order_id = ? where status = 1");
 			ptm.setInt(1, id);
 			rs = ptm.executeQuery();
+                        
 			while (rs.next()) {
 				int orderId = rs.getInt("order_id");
 				int accountId = rs.getInt("account_id");
@@ -62,25 +64,30 @@ public class DAO_Order {
 		return suppilier;
 	}
 
-	public boolean create(DTO_Order newObj) throws SQLException {
+	public int create(DTO_Order newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
+                int id = 0;
 		try {
-			String query = "INSERT INTO " + this.table_name +"(account_id, order_date, customer_id)" + "VALUES (?, ?, ?);";
+			String query = "INSERT INTO " + this.table_name +"(account_id, customer_id)" + "VALUES (?, ?);";
 
-			PreparedStatement ptm = con.getConnection().prepareStatement(query);
+			PreparedStatement ptm = con.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ptm.setInt(1, newObj.getAccountId());
-			ptm.setString(2, newObj.getOrderDate());
-			ptm.setInt(3, newObj.getCustomerId());
-
-			int result = ptm.executeUpdate();
+			ptm.setInt(2, newObj.getCustomerId());
+                        
+			ptm.executeUpdate();
+                        
+                        ResultSet rs = ptm.getGeneratedKeys();
+                        if (rs.next()){
+                            id=rs.getInt(1);
+                        }
 			con.closeConnection();
-			return result > 0;
+			return id;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("loi dao suppilier khong tao dc");
 		}
-		return false;
+		return id;
 	}
 
 	public boolean updateById(DTO_Order newObj) throws SQLException {

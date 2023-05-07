@@ -160,7 +160,7 @@ public class TestExportImoprtExcel extends javax.swing.JFrame {
 
         try {
             JFileChooser jfile = new JFileChooser();
-           jfile.setSelectedFile(new File("untitled.xls"));
+            jfile.setSelectedFile(new File("untitled.xls"));
 
             int seleted = jfile.showSaveDialog(this);
 

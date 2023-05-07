@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -367,7 +368,11 @@ public class HomeGUI extends javax.swing.JFrame {
     private void btnTaoDonHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoDonHangActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        new TaoDonHangGUI().setVisible(true);
+        try {
+            new TaoDonHangGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btnTaoDonHangActionPerformed
 

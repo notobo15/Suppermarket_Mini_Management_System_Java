@@ -9,6 +9,10 @@ public class DTO_Order {
 	public DTO_Order() {
 		super();
 	}
+        public DTO_Order( int accountId, int customerId) {
+		this.accountId = accountId;
+		this.customerId = customerId;
+	}
 	public DTO_Order(int orderId, int accountId, String orderDate, int customerId, boolean status) {
 		super();
 		this.orderId = orderId;

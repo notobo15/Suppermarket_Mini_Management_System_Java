@@ -6,7 +6,6 @@ package GUI;
 
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
-import DTO.DTO_Customer;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
 import DTO.DTO_Product;
@@ -19,28 +18,26 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import GUI.*;
 import java.awt.print.PrinterException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTextArea;
+
 /**
  *
  * @author ADMIN
  */
-public class InHoaDon extends javax.swing.JFrame {
+public class InPhieuNhap extends javax.swing.JFrame {
 
     private ArrayList<DTO_Product> list = new ArrayList<>();
-    private Session session = new Session();
-    private DTO_Customer cus = null;
+
     /**
      * Creates new form CustomerGUI
      */
-    public InHoaDon(ArrayList<DTO_Product> list, DTO_Customer cus) throws SQLException {
+    public InPhieuNhap(ArrayList<DTO_Product> list) throws SQLException {
         initComponents();
         this.list = list;
-         this.cus = cus;
         writeDetail();
         this.setLocationRelativeTo(null);
     }
@@ -150,17 +147,16 @@ public class InHoaDon extends javax.swing.JFrame {
 
     private void writeDetail() throws SQLException {
         ta1.setText("");
-DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-Date date = new Date();
+
         ta1.setText(ta1.getText() + "                      PHẦN MỀM QUẢN LÝ SIÊU THỊ MINI                      \n\n");
         ta1.setText(ta1.getText() + "    ĐỊA CHỈ: 123, Phường 5, Quận 5, Hồ Chí Minh                           \n");
         ta1.setText(ta1.getText() + "    SỐ ĐIỆN THOẠI: 0987654321                                             \n");
         ta1.setText(ta1.getText() + "                               --------------------------                        \n");
-        ta1.setText(ta1.getText() + "                                       HÓA ĐƠN                                 \n\n");
+        ta1.setText(ta1.getText() + "                                       PHIẾU NHẬP                                \n\n");
         ta1.setText(ta1.getText() + "    ID:   1122312                                                         \n");
-        ta1.setText(ta1.getText() + "    THỜI GIAN:  "+dateFormat.format(date)+"                                           \n");
-        ta1.setText(ta1.getText() + "    NHÂN VIÊN: "+session.getName()+"                                              \n");
-        ta1.setText(ta1.getText() + "    KHÁCH HÀNG: "+cus.getName()+"                                             \n");
+        ta1.setText(ta1.getText() + "    THỜI GIAN:  00:00:00 1-1-2012                                           \n");
+        ta1.setText(ta1.getText() + "    NHÂN VIÊN: NGUYỄN VĂN A                                              \n");
+        ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: NGUYỄN VẮN A                                              \n");
 
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 
@@ -179,7 +175,6 @@ Date date = new Date();
 
         ta1.setText(ta1.getText() + "    TỔNG TIỀN: \t\t" + sum + " VNĐ\n");
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
-        ta1.setText(ta1.getText() + "                   XIN CẢM ƠN QUÝ KHÁC.HEN GẶP LẠI.    \n");
     }
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -188,29 +183,10 @@ Date date = new Date();
             aw.setVisible(true);
         } else
         try {
-             
+
             ta1.print();
-            BUS_Order bus_order = new BUS_Order();
-            BUS_OrderDetail bus_order_detail = new BUS_OrderDetail();
-            
-            DTO_Order order = new DTO_Order(session.getId(), cus.getCustomerId());
-            try {
-                int id = Integer.parseInt(bus_order.add(order));
-                
-                for (int i = 0; i < list.size(); i++) {
-                     DTO_OrderDetail detail = new DTO_OrderDetail(id, list.get(i).getProductId(), list.get(i).getPrice(), list.get(i).getQuantity());
-                    bus_order_detail.add(detail);
-                }
-                this.dispose();
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-            
         } catch (PrinterException ex) {
-            Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPrintActionPerformed
 
@@ -219,9 +195,8 @@ Date date = new Date();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
-        this.dispose();
         // TODO add your handling code here:
+         this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -241,14 +216,22 @@ Date date = new Date();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InPhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InPhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InPhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InHoaDon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InPhieuNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

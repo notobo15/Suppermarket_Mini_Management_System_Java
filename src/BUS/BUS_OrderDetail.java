@@ -32,14 +32,14 @@ public class BUS_OrderDetail {
 		if (!isExist) {
 			boolean isSuccess = dao.create(acc);
 			if (isSuccess) {
-				new AlertWarning("Tạo chi tiết order thành công").setVisible(true);
+//				new AlertWarning("Tạo chi tiết order thành công").setVisible(true);
 				return "tao thanh cong";
 			} else {
-				new AlertWarning("Tạo chi tiết order không thành công").setVisible(true);
+//				new AlertWarning("Tạo chi tiết order không thành công").setVisible(true);
 				return "tao khong thanh cong";
 			}
 		} else {
-			new AlertWarning("chi tiết order đã có trong hệ thống!").setVisible(true);
+//			new AlertWarning("chi tiết order đã có trong hệ thống!").setVisible(true);
 			return "name da duoc tim thay trong db";
 		}
 	}

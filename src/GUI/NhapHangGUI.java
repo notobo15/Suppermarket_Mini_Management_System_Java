@@ -7,11 +7,15 @@ package GUI;
 import BUS.BUS_CategoryProduct;
 import BUS.BUS_Customer;
 import BUS.BUS_Product;
+import BUS.BUS_Suppilier;
 import DAO.DAO_Account;
 import DTO.DTO_CategoryProduct;
 import DTO.DTO_Customer;
 import DTO.DTO_Product;
+import DTO.DTO_Suppilier;
 import GUI.Components.ThemKhachHang;
+import GUI.Components.ThemNCC;
+import GUI.Components.ThemSanPham;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
@@ -36,18 +40,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ADMIN
  */
-public class TaoDonHangGUI extends javax.swing.JFrame {
+public class NhapHangGUI extends javax.swing.JFrame {
 
     private ArrayList<DTO_Product> list_product = new ArrayList<DTO_Product>();
     private DTO_Product product = new DTO_Product();
     private ArrayList<DTO_Product> all_product = new ArrayList<DTO_Product>();
     private int indexGioHangTable;
 
-    public TaoDonHangGUI() throws SQLException {
+    public NhapHangGUI() throws SQLException {
         initComponents();
 
         jtf_cap_nhat_quantity.setEditable(false);
         btn_cap_nhat_quantity.setEnabled(false);
+        jtf_update_gia.setEditable(false);
+        btn_cap_nhap_gia.setEnabled(false);
         this.setLocationRelativeTo(null);
 
         BUS_Product bus_product = new BUS_Product();
@@ -55,7 +61,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
 
         renderTableProduct(all_product);
 
-        renderCustomer();
+        renderNCC();
 
         // tim kiem
         DefaultComboBoxModel<String> model_jcb_ten_or_id = new DefaultComboBoxModel<>(new String[]{"Tất Cả", "Theo Tên", "Theo Id"});
@@ -73,12 +79,12 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
 
     }
 
-    private void renderCustomer() throws SQLException {
-        BUS_Customer bus_customer = new BUS_Customer();
-        ArrayList<DTO_Customer> list_customer = bus_customer.getList();
+    private void renderNCC() throws SQLException {
+        BUS_Suppilier bus_ncc = new BUS_Suppilier();
+        ArrayList<DTO_Suppilier> list_customer = bus_ncc.getList();
         String list_name_customer[] = new String[list_customer.size()];
         for (int i = 0; i < list_customer.size(); i++) {
-            list_name_customer[i] = list_customer.get(i).getCustomerId() + " - " + list_customer.get(i).getName();
+            list_name_customer[i] = list_customer.get(i).getSuppilierId() + " - " + list_customer.get(i).getName();
 
         }
         DefaultComboBoxModel<String> modelComboBox = new DefaultComboBoxModel<>(list_name_customer);
@@ -159,6 +165,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jcb_khach_hang = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -173,19 +180,23 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         btn_cap_nhat_quantity = new javax.swing.JButton();
         jlb_tong_tien = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btn_cap_nhap_gia = new javax.swing.JButton();
+        jtf_update_gia = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         ThemGHBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtf_so_luong_product = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jtf_gia_nhap = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1225, 740));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("TẠO ĐƠN HÀNG");
-        jPanel2.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(559, 0, -1, -1));
+        Title.setText("TẠO ĐƠN NHẬP HÀNG");
+        jPanel2.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, -1, -1));
         jPanel2.add(clockGUI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(986, 1, 209, -1));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -256,18 +267,18 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jPanel6.setLayout(new java.awt.BorderLayout());
         jPanel6.add(Jlb_img, java.awt.BorderLayout.CENTER);
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 180, 160));
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 180, 170));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel9.setText("Khách hàng");
+        jLabel9.setText("Nhà Cung Cấp");
 
         jcb_khach_hang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jcb_khach_hang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("Thêm Khách Hàng Mới");
+        jButton1.setText("Thêm NCC Mới");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -281,26 +292,34 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setText("Thêm SP");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jcb_khach_hang, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(49, 49, 49))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +331,9 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jcb_khach_hang, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -324,23 +345,17 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Giỏ hàng");
+        jLabel5.setText("Danh Sách SP Nhập");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 59, 540, -1));
@@ -393,7 +408,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Tổng số tiền");
-        jPanel10.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 140, 31));
+        jPanel10.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 140, 31));
 
         btn_xoa_product.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btn_xoa_product.setText("Xoá sản phẩm");
@@ -405,7 +420,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jPanel10.add(btn_xoa_product, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, 70));
 
         btn_clear_cart.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btn_clear_cart.setText("Làm sạch giỏ hàng");
+        btn_clear_cart.setText("Làm sạch");
         btn_clear_cart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_clear_cartMouseClicked(evt);
@@ -419,48 +434,74 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jPanel10.add(btn_clear_cart, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 200, 70));
 
         DatHangBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        DatHangBtn.setText("IN HÓA ĐƠN & ĐẶT HÀNG");
+        DatHangBtn.setText("IN HÓA ĐƠN & NHẬP HÀNG");
         DatHangBtn.setToolTipText("");
         DatHangBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DatHangBtnActionPerformed(evt);
             }
         });
-        jPanel10.add(DatHangBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 260, 100));
+        jPanel10.add(DatHangBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 270, 70));
 
+        btn_cap_nhat_quantity.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btn_cap_nhat_quantity.setText("Cập Nhật");
         btn_cap_nhat_quantity.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_cap_nhat_quantityMouseClicked(evt);
             }
         });
-        jPanel10.add(btn_cap_nhat_quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 100, 50));
+        jPanel10.add(btn_cap_nhat_quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 100, 50));
 
         jlb_tong_tien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jlb_tong_tien.setText("0");
-        jPanel10.add(jlb_tong_tien, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 120, 30));
+        jPanel10.add(jlb_tong_tien, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 120, 30));
 
         jLabel4.setText("VNĐ");
-        jPanel10.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 60, 30));
+        jPanel10.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 60, 30));
+
+        btn_cap_nhap_gia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btn_cap_nhap_gia.setText("Cập Nhật");
+        btn_cap_nhap_gia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_cap_nhap_giaMouseClicked(evt);
+            }
+        });
+        jPanel10.add(btn_cap_nhap_gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 120, 50));
+
+        jtf_update_gia.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jtf_update_gia.setText("1");
+        jPanel10.add(jtf_update_gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 100, 50));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Nhập giá cần sửa");
+        jPanel10.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 230, 30));
 
         jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 287, 540, 281));
 
-        ThemGHBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ThemGHBtn.setText("Thêm vào giỏ hàng");
+        ThemGHBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ThemGHBtn.setText("Thêm");
         ThemGHBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ThemGHBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(ThemGHBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 330, 53));
+        jPanel2.add(ThemGHBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, 190, 53));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Số Lượng");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 90, 50));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, 50));
 
         jtf_so_luong_product.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jtf_so_luong_product.setText("1");
-        jPanel2.add(jtf_so_luong_product, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, 190, 50));
+        jtf_so_luong_product.setText("100");
+        jPanel2.add(jtf_so_luong_product, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 110, 50));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Giá Nhập");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 90, 50));
+
+        jtf_gia_nhap.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jtf_gia_nhap.setText("0");
+        jPanel2.add(jtf_gia_nhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, 150, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -501,17 +542,10 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
     private void DatHangBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatHangBtnActionPerformed
         try {
             // TODO add your handling code here
-            BUS_Customer bus_customer = new BUS_Customer();
-            String cus = jcb_khach_hang.getSelectedItem().toString();
-            int a = cus.charAt(0);
-            int cus_id = Character.getNumericValue(a);
-            
-            DTO_Customer customer = bus_customer.getSingleById(cus_id);
-            
-            
-            new InHoaDon(list_product,customer).setVisible(true);
+
+            new InPhieuNhap(list_product).setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(TaoDonHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_DatHangBtnActionPerformed
@@ -563,6 +597,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         if (product.getProductId() != 0) {
             try {
                 product.setQuantity(Float.parseFloat(jtf_so_luong_product.getText()));
+                product.setPrice(Float.parseFloat(jtf_gia_nhap.getText()));
             } catch (Exception e) {
                 System.out.println("CHi nhap so");
                 return;
@@ -606,9 +641,12 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         if (indexGioHangTable >= 0) {
             jtf_cap_nhat_quantity.setEditable(true);
             btn_cap_nhat_quantity.setEnabled(true);
+            jtf_update_gia.setEditable(true);
+            btn_cap_nhap_gia.setEnabled(true);
             for (int i = 0; i < list_product.size(); i++) {
                 if (indexGioHangTable == i) {
                     jtf_cap_nhat_quantity.setText("" + list_product.get(i).getQuantity());
+                    jtf_update_gia.setText("" + list_product.get(i).getPrice());
                     break;
                 }
 
@@ -723,7 +761,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        new ThemKhachHang().setVisible(true);
+        new ThemNCC().setVisible(true);
 
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -731,11 +769,41 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
 
-            renderCustomer();
+            renderNCC();
         } catch (SQLException ex) {
-            Logger.getLogger(TaoDonHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void btn_cap_nhap_giaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cap_nhap_giaMouseClicked
+         // TODO add your handling code here:
+        try {
+            float price = Float.parseFloat(jtf_update_gia.getText());
+            System.out.println(price);
+            for (int i = 0; i < list_product.size(); i++) {
+                if (indexGioHangTable == i) {
+                    list_product.get(i).setPrice(price);
+                    break;
+                }
+
+            }
+            renderTableGioHang();
+
+        } catch (Exception e) {
+            System.out.println("GUI.TaoDonHangGUI.btn_cap_nhat_quantityMouseClicked()");
+            return;
+        }
+    }//GEN-LAST:event_btn_cap_nhap_giaMouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        try {
+            // TODO add your handling code here:
+            new ThemSanPham().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -754,14 +822,18 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TaoDonHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NhapHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TaoDonHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NhapHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TaoDonHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NhapHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TaoDonHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NhapHangGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -771,9 +843,9 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new TaoDonHangGUI().setVisible(true);
+                    new NhapHangGUI().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(TaoDonHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -786,6 +858,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
     private javax.swing.JTable SanPhamTable;
     private javax.swing.JButton ThemGHBtn;
     private javax.swing.JLabel Title;
+    private javax.swing.JButton btn_cap_nhap_gia;
     private javax.swing.JButton btn_cap_nhat_quantity;
     private javax.swing.JButton btn_clear_cart;
     private javax.swing.JButton btn_search;
@@ -793,12 +866,15 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -813,7 +889,9 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jcb_search_ten_or_id;
     private javax.swing.JLabel jlb_tong_tien;
     private javax.swing.JTextField jtf_cap_nhat_quantity;
+    private javax.swing.JTextField jtf_gia_nhap;
     private javax.swing.JTextField jtf_search;
     private javax.swing.JTextField jtf_so_luong_product;
+    private javax.swing.JTextField jtf_update_gia;
     // End of variables declaration//GEN-END:variables
 }

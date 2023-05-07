@@ -22,6 +22,13 @@ public class DTO_OrderDetail {
 		this.order_id = order_id;
 		this.status = status;
 	}
+        public DTO_OrderDetail(int order_id, int product_id, float price, float quanity) {
+		super();
+		this.product_id = product_id;
+		this.price = price;
+		this.quanity = quanity;
+		this.order_id = order_id;
+	}
 	public int getId() {
 		return id;
 	}
