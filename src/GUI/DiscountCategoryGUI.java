@@ -25,7 +25,7 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
      * Creates new form DiscountCategory
      */
     public DiscountCategoryGUI() {
-        initComponents();
+        initComponents(); this.setLocationRelativeTo(null);
         try {
             addRowToJTable();
         } catch (SQLException ex) {
@@ -363,7 +363,7 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         );
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel19.setText("Giảm giá");
+        jLabel19.setText("GIẢM GIÁ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

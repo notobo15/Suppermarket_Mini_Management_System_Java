@@ -4,8 +4,8 @@
  */
 package GUI;
 
-
 import BUS.BUS_Suppilier;
+import DTO.DTO_Account;
 import DTO.DTO_Suppilier;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,30 +21,33 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SuppilierGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SuppilierGUI
-     */
-    public SuppilierGUI() throws Exception{
+    private ArrayList<DTO_Suppilier> list = new ArrayList<>();
+
+    public SuppilierGUI() throws Exception {
         initComponents();
+        this.setLocationRelativeTo(null);
         try {
-            addRowToJTable();
-            } catch (SQLException ex) {
+            BUS_Suppilier bus_suppilier = new BUS_Suppilier();
+            list = bus_suppilier.getList();
+            addRowToJTable(list);
+        } catch (SQLException ex) {
             Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
     }
-    public void clear()
-    {
+
+    public void clear() {
         tfSuppiliername.setText("");
         tfAddress.setText("");
         tfPhone.setText("");
     }
-    public void addRowToJTable() throws SQLException {
-        BUS_Suppilier bus_suppilier = new BUS_Suppilier();
-        ArrayList<DTO_Suppilier> list = bus_suppilier.getList();
+
+    public void addRowToJTable(ArrayList<DTO_Suppilier> list) throws SQLException {
+
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         Object rowData[] = new Object[4];
-        
+
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getName());
             rowData[0] = list.get(i).getSuppilierId();
@@ -53,8 +56,9 @@ public class SuppilierGUI extends javax.swing.JFrame {
             rowData[3] = list.get(i).getPhone();
             model.addRow(rowData);
         }
-                
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,8 +87,8 @@ public class SuppilierGUI extends javax.swing.JFrame {
         jButton22 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
+        jtf_id = new javax.swing.JTextField();
+        jtf_ten = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
         clockGUI1 = new GUI.Components.ClockGUI();
         btnrefresh = new javax.swing.JButton();
@@ -92,14 +96,15 @@ public class SuppilierGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("SUPPILIER");
+        jLabel1.setText("NHÀ CUNG CẤP");
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Suppilier name", "Address", "Phone"
+                "ID", "Tên Nhà Cung Cấp", "Địa Chỉ", "SĐT"
             }
         ) {
             Class[] types = new Class [] {
@@ -127,6 +132,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 233, 166));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18))); // NOI18N
 
+        btnThem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +140,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
             }
         });
 
+        btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setEnabled(false);
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +149,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSua.setText("Sửa");
         btnSua.setEnabled(false);
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +158,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
             }
         });
 
+        btnReset.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,12 +166,20 @@ public class SuppilierGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Suppilier name");
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setText("Tên");
 
-        jLabel16.setText("Address");
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel16.setText("Địa Chỉ");
 
-        Phone.setText("Phone");
+        Phone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Phone.setText("SĐT");
 
+        tfAddress.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        tfSuppiliername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        tfPhone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tfPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPhoneActionPerformed(evt);
@@ -226,34 +243,55 @@ public class SuppilierGUI extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(143, 209, 158));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18))); // NOI18N
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("Tìm kiếm");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
+        jButton22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton22.setText("Hủy tìm kiếm");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
 
-        jLabel23.setText("Suppilier name");
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel23.setText("Id");
 
-        jLabel26.setText("Phone");
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel26.setText("Tên");
+
+        jtf_id.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jtf_ten.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField20))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtf_ten, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
+                        .addGap(51, 51, 51)
+                        .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 121, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,14 +299,16 @@ public class SuppilierGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnrefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset_32.png"))); // NOI18N
@@ -295,7 +335,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(446, 446, 446)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(header1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -312,11 +352,11 @@ public class SuppilierGUI extends javax.swing.JFrame {
                     .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnrefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -325,22 +365,21 @@ public class SuppilierGUI extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         DTO_Suppilier acc = new DTO_Suppilier();
-        BUS_Suppilier tmp = new BUS_Suppilier();   
-        if(tfSuppiliername.getText().equals(""))
+        BUS_Suppilier tmp = new BUS_Suppilier();
+        if (tfSuppiliername.getText().equals(""))
             new AlertWarning("Vui lòng nhập tên nhà cung cấp!!").setVisible(true);
-        else if(tfPhone.getText().equals(""))
+        else if (tfPhone.getText().equals(""))
             new AlertWarning("Vui lòng nhập số điện thoại!!").setVisible(true);
-        else
-        {
+        else {
             acc.setName(tfSuppiliername.getText());
-            acc.setPhone(tfPhone.getText());                   
-            acc.setAddress(tfAddress.getText());  
-                       
+            acc.setPhone(tfPhone.getText());
+            acc.setAddress(tfAddress.getText());
+
             try {
                 tmp.add(acc);
             } catch (SQLException ex) {
                 Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -360,15 +399,15 @@ public class SuppilierGUI extends javax.swing.JFrame {
         btnThem.setEnabled(false);
         btnXoa.setEnabled(true);
         btnSua.setEnabled(true);
-        tfSuppiliername.setEditable(false);
-        
+//        tfSuppiliername.setEditable(false);
+
         int i = jTable1.getSelectedRow();
         System.out.println(i);
         tfSuppiliername.setText(jTable1.getModel().getValueAt(i, 1).toString());
         tfAddress.setText(jTable1.getModel().getValueAt(i, 2).toString());
         tfPhone.setText(jTable1.getModel().getValueAt(i, 3).toString());
-        
-        
+
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
@@ -380,51 +419,116 @@ public class SuppilierGUI extends javax.swing.JFrame {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
-            addRowToJTable();
+            BUS_Suppilier bus_suppilier = new BUS_Suppilier();
+            list = bus_suppilier.getList();
+            addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnrefreshActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        BUS_Suppilier tmp = new BUS_Suppilier();      
+        BUS_Suppilier tmp = new BUS_Suppilier();
         int i = jTable1.getSelectedRow();
-        int id = (int) jTable1.getModel().getValueAt(i, 0);       
+        int id = (int) jTable1.getModel().getValueAt(i, 0);
         try {
             tmp.delete(id);
         } catch (SQLException ex) {
             Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         DTO_Suppilier acc = new DTO_Suppilier();
-        BUS_Suppilier tmp = new BUS_Suppilier();   
-        
-        int a=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn sửa chứ!!");  
+        BUS_Suppilier tmp = new BUS_Suppilier();
+
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ!!");
         // new AlertMessageYN();
-        if(a == JOptionPane.YES_OPTION)
-        {            
+        if (a == JOptionPane.YES_OPTION) {
             acc.setName(tfSuppiliername.getText());
-            acc.setPhone(tfPhone.getText());          
-            acc.setAddress(tfAddress.getText());   
+            acc.setPhone(tfPhone.getText());
+            acc.setAddress(tfAddress.getText());
             int i = jTable1.getSelectedRow();
-            int id = (int) jTable1.getModel().getValueAt(i, 0);        
-            acc.setSuppilierId(id);          
+            int id = (int) jTable1.getModel().getValueAt(i, 0);
+            acc.setSuppilierId(id);
             try {
                 tmp.update(acc);
             } catch (SQLException ex) {
                 Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // TODO add your handling code here:
+
+        jtf_id.setText("");
+        jtf_ten.setText("");
+        BUS_Suppilier bus_suppilier = new BUS_Suppilier();
+        try {
+            list = bus_suppilier.getList();
+            addRowToJTable(list);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        String id = jtf_id.getText();
+        String ten = jtf_ten.getText();
+
+        ArrayList<DTO_Suppilier> filter_id = new ArrayList<>();
+        ArrayList<DTO_Suppilier> filter_ten = new ArrayList<>();
+        ArrayList<DTO_Suppilier> filter = new ArrayList<>();
+        if (id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSuppilierId() == Integer.parseInt(id)) {
+                    filter_id.add(list.get(i));
+                }
+            }
+            filter = filter_id;
+
+        }
+
+        if (ten.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getName().toLowerCase().contains(ten.toLowerCase())) {
+                    filter_ten.add(list.get(i));
+                }
+            }
+            filter = filter_ten;
+
+        }
+        if (ten.length() != 0 && id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getName().toLowerCase().contains(ten.toLowerCase()) && list.get(i).getSuppilierId() == Integer.parseInt(id)) {
+                    filter.add(list.get(i));
+                }
+            }
+        }
+        try {
+            System.out.println(filter);
+            addRowToJTable(filter);
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
      */
- 
+    public static void main(String[] args) throws Exception {
+        new SuppilierGUI().setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Phone;
@@ -446,8 +550,8 @@ public class SuppilierGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
+    private javax.swing.JTextField jtf_id;
+    private javax.swing.JTextField jtf_ten;
     private javax.swing.JTextField tfAddress;
     private javax.swing.JTextField tfPhone;
     private javax.swing.JTextField tfSuppiliername;

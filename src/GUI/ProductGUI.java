@@ -29,7 +29,7 @@ public class ProductGUI extends javax.swing.JFrame {
      * Creates new form ProductGUI
      */
     public ProductGUI() {
-        initComponents();
+        initComponents(); this.setLocationRelativeTo(null);
         try {
             addRowToJTable();
         } catch (SQLException ex) {
@@ -309,7 +309,7 @@ public class ProductGUI extends javax.swing.JFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(input_hinh)

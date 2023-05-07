@@ -4,7 +4,6 @@
  */
 package GUI;
 
-
 import BUS.BUS_Customer;
 import DTO.DTO_Customer;
 import java.sql.SQLException;
@@ -24,18 +23,22 @@ import javax.swing.table.DefaultTableModel;
  * @author ADMIN
  */
 public class CustomerGUI extends javax.swing.JFrame {
-    public CustomerGUI() throws Exception{
-        initComponents();
+
+    private ArrayList<DTO_Customer> list = new ArrayList<DTO_Customer>();
+
+    public CustomerGUI() throws Exception {
+        initComponents(); this.setLocationRelativeTo(null);
         try {
-            
-            addRowToJTable();
+            BUS_Customer bus_customer = new BUS_Customer();
+            list = bus_customer.getList();
+            addRowToJTable(list);
             displayDate();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void displayDate() throws ParseException
-    {
+
+    public void displayDate() throws ParseException {
         Calendar ca = new GregorianCalendar();
         String day = ca.get(Calendar.DAY_OF_MONTH) + "";
         String month = ca.get(Calendar.MONTH) + 1 + "";
@@ -50,26 +53,27 @@ public class CustomerGUI extends javax.swing.JFrame {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
         jDateChooser1.setDate(date);
     }
-    public void clear()
-    {
+
+    public void clear() {
         tfCustomername.setText("");
         tfPhone.setText("");
-        tfAddress.setText(""); 
+        tfAddress.setText("");
         jRadioButtonNam.setSelected(true);
         //JOptionPane.showMessageDialog(rootPane, "ban vua click");
-        try {        
+        try {
             displayDate();
         } catch (ParseException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    public void addRowToJTable() throws SQLException {
-        BUS_Customer bus_customer = new BUS_Customer();
-        ArrayList<DTO_Customer> list = bus_customer.getList();
+
+    public void addRowToJTable(ArrayList<DTO_Customer> list) throws SQLException {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
         Object rowData[] = new Object[6];
-        
+
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getBirthDate());
             rowData[0] = list.get(i).getCustomerId();
@@ -80,8 +84,9 @@ public class CustomerGUI extends javax.swing.JFrame {
             rowData[5] = list.get(i).getAddress();
             model.addRow(rowData);
         }
-                
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,8 +121,10 @@ public class CustomerGUI extends javax.swing.JFrame {
         jButton22 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField19 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
+        jtf_id = new javax.swing.JTextField();
+        jtf_ten = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jtf_sdt = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
         clockGUI1 = new GUI.Components.ClockGUI();
         btnRefresh = new javax.swing.JButton();
@@ -153,6 +160,7 @@ public class CustomerGUI extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 233, 166));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18))); // NOI18N
 
+        btnThem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +168,7 @@ public class CustomerGUI extends javax.swing.JFrame {
             }
         });
 
+        btnXoa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setEnabled(false);
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -168,6 +177,7 @@ public class CustomerGUI extends javax.swing.JFrame {
             }
         });
 
+        btnSua.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSua.setText("Sửa");
         btnSua.setEnabled(false);
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -176,6 +186,7 @@ public class CustomerGUI extends javax.swing.JFrame {
             }
         });
 
+        btnReset.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,20 +194,33 @@ public class CustomerGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Customer name");
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setText("Tên");
 
-        jLabel15.setText("Birth date");
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel15.setText("Ngày Sinh");
 
-        jLabel16.setText("Phone");
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel16.setText("SĐT");
 
-        jLabel17.setText("Address");
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel17.setText("Địa Chỉ");
 
-        jLabel20.setText("Gender");
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel20.setText("Giới Tính");
+
+        tfCustomername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        tfPhone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        tfAddress.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         buttonGroup1.add(jRadioButtonNam);
+        jRadioButtonNam.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jRadioButtonNam.setText("Nam");
 
         buttonGroup1.add(jRadioButtonNu);
+        jRadioButtonNu.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jRadioButtonNu.setText("Nữ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -207,26 +231,26 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jRadioButtonNam)
-                                .addGap(26, 26, 26)
-                                .addComponent(jRadioButtonNu, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCustomername)))
-                .addGap(81, 81, 81)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tfCustomername))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonNam)
+                        .addGap(26, 26, 26)
+                        .addComponent(jRadioButtonNu, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 38, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfPhone)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfAddress)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,54 +259,74 @@ public class CustomerGUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(tfCustomername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfCustomername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRadioButtonNam)
-                            .addComponent(jRadioButtonNu)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jRadioButtonNu))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(143, 209, 158));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 18))); // NOI18N
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("Tìm kiếm");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
+        jButton22.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton22.setText("Hủy tìm kiếm");
 
-        jLabel23.setText("Customer name");
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel23.setText("id");
 
-        jLabel26.setText("Phone");
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel26.setText("Ten");
+
+        jtf_id.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jtf_ten.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("SĐT");
+
+        jtf_sdt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -292,17 +336,21 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField20))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtf_ten)
+                            .addComponent(jtf_sdt))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(41, 41, 41))
         );
         jPanel4Layout.setVerticalGroup(
@@ -311,13 +359,19 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtf_sdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(3, 3, 3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -337,7 +391,7 @@ public class CustomerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)
+                        .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
@@ -351,7 +405,7 @@ public class CustomerGUI extends javax.swing.JFrame {
                         .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
@@ -367,7 +421,7 @@ public class CustomerGUI extends javax.swing.JFrame {
                     .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -382,16 +436,16 @@ public class CustomerGUI extends javax.swing.JFrame {
         btnThem.setEnabled(false);
         btnXoa.setEnabled(true);
         btnSua.setEnabled(true);
-        
-        int  i=jTable1.getSelectedRow();
+
+        int i = jTable1.getSelectedRow();
         System.out.println(i);
         tfCustomername.setText(jTable1.getModel().getValueAt(i, 1).toString());
         tfPhone.setText(jTable1.getModel().getValueAt(i, 2).toString());
         if (jTable1.getModel().getValueAt(i, 3).toString().equalsIgnoreCase("nam")) {
             jRadioButtonNam.setSelected(true);
-        }else  {
+        } else {
             jRadioButtonNu.setSelected(true);
-       }
+        }
         Date date;
         try {
             System.out.println("birst date :" + jTable1.getModel().getValueAt(i, 4).toString());
@@ -402,78 +456,75 @@ public class CustomerGUI extends javax.swing.JFrame {
             Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         tfAddress.setText(jTable1.getModel().getValueAt(i, 5).toString());
-        
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         btnThem.setEnabled(true);
         btnSua.setEnabled(false);
         btnXoa.setEnabled(false);
-              
+
         clear();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         DTO_Customer acc = new DTO_Customer();
-        BUS_Customer tmp = new BUS_Customer();   
-        if(tfCustomername.getText().equals(""))
+        BUS_Customer tmp = new BUS_Customer();
+        if (tfCustomername.getText().equals(""))
             new AlertWarning("Vui lòng nhập tên khách hàng!!").setVisible(true);
-        else if(tfPhone.getText().equals(""))
+        else if (tfPhone.getText().equals(""))
             new AlertWarning("Vui lòng nhập số điện thoại!!").setVisible(true);
-        else
-        {
+        else {
             acc.setName(tfCustomername.getText());
-            acc.setPhone(tfPhone.getText());   
-            if(jRadioButtonNam.isSelected())
-            {
+            acc.setPhone(tfPhone.getText());
+            if (jRadioButtonNam.isSelected()) {
                 acc.setGender("nam");
+            } else {
+                acc.setGender("nu");
             }
-            else
-                acc.setGender("nu"); 
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-            acc.setBirthDate(temp); 
-            acc.setAddress(tfAddress.getText());  
-                       
+            acc.setBirthDate(temp);
+            acc.setAddress(tfAddress.getText());
+
             try {
                 tmp.addCustomer(acc);
             } catch (SQLException ex) {
                 Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        BUS_Customer tmp = new BUS_Customer();      
+        BUS_Customer tmp = new BUS_Customer();
         int i = jTable1.getSelectedRow();
         int id = (int) jTable1.getModel().getValueAt(i, 0);
         try {
             tmp.delete(id);
         } catch (SQLException ex) {
             Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }         
+        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         DTO_Customer acc = new DTO_Customer();
-        BUS_Customer tmp = new BUS_Customer();   
-        
-        int a=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn sửa chứ!!");  
+        BUS_Customer tmp = new BUS_Customer();
+
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ!!");
         // new AlertMessageYN();
-        if(a == JOptionPane.YES_OPTION){  
+        if (a == JOptionPane.YES_OPTION) {
             acc.setName(tfCustomername.getText());
             acc.setPhone(tfPhone.getText());
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
-            acc.setBirthDate(temp);       
-            acc.setAddress(tfAddress.getText());   
-            if(jRadioButtonNam.isSelected())
-            {
+            acc.setBirthDate(temp);
+            acc.setAddress(tfAddress.getText());
+            if (jRadioButtonNam.isSelected()) {
                 acc.setGender("nam");
-            }
-            else
+            } else {
                 acc.setGender("nu");
+            }
 
             int i = jTable1.getSelectedRow();
-            int id = (int) jTable1.getModel().getValueAt(i, 0);        
+            int id = (int) jTable1.getModel().getValueAt(i, 0);
             acc.setCustomerId(id);
 
             try {
@@ -490,16 +541,58 @@ public class CustomerGUI extends javax.swing.JFrame {
         btnSua.setEnabled(false);
         btnXoa.setEnabled(false);
 
-        try {          
+        try {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            addRowToJTable();
+
+            addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRefreshActionPerformed
 
-  
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        String id = jtf_id.getText();
+        String sdt = jtf_sdt.getText();
+        String ten = jtf_ten.getText();
+        ArrayList<DTO_Customer> list_filter = new  ArrayList<DTO_Customer>();
+        if (id.length() != 0 ) {
+        
+        }
+        if (id.length() != 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getCustomerId() == Integer.parseInt(id)) {
+                    list_filter.add(list.get(i));
+                }
+            }
+        }
+        if (sdt.length() != 0) {
+             for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getPhone().contains(sdt)) {
+                    list_filter.add(list_filter.get(i));
+                }
+            }
+        }
+        if (ten.length() != 0) {
+             for (int i = 0; i < list_filter.size(); i++) {
+                if (list_filter.get(i).getName().contains(ten)) {
+                    list_filter.add(list_filter.get(i));
+                }
+            }
+        }
+        try {
+            addRowToJTable(list_filter);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    public static void main(String[] args) {
+        try {
+            new CustomerGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;
@@ -518,6 +611,7 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel26;
@@ -527,8 +621,9 @@ public class CustomerGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonNu;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
+    private javax.swing.JTextField jtf_id;
+    private javax.swing.JTextField jtf_sdt;
+    private javax.swing.JTextField jtf_ten;
     private javax.swing.JTextField tfAddress;
     private javax.swing.JTextField tfCustomername;
     private javax.swing.JTextField tfPhone;

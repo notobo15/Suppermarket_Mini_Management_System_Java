@@ -605,7 +605,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Gi&#x1ea3;m gi&#xe1;"/>
+        <Property name="text" type="java.lang.String" value="GI&#x1ea2;M GI&#xc1;"/>
       </Properties>
     </Component>
     <Component class="GUI.Components.ClockGUI" name="clockGUI1">

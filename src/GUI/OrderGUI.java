@@ -31,7 +31,7 @@ public class OrderGUI extends javax.swing.JFrame {
      * Creates new form CustomerGUI
      */
     public OrderGUI() {
-        initComponents();
+        initComponents(); this.setLocationRelativeTo(null);
         try {
             addRowToJTable();
         } catch (SQLException ex) {
