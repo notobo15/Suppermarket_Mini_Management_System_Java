@@ -8,6 +8,7 @@ import BUS.BUS_Account;
 import BUS.BUS_Role;
 import DTO.DTO_Account;
 import DTO.DTO_Role;
+import DTO.DTO_Suppilier;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -41,15 +42,6 @@ public class AccountGUI extends javax.swing.JFrame {
         list = bus_account.getList();
         addRowToJTable(list);
         displayDate();
-
-        BUS_Role bus_role = new BUS_Role();
-        ArrayList<DTO_Role> role = bus_role.getList();
-        String[] list_role = new String[role.size()];
-        for (int i = 0; i < role.size(); i++) {
-            list_role[i] = role.get(i).getRoleId() + " - " + role.get(i).getName();
-        }
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(list_role);
-        jComboBox1.setModel(model);
 
     }
 
@@ -93,8 +85,9 @@ public class AccountGUI extends javax.swing.JFrame {
     public void addRowToJTable(ArrayList<DTO_Account> list) throws SQLException {
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+         model.setRowCount(0);
         Object rowData[] = new Object[10];
-
+        
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getBirthDate());
             rowData[0] = list.get(i).getAccountId();
@@ -149,16 +142,13 @@ public class AccountGUI extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jRadioButtonNam = new javax.swing.JRadioButton();
         jRadioButtonNu = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jtf_search_user = new javax.swing.JTextField();
         jtf_search_id = new javax.swing.JTextField();
-        jtf_search_sdt = new javax.swing.JTextField();
         header1 = new GUI.Components.Header();
         clockGUI1 = new GUI.Components.ClockGUI();
         btnRefresh = new javax.swing.JButton();
@@ -307,8 +297,6 @@ public class AccountGUI extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -355,8 +343,7 @@ public class AccountGUI extends javax.swing.JFrame {
                         .addComponent(jRadioButtonNam, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonNu, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tfRoleID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfRoleID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -405,12 +392,9 @@ public class AccountGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfRoleID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfRoleID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jPanel3.setBackground(new java.awt.Color(143, 209, 158));
@@ -428,31 +412,24 @@ public class AccountGUI extends javax.swing.JFrame {
 
         jButton18.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton18.setText("Hủy tìm kiếm");
-        jPanel3.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 129, -1, 50));
+        jPanel3.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 129, 140, 50));
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel13.setText("Tên User ");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 90, 36));
-
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel14.setText("SĐT");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 106, 90, 40));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 90, 36));
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel15.setText("ID");
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 53, 90, -1));
 
         jtf_search_user.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPanel3.add(jtf_search_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 160, 37));
+        jPanel3.add(jtf_search_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 160, 37));
 
         jtf_search_id.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jPanel3.add(jtf_search_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 42, 160, 40));
 
-        jtf_search_sdt.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPanel3.add(jtf_search_sdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 107, 160, 39));
-
         btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset_32.png"))); // NOI18N
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset-32px.png"))); // NOI18N
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
@@ -506,7 +483,7 @@ public class AccountGUI extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         //tfAccountname.setEnabled(false);
-        tfAccountname.setEditable(false);
+//        tfAccountname.setEditable(false);
         btnThem.setEnabled(false);
         btnSua.setEnabled(true);
         btnXoa.setEnabled(true);
@@ -514,12 +491,6 @@ public class AccountGUI extends javax.swing.JFrame {
         int i = jTable1.getSelectedRow();
         System.out.println(i);
 
-        for (int j = 0; i < jComboBox1.getItemCount(); j++) {
-            String item = jComboBox1.getItemAt(j);
-            if (item.contains(jTable1.getModel().getValueAt(i, 9).toString())) {
-                jComboBox1.setSelectedItem(item);
-            }
-        }
         tfAccountname.setText(jTable1.getModel().getValueAt(i, 1).toString());
         tfPassword.setText(jTable1.getModel().getValueAt(i, 2).toString());
         tfFirstname.setText(jTable1.getModel().getValueAt(i, 3).toString());
@@ -571,7 +542,7 @@ public class AccountGUI extends javax.swing.JFrame {
             acc.setFirstName(tfFirstname.getText());
             acc.setLastName(tfLastname.getText());
             acc.setPhone(tfPhone.getText());
-
+            acc.setPhone(tfRoleID.getText());
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(jDateChooser1.getDate());
             acc.setBirthDate(temp);
             System.out.println("birst date :" + temp);
@@ -616,8 +587,11 @@ public class AccountGUI extends javax.swing.JFrame {
         btnXoa.setEnabled(false);
         tfAccountname.setEditable(true);
         try {
+
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
+            BUS_Account bus_account = new BUS_Account();
+            list = bus_account.getList();
             addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -663,15 +637,44 @@ public class AccountGUI extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-
+        ArrayList<DTO_Account> filter_id = new ArrayList<>();
+        ArrayList<DTO_Account> filter_ten = new ArrayList<>();
+        ArrayList<DTO_Account> filter = new ArrayList<>();
         String id = jtf_search_id.getText();
-        String user = jtf_search_user.getText();
-        String sdt = jtf_search_sdt.getText();
-
+        String ten = jtf_search_user.getText();
         if (id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getAccountId() == Integer.parseInt(id)) {
+                    filter_id.add(list.get(i));
+                }
+            }
+            filter = filter_id;
 
         }
+        if (ten.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getAccountName().toLowerCase().contains(ten.toLowerCase())) {
+                    filter_ten.add(list.get(i));
+                }
+            }
+            filter = filter_ten;
 
+        }
+        if (ten.length() != 0 && id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getAccountName().toLowerCase().contains(ten.toLowerCase()) && list.get(i).getAccountId()== Integer.parseInt(id)) {
+                    filter.add(list.get(i));
+                }
+            }
+        }
+        try {
+            addRowToJTable(filter);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**
@@ -692,13 +695,11 @@ public class AccountGUI extends javax.swing.JFrame {
     private GUI.Components.Header header1;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -714,7 +715,6 @@ public class AccountGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jtf_search_id;
-    private javax.swing.JTextField jtf_search_sdt;
     private javax.swing.JTextField jtf_search_user;
     private javax.swing.JTextField tfAccountname;
     private javax.swing.JTextField tfAddress;

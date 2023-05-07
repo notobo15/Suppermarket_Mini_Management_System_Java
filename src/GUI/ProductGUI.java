@@ -9,6 +9,7 @@ import DTO.DTO_Product;
 import DTO.DTO_CategoryProduct;
 import BUS.BUS_CategoryProduct;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import java.awt.Image;
 // import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -20,6 +21,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -112,10 +114,10 @@ public class ProductGUI extends javax.swing.JFrame {
         input_soluong = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        input_hinh = new javax.swing.JTextField();
         input_maloai = new javax.swing.JComboBox<>();
         input_hansudung = new com.toedter.calendar.JDateChooser();
         input_tinhtrang = new javax.swing.JComboBox<>();
+        jlb_img = new javax.swing.JLabel();
         btn_themsanpham = new javax.swing.JButton();
         btn_xoasanpham = new javax.swing.JButton();
         btn_resetsanpham = new javax.swing.JButton();
@@ -231,11 +233,11 @@ public class ProductGUI extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(input_ten, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(input_hinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(input_masanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(input_ten, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(input_masanpham, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(jlb_img, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,31 +297,34 @@ public class ProductGUI extends javax.swing.JFrame {
                                 .addComponent(input_noiban)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(input_maloai, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(input_maloai)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(input_soluong, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addComponent(input_soluong))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(input_tinhtrang, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addComponent(input_tinhtrang))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(input_hansudung, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                             .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(53, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(input_hinh)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jlb_img, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
 
         btn_themsanpham.setBackground(new java.awt.Color(103, 148, 54));
@@ -715,7 +720,6 @@ public class ProductGUI extends javax.swing.JFrame {
             pro.setName(input_ten.getText());
             pro.setDescription(input_mota.getText());
             pro.setPrice(Float.parseFloat(input_gia.getText()));
-            pro.setImg(input_hinh.getText());
             pro.setMass(input_trongluong.getText());
             pro.settrademark(input_noiban.getText());       
             pro.setCategoryId(Integer.parseInt((String)input_maloai.getSelectedItem()));
@@ -743,7 +747,6 @@ public class ProductGUI extends javax.swing.JFrame {
         input_ten.setText("");
         input_mota.setText("");
         input_gia.setText("");
-        input_hinh.setText("");
         input_trongluong.setText("");
         input_noiban.setText("");
         input_maloai.setSelectedIndex(0);
@@ -785,7 +788,6 @@ public class ProductGUI extends javax.swing.JFrame {
                 input_gia.setText("0");
             }
             pro.setPrice(Float.parseFloat(input_gia.getText()));
-            pro.setImg(input_hinh.getText());
             pro.setMass(input_trongluong.getText());
             pro.settrademark(input_noiban.getText());
 
@@ -871,7 +873,6 @@ public class ProductGUI extends javax.swing.JFrame {
         input_ten.setText(TableSanPham.getModel().getValueAt(i, 1).toString());
         input_mota.setText(TableSanPham.getModel().getValueAt(i, 2).toString());
         input_gia.setText(TableSanPham.getModel().getValueAt(i, 3).toString());
-        input_hinh.setText(TableSanPham.getModel().getValueAt(i, 4).toString());
         input_trongluong.setText(TableSanPham.getModel().getValueAt(i, 5).toString());
         input_noiban.setText(TableSanPham.getModel().getValueAt(i, 6).toString());
         input_maloai.setSelectedItem(TableSanPham.getModel().getValueAt(i, 7));
@@ -889,7 +890,11 @@ public class ProductGUI extends javax.swing.JFrame {
             Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("\\Images\\products\\" + TableSanPham.getModel().getValueAt(i, 4))); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it 
+        Image newimg = image.getScaledInstance(180, 150, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+        imageIcon = new ImageIcon(newimg);  // transform it back
+        jlb_img.setIcon(imageIcon);
         
         btn_themsanpham.setEnabled(false);
         btn_suasanpham.setEnabled(true);
@@ -983,7 +988,6 @@ public class ProductGUI extends javax.swing.JFrame {
     private GUI.Components.Header header1;
     private javax.swing.JTextField input_gia;
     private com.toedter.calendar.JDateChooser input_hansudung;
-    private javax.swing.JTextField input_hinh;
     private javax.swing.JComboBox<String> input_maloai;
     private javax.swing.JTextField input_masanpham;
     private javax.swing.JTextArea input_mota;
@@ -1020,5 +1024,6 @@ public class ProductGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jlb_img;
     // End of variables declaration//GEN-END:variables
 }
