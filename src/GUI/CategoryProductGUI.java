@@ -45,7 +45,7 @@ public class CategoryProductGUI extends javax.swing.JFrame {
      btn_themloaisanpham.setEnabled(true);
         btn_sualoaisanpham.setEnabled(false);
         btn_xoaloaisanpham.setEnabled(false);
-input_maloai.setEnabled(false);
+
     }
     
     
@@ -483,13 +483,14 @@ input_maloai.setEnabled(false);
         btn_themloaisanpham.setEnabled(true);
         btn_sualoaisanpham.setEnabled(false);
         btn_xoaloaisanpham.setEnabled(false);
-    
+      input_maloai.setEnabled(true);
     }//GEN-LAST:event_btn_resetsanphamActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         btn_themloaisanpham.setEnabled(true);
         btn_sualoaisanpham.setEnabled(false);
         btn_xoaloaisanpham.setEnabled(false);
+        input_maloai.setEnabled(true);
         clear();
         try {
             DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
@@ -532,7 +533,7 @@ input_maloai.setEnabled(false);
         int i = TableLoaiHangHoa.getSelectedRow();
         input_maloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 0).toString());
         input_tenloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 1).toString());
-
+input_maloai.setEnabled(false);
 
        
      
