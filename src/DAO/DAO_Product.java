@@ -79,7 +79,7 @@ public class DAO_Product {
 	public boolean create(DTO_Product newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO product(name, description, img, mass, trademark, expireDate, quantity, price, cate_id)"
+			String query = "INSERT INTO product(name, description, img, mass, trademark, expire_date, quantity, price, cate_id)"
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
@@ -106,7 +106,7 @@ public class DAO_Product {
 	public boolean updateById(DTO_Product newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, description = ?, img = ?, mass = ?, trademark = ?, expire_date = ?, quantity = ?, price = ?, cate_id = ? where id = ? and status = 1;";
+			String query = "UPDATE product SET name = ?, description = ?, img = ?, mass = ?, trademark = ?, expire_date = ?, quantity = ?, price = ?, cate_id = ? where product_id = ? and status = 1;";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
 			ptm.setString(2, newObj.getDescription());

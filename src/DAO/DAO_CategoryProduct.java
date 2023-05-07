@@ -19,10 +19,8 @@ public class DAO_CategoryProduct {
 			while( rs.next()) {
 				int category_id = rs.getInt("category_id");
 				String name = rs.getString("name");
-				String desc = "";
 				Boolean status = rs.getBoolean("status");
-				
-				DTO_CategoryProduct category = new DTO_CategoryProduct(category_id, name, desc , status);
+				DTO_CategoryProduct category = new DTO_CategoryProduct(category_id, name , status);
 			
 				list.add(category);
 			}
@@ -47,7 +45,7 @@ public class DAO_CategoryProduct {
 				String desc = rs.getString("desc");
 				Boolean status = rs.getBoolean("status");
 				
-				category = new DTO_CategoryProduct(category_id, name, desc , status);
+				category = new DTO_CategoryProduct(category_id, name , status);
 			}
 			con.closeConnection();
 		} catch (Exception e) {
@@ -59,14 +57,11 @@ public class DAO_CategoryProduct {
 	public boolean create(DTO_CategoryProduct newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "INSERT INTO account(category_id, name, desc, status)"
-							+ "VALUES (?, ?, ?, ?);";
+			String query = "INSERT INTO category_product(name)"
+							+ "VALUES ( ?);";
 			
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
-			ptm.setInt(1, newObj.getId());
-			ptm.setString(2, newObj.getName());
-			ptm.setString(3, newObj.getDesc());
-			ptm.setBoolean(4, newObj.getStatus());
+			ptm.setString(1, newObj.getName());
 			
 			int result = ptm.executeUpdate();
 			con.closeConnection();
@@ -81,12 +76,11 @@ public class DAO_CategoryProduct {
 	public boolean updateById(DTO_CategoryProduct newObj) throws SQLException {
 		 ConnectDB con = new ConnectDB();
 		try {
-			String query = "UPDATE account SET name = ?, desc = ?, status = ? where id = ? and status = 1";
+			String query = "UPDATE category_product SET name = ?,  status = ? where category_id = ? and status = 1";
 			PreparedStatement ptm = con.getConnection().prepareStatement(query);
 			ptm.setString(1, newObj.getName());
-			ptm.setString(2, newObj.getDesc());
-			ptm.setBoolean(3, newObj.getStatus());
-			ptm.setInt(4, newObj.getId());
+			ptm.setBoolean(2, newObj.getStatus());
+			ptm.setInt(3, newObj.getId());
 			int result = ptm.executeUpdate();
 			
 			con.closeConnection();

@@ -3,17 +3,16 @@ package DTO;
 public class DTO_CategoryProduct {
 	private int id;
 	private boolean status;
-	private String name, desc;
+	private String name;
 	
 	public DTO_CategoryProduct() {
 		super();
 	}
-	public DTO_CategoryProduct(int id, String name, String desc, boolean status) {
+	public DTO_CategoryProduct(int id, String name, boolean status) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.name = name;
-		this.desc = desc;
 	}
 	public int getId() {
 		return id;
@@ -32,12 +31,6 @@ public class DTO_CategoryProduct {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 	
 }
