@@ -4,8 +4,12 @@
  */
 package GUI;
 
+import BUS.BUS_CategoryProduct;
 import BUS.BUS_Discount;
+import BUS.BUS_Product;
+import DTO.DTO_CategoryProduct;
 import DTO.DTO_Discount;
+import DTO.DTO_Product;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,7 +36,6 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        btn_luugiamgia.setEnabled(false);
     }
 
     public void addRowToJTable() throws SQLException {
@@ -41,9 +45,7 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         Object rowData[] = new Object[7];
 
         for (int i = 0; i < list.size(); i++) {
-
             System.out.println(list.get(i).getName());
-
             rowData[0] = list.get(i).getId();
             rowData[1] = list.get(i).getName();
             rowData[2] = list.get(i).getStartDate();
@@ -51,10 +53,8 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
             rowData[4] = list.get(i).getPercent();
             rowData[5] = list.get(i).getCreateAt();
             rowData[6] = list.get(i).isIsDeleted();
-
             model.addRow(rowData);
         }
-
     }
 
     /**
@@ -85,10 +85,11 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         input_giamgiataoluc = new com.toedter.calendar.JDateChooser();
         input_Ten = new javax.swing.JTextField();
         input_daxoa = new javax.swing.JComboBox<>();
-        btn_themgiamgia = new javax.swing.JButton();
         btn_suagiamgia = new javax.swing.JButton();
         btn_xoagiamgia = new javax.swing.JButton();
         btn_luugiamgia = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        input_isDeleted = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -97,8 +98,8 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         input_timkiemID = new javax.swing.JTextField();
         btn_timkiemgiamgia = new javax.swing.JButton();
         btn_huytimkiemgiamgia = new javax.swing.JButton();
-        input_timkiemmaloai = new javax.swing.JComboBox<>();
         input_timkiemtinhtrang = new javax.swing.JComboBox<>();
+        input_timkiemten = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         clockGUI1 = new GUI.Components.ClockGUI();
         header1 = new GUI.Components.Header();
@@ -157,16 +158,6 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
 
         input_daxoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btn_themgiamgia.setBackground(new java.awt.Color(103, 148, 54));
-        btn_themgiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btn_themgiamgia.setForeground(new java.awt.Color(255, 255, 255));
-        btn_themgiamgia.setText("Thêm");
-        btn_themgiamgia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_themgiamgiaActionPerformed(evt);
-            }
-        });
-
         btn_suagiamgia.setBackground(new java.awt.Color(255, 202, 58));
         btn_suagiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_suagiamgia.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,19 +172,34 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         btn_xoagiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_xoagiamgia.setForeground(new java.awt.Color(255, 255, 255));
         btn_xoagiamgia.setText("Xóa");
+        btn_xoagiamgia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoagiamgiaActionPerformed(evt);
+            }
+        });
 
         btn_luugiamgia.setBackground(new java.awt.Color(56, 111, 164));
         btn_luugiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_luugiamgia.setForeground(new java.awt.Color(255, 255, 255));
         btn_luugiamgia.setText("Lưu");
+        btn_luugiamgia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_luugiamgiaActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel13.setText("Đã xóa");
+
+        input_isDeleted.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "true", "false"}));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,18 +221,24 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                                 .addComponent(input_ngaybatdaugiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                 .addComponent(input_ngayketthucgiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(input_giamgiataoluc, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(input_isDeleted, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(input_giamgia, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(input_daxoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(input_daxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_themgiamgia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_suagiamgia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_xoagiamgia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_luugiamgia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,13 +283,15 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                                 .addComponent(input_giamgiataoluc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(input_isDeleted))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(input_daxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(152, 152, 152))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(btn_themgiamgia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_suagiamgia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_xoagiamgia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,24 +309,32 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         jLabel10.setText("ID");
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel11.setText("Mã loại");
+        jLabel11.setText("Tên");
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel12.setText("Tình trạng");
+        jLabel12.setText("Đã xóa");
 
         btn_timkiemgiamgia.setBackground(new java.awt.Color(103, 148, 54));
         btn_timkiemgiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_timkiemgiamgia.setForeground(new java.awt.Color(255, 255, 255));
         btn_timkiemgiamgia.setText("Tìm kiếm");
+        btn_timkiemgiamgia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_timkiemgiamgiaActionPerformed(evt);
+            }
+        });
 
         btn_huytimkiemgiamgia.setBackground(new java.awt.Color(217, 4, 41));
         btn_huytimkiemgiamgia.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_huytimkiemgiamgia.setForeground(new java.awt.Color(255, 255, 255));
         btn_huytimkiemgiamgia.setText("Hủy tìm kiếm");
+        btn_huytimkiemgiamgia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_huytimkiemgiamgiaActionPerformed(evt);
+            }
+        });
 
-        input_timkiemmaloai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        input_timkiemtinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        input_timkiemtinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--", "true", "false"}));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -328,8 +350,8 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(input_timkiemID)
-                    .addComponent(input_timkiemmaloai, 0, 200, Short.MAX_VALUE)
-                    .addComponent(input_timkiemtinhtrang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(input_timkiemtinhtrang, 0, 200, Short.MAX_VALUE)
+                    .addComponent(input_timkiemten))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_timkiemgiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -349,8 +371,8 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(input_timkiemmaloai, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(input_timkiemten))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
@@ -369,7 +391,7 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+            .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -377,12 +399,12 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(227, 227, 227)
+                        .addGap(293, 293, 293)
                         .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -405,51 +427,169 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_themgiamgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themgiamgiaActionPerformed
+    private void btn_xoagiamgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoagiamgiaActionPerformed
+        // TODO add your handling code here:
+        BUS_Discount tmp = new BUS_Discount();
+        int i = TableGiamGia.getSelectedRow();
+        int id = (int) TableGiamGia.getModel().getValueAt(i, 0);
+        try {
+            tmp.delete(id);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_xoagiamgiaActionPerformed
+
+    private void btn_luugiamgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_luugiamgiaActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel model = (DefaultTableModel) TableGiamGia.getModel();
+            model.setRowCount(0);
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_luugiamgiaActionPerformed
+
+    private void btn_huytimkiemgiamgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huytimkiemgiamgiaActionPerformed
         // TODO add your handling code here:
 
-        input_ID.setEditable(true);
-        input_ID.setEnabled(true);
-
-        input_ID.setText("");
-        input_Ten.setText("");
-
-        Date date;
+        BUS_Discount tmp = new BUS_Discount();
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-            input_ngaybatdaugiamgia.setDate(date);
+            tmp.getList();
+            DefaultTableModel modeld = (DefaultTableModel) TableGiamGia.getModel();
+            modeld.setRowCount(0);
+            addRowToJTable();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        input_timkiemID.setText("");
+        input_timkiemten.setText("");
+        input_timkiemtinhtrang.setSelectedIndex(0);
+    }//GEN-LAST:event_btn_huytimkiemgiamgiaActionPerformed
 
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+    private void btn_timkiemgiamgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemgiamgiaActionPerformed
+        // TODO add your handling code here:
+
+//        DTO_Discount pro = new DTO_Discount();
+        BUS_Discount tmp = new BUS_Discount();
+        if (!input_timkiemID.getText().equals("")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableGiamGia.getModel();
+                modeld.setRowCount(0);
+                ArrayList<DTO_Discount> list = tmp.getList();
+                int searchNumb = Integer.parseInt(input_timkiemID.getText());
+                DefaultTableModel model = (DefaultTableModel) TableGiamGia.getModel();
+                Object rowData[] = new Object[12];
+                tmp.getSingleById(searchNumb);
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId() == searchNumb) {
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStartDate();
+                        rowData[3] = list.get(i).getEndDate();
+                        rowData[4] = list.get(i).getPercent();
+                        rowData[5] = list.get(i).getCreateAt();
+                        rowData[6] = list.get(i).isIsDeleted();
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
         }
 
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-            input_ngayketthucgiamgia.setDate(date);
-
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        if (!input_timkiemten.getText().equals("")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableGiamGia.getModel();
+                modeld.setRowCount(0);
+                ArrayList<DTO_Discount> list = tmp.getList();
+                String search = input_timkiemten.getText();
+                DefaultTableModel model = (DefaultTableModel) TableGiamGia.getModel();
+                Object rowData[] = new Object[12];
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getName().contains(search)) {
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStartDate();
+                        rowData[3] = list.get(i).getEndDate();
+                        rowData[4] = list.get(i).getPercent();
+                        rowData[5] = list.get(i).getCreateAt();
+                        rowData[6] = list.get(i).isIsDeleted();
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
         }
 
-        input_giamgia.setText("");
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-            input_giamgiataoluc.setDate(date);
+        if (!input_timkiemtinhtrang.getSelectedItem().equals("--Select--")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableGiamGia.getModel();
+                modeld.setRowCount(0);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+                ArrayList<DTO_Discount> list = tmp.getList();
+                Boolean searchStatus = Boolean.parseBoolean(input_timkiemtinhtrang.getSelectedItem().toString());
+                DefaultTableModel model = (DefaultTableModel) TableGiamGia.getModel();
+
+                Object rowData[] = new Object[12];
+                for (int i = 0; i < list.size(); i++) {
+//                 System.out.println(list.get(i).isStatus());
+                    if (list.get(i).isIsDeleted() == searchStatus) {
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStartDate();
+                        rowData[3] = list.get(i).getEndDate();
+                        rowData[4] = list.get(i).getPercent();
+                        rowData[5] = list.get(i).getCreateAt();
+                        rowData[6] = list.get(i).isIsDeleted();
+
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
         }
-
-        btn_themgiamgia.setEnabled(false);
-        btn_suagiamgia.setEnabled(false);
-        btn_xoagiamgia.setEnabled(false);
-        btn_luugiamgia.setEnabled(true);
-
-
-    }//GEN-LAST:event_btn_themgiamgiaActionPerformed
+    }//GEN-LAST:event_btn_timkiemgiamgiaActionPerformed
 
     private void btn_suagiamgiaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_suagiamgiaActionPerformed
         // TODO add your handling code here:
+
+//        DTO_Discount dis = new DTO_Discount();
+//        BUS_Discount tmp = new BUS_Discount();
+//        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ!!");
+//
+//        if (a == JOptionPane.YES_OPTION) {
+//
+//            dis.setId(Integer.parseInt(input_ID.getText()));
+//
+//            dis.setName(input_Ten.getText());
+//
+//            String temp = new SimpleDateFormat("yyyy-MM-dd").format(input_ngaybatdaugiamgia.getDate());
+//            dis.setStartDate(temp);
+//
+//            String temp1 = new SimpleDateFormat("yyyy-MM-dd").format(input_ngayketthucgiamgia.getDate());
+//            dis.setEndDate(temp1);
+//
+//            String temp2 = new SimpleDateFormat("yyyy-MM-dd").format(input_giamgiataoluc.getDate());
+//            dis.setCreateAt(temp2);
+//
+//            dis.setPercent(Float.parseFloat(input_giamgia.getText()));
+//            dis.setIsDeleted(Boolean.parseBoolean(input_isDeleted.getSelectedItem().toString()));
+//
+//            try {
+//                tmp.update(dis);
+//            } catch (Exception ex) {
+//                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }// GEN-LAST:event_btn_suagiamgiaActionPerformed
 
     private void input_giamgiaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_input_giamgiaActionPerformed
@@ -469,7 +609,8 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
             input_ngaybatdaugiamgia.setDate(date);
 
         } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountGUI.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         try {
             System.out.println("birst date :" + TableGiamGia.getModel().getValueAt(i, 3).toString());
@@ -477,26 +618,20 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
             input_ngayketthucgiamgia.setDate(date);
 
         } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountGUI.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         input_giamgia.setText(TableGiamGia.getModel().getValueAt(i, 4).toString());
         try {
             System.out.println("birst date :" + TableGiamGia.getModel().getValueAt(i, 5).toString());
             date = new SimpleDateFormat("yyyy-MM-dd").parse(TableGiamGia.getModel().getValueAt(i, 5).toString());
             input_giamgiataoluc.setDate(date);
+
         } catch (ParseException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountGUI.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         input_daxoa.setSelectedItem(TableGiamGia.getModel().getValueAt(i, 6));
-
-        input_ID.setEditable(true);
-        input_ID.setEnabled(false);
-
-        btn_themgiamgia.setEnabled(true);
-        btn_suagiamgia.setEnabled(true);
-        btn_xoagiamgia.setEnabled(true);
-        btn_luugiamgia.setEnabled(false);
-
     }// GEN-LAST:event_TableGiamGiaMouseClicked
 
     /**
@@ -517,20 +652,28 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
+            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
+            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
+            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
+            java.util.logging.Logger.getLogger(DiscountCategoryGUI.class
+                    .getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
         }
 
         /* Create and display the form */
@@ -546,7 +689,6 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_huytimkiemgiamgia;
     private javax.swing.JButton btn_luugiamgia;
     private javax.swing.JButton btn_suagiamgia;
-    private javax.swing.JButton btn_themgiamgia;
     private javax.swing.JButton btn_timkiemgiamgia;
     private javax.swing.JButton btn_xoagiamgia;
     private GUI.Components.ClockGUI clockGUI1;
@@ -556,15 +698,17 @@ public class DiscountCategoryGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> input_daxoa;
     private javax.swing.JTextField input_giamgia;
     private com.toedter.calendar.JDateChooser input_giamgiataoluc;
+    private javax.swing.JComboBox<String> input_isDeleted;
     private com.toedter.calendar.JDateChooser input_ngaybatdaugiamgia;
     private com.toedter.calendar.JDateChooser input_ngayketthucgiamgia;
     private javax.swing.JTextField input_timkiemID;
-    private javax.swing.JComboBox<String> input_timkiemmaloai;
+    private javax.swing.JTextField input_timkiemten;
     private javax.swing.JComboBox<String> input_timkiemtinhtrang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

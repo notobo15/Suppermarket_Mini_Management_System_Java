@@ -5,12 +5,18 @@
 package GUI;
 
 import BUS.BUS_CategoryProduct;
+import BUS.BUS_Product;
 import DTO.DTO_CategoryProduct;
+import DTO.DTO_Product;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,13 +31,22 @@ public class CategoryProductGUI extends javax.swing.JFrame {
      */
     public CategoryProductGUI() {
         initComponents();
+
+        try {
+            cbbMaLoai();
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             addRowToJTable();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        btn_luuloaisanpham.setEnabled(false);
+        btn_themloaisanpham.setEnabled(true);
+        btn_sualoaisanpham.setEnabled(false);
+        btn_xoaloaisanpham.setEnabled(false);
+        btn_luuloaisanpham.setEnabled(true);
     }
 
     public void addRowToJTable() throws SQLException {
@@ -76,8 +91,9 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         btn_luuloaisanpham = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         input_mota = new javax.swing.JTextArea();
-        input_maloai = new javax.swing.JComboBox<>();
         input_tinhtrang = new javax.swing.JComboBox<>();
+        input_maloai = new javax.swing.JTextField();
+        btn_resetloaisanpham = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -153,19 +169,37 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         btn_xoaloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_xoaloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
         btn_xoaloaisanpham.setText("Xóa");
+        btn_xoaloaisanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoaloaisanphamActionPerformed(evt);
+            }
+        });
 
         btn_luuloaisanpham.setBackground(new java.awt.Color(56, 111, 164));
         btn_luuloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_luuloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
         btn_luuloaisanpham.setText("Lưu");
+        btn_luuloaisanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_luuloaisanphamActionPerformed(evt);
+            }
+        });
 
         input_mota.setColumns(20);
         input_mota.setRows(5);
         jScrollPane2.setViewportView(input_mota);
 
-        input_maloai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        input_tinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--","true", "false" }));
 
-        input_tinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btn_resetloaisanpham.setBackground(new java.awt.Color(199, 125, 255));
+        btn_resetloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btn_resetloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
+        btn_resetloaisanpham.setText("Reset");
+        btn_resetloaisanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetloaisanphamActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -181,20 +215,24 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(input_maloai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(input_tenloai)
                     .addComponent(input_tinhtrang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(input_maloai))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_luuloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(58, 58, 58)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btn_themloaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_sualoaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_xoaloaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_themloaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_sualoaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_xoaloaisanpham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_luuloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_resetloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -211,12 +249,14 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_xoaloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_resetloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_luuloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(input_maloai, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(input_maloai))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,8 +268,8 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
-                        .addGap(99, 99, 99))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))))
+                .addGap(99, 99, 99))
         );
 
         jPanel3.setBackground(new java.awt.Color(241, 192, 232));
@@ -251,13 +291,23 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         btn_timkiemloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_timkiemloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
         btn_timkiemloaisanpham.setText("Tìm kiếm");
+        btn_timkiemloaisanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_timkiemloaisanphamActionPerformed(evt);
+            }
+        });
 
         btn_huytimkiemloaisanpham.setBackground(new java.awt.Color(217, 4, 41));
         btn_huytimkiemloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btn_huytimkiemloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
         btn_huytimkiemloaisanpham.setText("Hủy tìm kiếm");
+        btn_huytimkiemloaisanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_huytimkiemloaisanphamActionPerformed(evt);
+            }
+        });
 
-        input_timkiemtinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        input_timkiemtinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Select--","true", "false" }));
 
         input_timkiemmaloai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -306,7 +356,7 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                         .addComponent(btn_timkiemloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_huytimkiemloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
 
         jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -356,44 +406,236 @@ public class CategoryProductGUI extends javax.swing.JFrame {
 
     private void btn_themloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themloaisanphamActionPerformed
         // TODO add your handling code here:
-        input_maloai.setEditable(true);
-        input_maloai.setEnabled(true);
 
-        input_tinhtrang.setEditable(true);
-        input_tinhtrang.setEnabled(true);
+        DTO_CategoryProduct pro = new DTO_CategoryProduct();
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
 
-        input_maloai.setSelectedIndex(0);
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn them chứ!!");
+
+        if (a == JOptionPane.YES_OPTION) {
+
+            pro.setId(Integer.parseInt(input_maloai.getText()));
+            pro.setName(input_tenloai.getText());
+            pro.setStatus(Boolean.parseBoolean(input_tinhtrang.getSelectedItem().toString()));
+            pro.setDesc(input_mota.getText());
+//            pro.setId(122);
+//            pro.setName("test");
+//            pro.setStatus(true);
+//            pro.setDesc("soometing");
+
+            try {
+                tmp.add(pro);
+           } catch (Exception ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_btn_themloaisanphamActionPerformed
+
+    private void btn_xoaloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaloaisanphamActionPerformed
+        // TODO add your handling code here:
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+        int i = TableLoaiHangHoa.getSelectedRow();
+        int id = (int) TableLoaiHangHoa.getModel().getValueAt(i, 0);
+        try {
+            tmp.delete(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_xoaloaisanphamActionPerformed
+
+    private void btn_luuloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_luuloaisanphamActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
+            model.setRowCount(0);
+            addRowToJTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_luuloaisanphamActionPerformed
+
+    private void btn_huytimkiemloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huytimkiemloaisanphamActionPerformed
+        // TODO add your handling code here:
+
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+        try {
+            tmp.getList();
+            DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
+            modeld.setRowCount(0);
+            addRowToJTable();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        input_timkiemmaloai.setSelectedIndex(0);
+        input_timkiemtenloai.setText("");
+        input_timkiemtinhtrang.setSelectedIndex(0);
+    }//GEN-LAST:event_btn_huytimkiemloaisanphamActionPerformed
+
+    private void btn_timkiemloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemloaisanphamActionPerformed
+        // TODO add your handling code here:
+
+        DTO_CategoryProduct pro = new DTO_CategoryProduct();
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+
+        if (!input_timkiemmaloai.getSelectedItem().equals("--Select--")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
+                modeld.setRowCount(0);
+
+                ArrayList<DTO_CategoryProduct> list = tmp.getList();
+                int searchMaLoai = Integer.parseInt(input_timkiemmaloai.getSelectedItem().toString());
+                DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
+                Object rowData[] = new Object[12];
+                tmp.getSingleById(searchMaLoai);
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId() == searchMaLoai) {
+                        System.out.println(list.get(i).getName());
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStatus();
+                        rowData[3] = list.get(i).getDesc();
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
+        }
+
+        if (!input_timkiemtenloai.getText().equals("")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
+                modeld.setRowCount(0);
+
+                ArrayList<DTO_CategoryProduct> list = tmp.getList();
+                String search = input_timkiemtenloai.getText();
+                DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
+                Object rowData[] = new Object[12];
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getName().contains(search)) {
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStatus();
+                        rowData[3] = list.get(i).getDesc();
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
+        }
+
+        if (!input_timkiemtinhtrang.getSelectedItem().equals("--Select--")) {
+            try {
+                DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
+                modeld.setRowCount(0);
+
+                ArrayList<DTO_CategoryProduct> list = tmp.getList();
+                Boolean searchStatus = Boolean.parseBoolean(input_timkiemtinhtrang.getSelectedItem().toString());
+                DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
+
+                Object rowData[] = new Object[12];
+                for (int i = 0; i < list.size(); i++) {
+//                 System.out.println(list.get(i).isStatus());
+                    if (list.get(i).getStatus() == searchStatus) {
+                        rowData[0] = list.get(i).getId();
+                        rowData[1] = list.get(i).getName();
+                        rowData[2] = list.get(i).getStatus();
+                        rowData[3] = list.get(i).getDesc();
+                        model.addRow(rowData);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+
+        }
+
+
+    }//GEN-LAST:event_btn_timkiemloaisanphamActionPerformed
+
+    private void btn_resetloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetloaisanphamActionPerformed
+        // TODO add your handling code here:
+
+        input_maloai.setText("");
         input_tenloai.setText("");
         input_tinhtrang.setSelectedIndex(0);
         input_mota.setText("");
-
-        btn_themloaisanpham.setEnabled(false);
+       
+        btn_themloaisanpham.setEnabled(true);
         btn_sualoaisanpham.setEnabled(false);
         btn_xoaloaisanpham.setEnabled(false);
         btn_luuloaisanpham.setEnabled(true);
-    }//GEN-LAST:event_btn_themloaisanphamActionPerformed
+
+
+    }//GEN-LAST:event_btn_resetloaisanphamActionPerformed
 
     private void btn_sualoaisanphamActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_sualoaisanphamActionPerformed
         // TODO add your handling code here:
+        DTO_CategoryProduct pro = new DTO_CategoryProduct();
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ!!");
+
+        if (a == JOptionPane.YES_OPTION) {
+
+            pro.setId(Integer.parseInt(input_maloai.getText()));
+            pro.setName(input_tenloai.getText());
+            pro.setStatus(Boolean.parseBoolean(input_tinhtrang.getSelectedItem().toString()));
+            pro.setDesc(input_mota.getText());
+
+            try {
+                tmp.update(pro);
+            } catch (Exception ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
     }// GEN-LAST:event_btn_sualoaisanphamActionPerformed
 
     private void TableLoaiHangHoaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_TableLoaiHangHoaMouseClicked
         // TODO add your handling code here:
         int i = TableLoaiHangHoa.getSelectedRow();
         System.out.println(i);
-        input_maloai.setSelectedItem(TableLoaiHangHoa.getModel().getValueAt(i, 0));
+        input_maloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 0).toString());
         input_tenloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 1).toString());
         input_tinhtrang.setSelectedItem(TableLoaiHangHoa.getModel().getValueAt(i, 2));
         input_mota.setText(TableLoaiHangHoa.getModel().getValueAt(i, 3).toString());
 
-        input_maloai.setEditable(true);
-        input_tinhtrang.setEditable(true);
-
-        btn_themloaisanpham.setEnabled(true);
+        btn_themloaisanpham.setEnabled(false);
         btn_sualoaisanpham.setEnabled(true);
         btn_xoaloaisanpham.setEnabled(true);
+        btn_luuloaisanpham.setEnabled(true);
 
     }// GEN-LAST:event_TableLoaiHangHoaMouseClicked
+
+    public void cbbMaLoai() throws Exception {
+        DTO_CategoryProduct pro = new DTO_CategoryProduct();
+        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+        ArrayList<DTO_CategoryProduct> list = tmp.getList();
+        String[] array = new String[list.size()];
+
+        String[] listCI;
+        String ar = null;
+        for (int i = 0; i < array.length; i++) {
+            array[i] = Integer.toString(list.get(i).getId());
+            String[] array1 = {"--Select--"};
+            String[] result = Arrays.copyOf(array1, array1.length + array.length);
+            System.arraycopy(array, 0, result, array1.length, array.length);
+            ar = Arrays.toString(result).substring(1);
+            ar = ar.substring(0, ar.length() - 1);
+        }
+
+        listCI = ar.split(", ");
+
+        input_timkiemmaloai.setModel(new DefaultComboBoxModel<>(listCI));
+    }
 
     /**
      * @param args the command line arguments
@@ -441,13 +683,14 @@ public class CategoryProductGUI extends javax.swing.JFrame {
     private javax.swing.JTable TableLoaiHangHoa;
     private javax.swing.JButton btn_huytimkiemloaisanpham;
     private javax.swing.JButton btn_luuloaisanpham;
+    private javax.swing.JButton btn_resetloaisanpham;
     private javax.swing.JButton btn_sualoaisanpham;
     private javax.swing.JButton btn_themloaisanpham;
     private javax.swing.JButton btn_timkiemloaisanpham;
     private javax.swing.JButton btn_xoaloaisanpham;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
-    private javax.swing.JComboBox<String> input_maloai;
+    private javax.swing.JTextField input_maloai;
     private javax.swing.JTextArea input_mota;
     private javax.swing.JTextField input_tenloai;
     private javax.swing.JComboBox<String> input_timkiemmaloai;
