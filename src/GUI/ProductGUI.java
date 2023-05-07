@@ -12,6 +12,8 @@ import BUS.BUS_Suppilier;
 import DTO.DTO_Suppilier;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileOutputStream;
 // import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -24,9 +26,44 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
+import BUS.BUS_Account;
+import DAO.DAO_Account;
+import DTO.DTO_Account;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import jxl.write.WritableSheet;
+import org.apache.poi.ss.usermodel.Cell;
+import static org.apache.poi.ss.usermodel.CellType.BLANK;
+import static org.apache.poi.ss.usermodel.CellType.BOOLEAN;
+import static org.apache.poi.ss.usermodel.CellType.ERROR;
+import static org.apache.poi.ss.usermodel.CellType.FORMULA;
+import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
+import static org.apache.poi.ss.usermodel.CellType.STRING;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
 /**
  *
  * @author EV
@@ -150,6 +187,11 @@ public class ProductGUI extends javax.swing.JFrame {
         btn_timkiemsanpham = new javax.swing.JButton();
         btn_huytimkiemsanpham = new javax.swing.JButton();
         input_timkiemmaloai = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        btn_nhapExcel = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        btn_xuatExcel = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -445,6 +487,63 @@ public class ProductGUI extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(241, 192, 232));
+
+        btn_nhapExcel.setBackground(new java.awt.Color(20, 168, 255));
+        btn_nhapExcel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_nhapExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btn_nhapExcel.setText("NHẬP");
+        btn_nhapExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nhapExcelActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel17.setText("Nhập Excel");
+
+        jLabel20.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel20.setText("Xuất Excel");
+
+        btn_xuatExcel.setBackground(new java.awt.Color(103, 148, 54));
+        btn_xuatExcel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_xuatExcel.setForeground(new java.awt.Color(255, 255, 255));
+        btn_xuatExcel.setText("XUẤT");
+        btn_xuatExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xuatExcelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_nhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_nhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -452,22 +551,28 @@ public class ProductGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(input_timkiemten, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(input_timkiemma, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(input_timkiemmaloai))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_huytimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_timkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel14)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(input_timkiemten, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(input_timkiemma, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(input_timkiemmaloai))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_huytimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btn_timkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,12 +593,14 @@ public class ProductGUI extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(input_timkiemmaloai, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btn_timkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_huytimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
@@ -619,6 +726,165 @@ public class ProductGUI extends javax.swing.JFrame {
             Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btn_xuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xuatExcelActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            JFileChooser jfile = new JFileChooser();
+            jfile.setSelectedFile(new File("untitled.xls"));
+
+            int seleted = jfile.showSaveDialog(this);
+
+            if (seleted == JFileChooser.APPROVE_OPTION) {
+                String FilePath = jfile.getSelectedFile().getPath();
+                System.out.println(FilePath);
+
+                HSSFWorkbook workbook = new HSSFWorkbook();
+                HSSFSheet sheet = workbook.createSheet("product");
+                BUS_Product bus_product = new BUS_Product();
+                ArrayList<DTO_Product> list = bus_product.getList();
+                int rowPos = 0;
+                HSSFRow row = sheet.createRow(rowPos);
+                row.createCell(0, CellType.NUMERIC).setCellValue("id");
+                row.createCell(1, CellType.STRING).setCellValue("ten");
+                row.createCell(2, CellType.STRING).setCellValue("mo ta");
+                row.createCell(3, CellType.STRING).setCellValue("gia");
+                row.createCell(4, CellType.STRING).setCellValue("hinh");
+                row.createCell(5, CellType.STRING).setCellValue("trong luong");
+                row.createCell(6, CellType.STRING).setCellValue("noi ban");
+                row.createCell(7, CellType.NUMERIC).setCellValue("ma loai");
+                row.createCell(8, CellType.STRING).setCellValue("so luong");
+                row.createCell(9, CellType.STRING).setCellValue("tinh trang");
+                row.createCell(10, CellType.STRING).setCellValue("han su dung");
+         
+
+                for (int i = 0; i < list.size(); i++) {
+                    rowPos++;
+                    row = sheet.createRow(rowPos);
+                    row.createCell(0, CellType.NUMERIC).setCellValue(list.get(i).getProductId());
+                    row.createCell(1, CellType.STRING).setCellValue(list.get(i).getName());
+                    row.createCell(2, CellType.STRING).setCellValue(list.get(i).getDescription());
+                    row.createCell(3, CellType.STRING).setCellValue(list.get(i).getPrice());
+                    row.createCell(4, CellType.STRING).setCellValue(list.get(i).getImg());
+                    row.createCell(5, CellType.STRING).setCellValue(list.get(i).getMass());
+                    row.createCell(6, CellType.STRING).setCellValue(list.get(i).gettrademark());
+                    row.createCell(7, CellType.NUMERIC).setCellValue(list.get(i).getCategoryId());
+                    row.createCell(8, CellType.STRING).setCellValue(list.get(i).getQuantity());
+                    row.createCell(9, CellType.STRING).setCellValue(list.get(i).isStatus());
+                    row.createCell(10, CellType.STRING).setCellValue(list.get(i).getExpireDate());
+
+                }
+
+                File file = new File(FilePath);
+                try {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    workbook.write(fos);
+                    fos.close();
+
+                } catch (Exception e) {
+                    System.out.println("GUI.Table.jButton1MouseClicked()");
+                }
+
+            }
+            if (seleted == JFileChooser.CANCEL_OPTION) {
+            }
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_xuatExcelActionPerformed
+
+    private void btn_nhapExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nhapExcelActionPerformed
+        // TODO add your handling code here:
+        try {
+
+            JFileChooser jfile = new JFileChooser();
+            jfile.setFileFilter(new FileFilter() {
+
+                public String getDescription() {
+                    return "File Excel (*.xls)";
+                }
+
+                public boolean accept(File f) {
+                    if (f.isDirectory()) {
+                        return true;
+                    } else {
+                        String filename = f.getName().toLowerCase();
+                        return filename.endsWith(".xls");
+                    }
+                }
+            });
+            int seleted = jfile.showOpenDialog(this);
+            if (seleted == JFileChooser.APPROVE_OPTION) {
+                String FilePath = jfile.getSelectedFile().getPath();
+
+                FileInputStream fis = new FileInputStream(new File(FilePath));
+                HSSFWorkbook workbook = new HSSFWorkbook(fis);
+                HSSFSheet sheet = workbook.getSheetAt(0);
+                sheet.setRowBreak(0);
+                FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
+                DefaultTableModel model = (DefaultTableModel) TableSanPham.getModel();
+                while (model.getRowCount() > 0) {
+                    model.removeRow(0);
+                }
+                int i = 0;
+                ArrayList<DTO_Product> list = null;
+                for (Row row : sheet) {
+                    DTO_Product acc = new DTO_Product();
+                    if (i > 0) {
+                        ArrayList<String> item = new ArrayList<String>();
+                        for (Cell cell : row) {
+
+                            switch (evaluator.evaluateInCell(cell).getCellType()) {
+                                case BOOLEAN:
+//                                System.out.println(cell.getBooleanCellValue());
+                                    break;
+                                case NUMERIC:
+                                    item.add("" + cell.getNumericCellValue());
+//                                System.out.println(cell.getNumericCellValue());
+                                    break;
+                                case STRING:
+//                                System.out.println(cell.getStringCellValue());
+                                    item.add("" + cell.getStringCellValue());
+                                    break;
+                                case BLANK:
+                                    break;
+                                case ERROR:
+//                                System.out.println(cell.getErrorCellValue());
+                                    break;
+
+                                case FORMULA:
+                                    break;
+                            }
+
+                        }
+                        Object rowData[] = new Object[11];
+                        System.out.println(item.get(0));
+                        rowData[0] = item.get(0);
+                        rowData[1] = item.get(1);
+                        rowData[2] = item.get(2);
+                        rowData[3] = item.get(3);
+                        rowData[4] = item.get(4);
+                        rowData[5] = item.get(5);
+                        rowData[6] = item.get(6);
+                        rowData[0] = item.get(7);
+                        rowData[1] = item.get(8);
+                        rowData[2] = item.get(9);
+                        rowData[3] = item.get(10);             
+                        model.addRow(rowData);
+
+                    }
+
+                    i++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_btn_nhapExcelActionPerformed
 
     private void btn_xoasanphamActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_xoasanphamActionPerformed
         // TODO add your handling code here:
@@ -843,11 +1109,13 @@ public class ProductGUI extends javax.swing.JFrame {
     private javax.swing.JTable TableSanPham;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btn_huytimkiemsanpham;
+    private javax.swing.JButton btn_nhapExcel;
     private javax.swing.JButton btn_resetsanpham;
     private javax.swing.JButton btn_suasanpham;
     private javax.swing.JButton btn_themsanpham;
     private javax.swing.JButton btn_timkiemsanpham;
     private javax.swing.JButton btn_xoasanpham;
+    private javax.swing.JButton btn_xuatExcel;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
     private javax.swing.JTextField input_gia;
@@ -872,14 +1140,17 @@ public class ProductGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
