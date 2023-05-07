@@ -6,8 +6,10 @@ package GUI;
 
 import BUS.BUS_CategoryProduct;
 import BUS.BUS_Product;
+import BUS.BUS_Suppilier;
 import DTO.DTO_CategoryProduct;
 import DTO.DTO_Product;
+import DTO.DTO_Suppilier;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,36 +28,40 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CategoryProductGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CategoryProductGUI
-     */
+   private ArrayList<DTO_CategoryProduct> list = new ArrayList<>();
+    
+    
+    
     public CategoryProductGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
-
         try {
-            cbbMaLoai();
-        } catch (Exception ex) {
-            Logger.getLogger(CategoryProductGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            addRowToJTable();
+            BUS_CategoryProduct bus_categoryproduct = new BUS_CategoryProduct();
+            list = bus_categoryproduct.getList();
+            addRowToJTable(list);
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-//        btn_themloaisanpham.setEnabled(true);
-//        btn_sualoaisanpham.setEnabled(false);
-//        btn_xoaloaisanpham.setEnabled(false);
-//        btn_luuloaisanpham.setEnabled(true);
+     btn_themloaisanpham.setEnabled(true);
+        btn_sualoaisanpham.setEnabled(false);
+        btn_xoaloaisanpham.setEnabled(false);
+input_maloai.setEnabled(false);
     }
+    
+    
+      public void clear() {
+        input_maloai.setText("");
+        input_tenloai.setText("");
+    }
+    
+    
 
-    public void addRowToJTable() throws SQLException {
-        BUS_CategoryProduct bus_categoryproduct = new BUS_CategoryProduct();
-        ArrayList<DTO_CategoryProduct> list = bus_categoryproduct.getList();
+    public void addRowToJTable(ArrayList<DTO_CategoryProduct> list) throws SQLException {
+        
+        
         DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
-        Object rowData[] = new Object[3];
-
+        model.setRowCount(0);
+        Object rowData[] = new Object[2];
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getName());
             rowData[0] = list.get(i).getId();
@@ -86,7 +92,7 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         btn_themloaisanpham = new javax.swing.JButton();
         btn_sualoaisanpham = new javax.swing.JButton();
         btn_xoaloaisanpham = new javax.swing.JButton();
-        btn_luuloaisanpham = new javax.swing.JButton();
+        btn_resetsanpham = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -94,10 +100,11 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         input_timkiemtenloai = new javax.swing.JTextField();
         btn_timkiemloaisanpham = new javax.swing.JButton();
         btn_huytimkiemloaisanpham = new javax.swing.JButton();
-        input_timkiemmaloai = new javax.swing.JComboBox<>();
+        input_timkiemmaloai = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         clockGUI1 = new GUI.Components.ClockGUI();
         header1 = new GUI.Components.Header();
+        btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(141, 169, 196));
@@ -166,10 +173,15 @@ public class CategoryProductGUI extends javax.swing.JFrame {
             }
         });
 
-        btn_luuloaisanpham.setBackground(new java.awt.Color(56, 111, 164));
-        btn_luuloaisanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btn_luuloaisanpham.setForeground(new java.awt.Color(255, 255, 255));
-        btn_luuloaisanpham.setText("Lưu");
+        btn_resetsanpham.setBackground(new java.awt.Color(199, 125, 255));
+        btn_resetsanpham.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btn_resetsanpham.setForeground(new java.awt.Color(255, 255, 255));
+        btn_resetsanpham.setText("Reset");
+        btn_resetsanpham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetsanphamActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -194,8 +206,8 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_xoaloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_luuloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                        .addComponent(btn_resetsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,8 +227,8 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                     .addComponent(btn_themloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_sualoaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_xoaloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_luuloaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(202, Short.MAX_VALUE))
+                    .addComponent(btn_resetsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(241, 192, 232));
@@ -251,8 +263,6 @@ public class CategoryProductGUI extends javax.swing.JFrame {
             }
         });
 
-        input_timkiemmaloai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -265,13 +275,13 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(input_timkiemtenloai)
-                    .addComponent(input_timkiemmaloai, 0, 200, Short.MAX_VALUE))
+                    .addComponent(input_timkiemtenloai, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(input_timkiemmaloai))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_timkiemloaisanpham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_huytimkiemloaisanpham, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,23 +308,30 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel19.setText("LOẠI HÀNG HÓA");
 
+        btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset-32px.png"))); // NOI18N
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(237, 237, 237)
                         .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -327,12 +344,13 @@ public class CategoryProductGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -346,15 +364,12 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         DTO_CategoryProduct pro = new DTO_CategoryProduct();
         BUS_CategoryProduct tmp = new BUS_CategoryProduct();
 
-        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn them chứ!!");
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thêm chứ!!");
 
         if (a == JOptionPane.YES_OPTION) {
 
             pro.setId(Integer.parseInt(input_maloai.getText()));
             pro.setName(input_tenloai.getText());        
-//            pro.setId(122);
-//            pro.setName("test");
-
             try {
                 tmp.add(pro);
            } catch (Exception ex) {
@@ -376,107 +391,84 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_xoaloaisanphamActionPerformed
 
+    
+    
+    
+    
     private void btn_luuloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_luuloaisanphamActionPerformed
         // TODO add your handling code here:
-        try {
-            DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
-            model.setRowCount(0);
-            addRowToJTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_btn_luuloaisanphamActionPerformed
 
     private void btn_huytimkiemloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huytimkiemloaisanphamActionPerformed
         // TODO add your handling code here:
 
-        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
-        try {
-            tmp.getList();
-            DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
-            modeld.setRowCount(0);
-            addRowToJTable();
-        } catch (Exception ex) {
-            Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        input_timkiemmaloai.setSelectedIndex(0);
+        input_timkiemmaloai.setText("");
         input_timkiemtenloai.setText("");
+        BUS_CategoryProduct bus_categoryproduct = new BUS_CategoryProduct();
+        try {
+            list = bus_categoryproduct.getList();
+            addRowToJTable(list);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
     }//GEN-LAST:event_btn_huytimkiemloaisanphamActionPerformed
 
     private void btn_timkiemloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemloaisanphamActionPerformed
         // TODO add your handling code here:
+        
+        
+        
+        String id = input_timkiemmaloai.getText();
+        String ten = input_timkiemtenloai.getText();
 
-        DTO_CategoryProduct pro = new DTO_CategoryProduct();
-        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
-
-        if (!input_timkiemmaloai.getSelectedItem().equals("--Select--")) {
-            try {
-                DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
-                modeld.setRowCount(0);
-
-                ArrayList<DTO_CategoryProduct> list = tmp.getList();
-                int searchMaLoai = Integer.parseInt(input_timkiemmaloai.getSelectedItem().toString());
-                DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
-                Object rowData[] = new Object[12];
-                tmp.getSingleById(searchMaLoai);
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getId() == searchMaLoai) {
-                        System.out.println(list.get(i).getName());
-                        rowData[0] = list.get(i).getId();
-                        rowData[1] = list.get(i).getName();
-                        rowData[2] = list.get(i).getStatus();
-                        rowData[3] = list.get(i).getDesc();
-                        model.addRow(rowData);
-                    }
+        ArrayList<DTO_CategoryProduct> filter_id = new ArrayList<>();
+        ArrayList<DTO_CategoryProduct> filter_ten = new ArrayList<>();
+        ArrayList<DTO_CategoryProduct> filter = new ArrayList<>();
+        if (id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == Integer.parseInt(id)) {
+                    filter_id.add(list.get(i));
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+            filter = filter_id;
 
         }
 
-        if (!input_timkiemtenloai.getText().equals("")) {
-            try {
-                DefaultTableModel modeld = (DefaultTableModel) TableLoaiHangHoa.getModel();
-                modeld.setRowCount(0);
-
-                ArrayList<DTO_CategoryProduct> list = tmp.getList();
-                String search = input_timkiemtenloai.getText();
-                DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
-                Object rowData[] = new Object[12];
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getName().contains(search)) {
-                        rowData[0] = list.get(i).getId();
-                        rowData[1] = list.get(i).getName();
-                        rowData[2] = list.get(i).getStatus();
-                        rowData[3] = list.get(i).getDesc();
-                        model.addRow(rowData);
-                    }
+        if (ten.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getName().toLowerCase().contains(ten.toLowerCase())) {
+                    filter_ten.add(list.get(i));
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
+            filter = filter_ten;
 
         }
-
-       
-
-
+        if (ten.length() != 0 && id.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getName().toLowerCase().contains(ten.toLowerCase()) && list.get(i).getId() == Integer.parseInt(id)) {
+                    filter.add(list.get(i));
+                }
+            }
+        }
+        try {
+            System.out.println(filter);
+            addRowToJTable(filter);
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_timkiemloaisanphamActionPerformed
 
     private void btn_resetloaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetloaisanphamActionPerformed
         // TODO add your handling code here:
 
-        input_maloai.setText("");
-        input_tenloai.setText("");
+    
   
-       
-//        btn_themloaisanpham.setEnabled(true);
-//        btn_sualoaisanpham.setEnabled(false);
-//        btn_xoaloaisanpham.setEnabled(false);
-//        btn_luuloaisanpham.setEnabled(true);
+ 
 
 
     }//GEN-LAST:event_btn_resetloaisanphamActionPerformed
@@ -484,6 +476,31 @@ public class CategoryProductGUI extends javax.swing.JFrame {
     private void input_tenloaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_tenloaiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_tenloaiActionPerformed
+
+    private void btn_resetsanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetsanphamActionPerformed
+        // TODO add your handling code here:
+        clear();
+        btn_themloaisanpham.setEnabled(true);
+        btn_sualoaisanpham.setEnabled(false);
+        btn_xoaloaisanpham.setEnabled(false);
+    
+    }//GEN-LAST:event_btn_resetsanphamActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        btn_themloaisanpham.setEnabled(true);
+        btn_sualoaisanpham.setEnabled(false);
+        btn_xoaloaisanpham.setEnabled(false);
+        clear();
+        try {
+            DefaultTableModel model = (DefaultTableModel) TableLoaiHangHoa.getModel();
+            model.setRowCount(0);
+            BUS_CategoryProduct bus_categoryproduct = new BUS_CategoryProduct();
+            list = bus_categoryproduct.getList();
+            addRowToJTable(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btn_sualoaisanphamActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_sualoaisanphamActionPerformed
         // TODO add your handling code here:
@@ -508,40 +525,41 @@ public class CategoryProductGUI extends javax.swing.JFrame {
 
     private void TableLoaiHangHoaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_TableLoaiHangHoaMouseClicked
         // TODO add your handling code here:
+        
+         btn_themloaisanpham.setEnabled(false);
+        btn_sualoaisanpham.setEnabled(true);
+        btn_xoaloaisanpham.setEnabled(true);
         int i = TableLoaiHangHoa.getSelectedRow();
-        System.out.println(i);
         input_maloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 0).toString());
         input_tenloai.setText(TableLoaiHangHoa.getModel().getValueAt(i, 1).toString());
 
 
-//        btn_themloaisanpham.setEnabled(false);
-//        btn_sualoaisanpham.setEnabled(true);
-//        btn_xoaloaisanpham.setEnabled(true);
-//        btn_luuloaisanpham.setEnabled(true);
+       
+     
 
     }// GEN-LAST:event_TableLoaiHangHoaMouseClicked
 
-    public void cbbMaLoai() throws Exception {
-        DTO_CategoryProduct pro = new DTO_CategoryProduct();
-        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
-        ArrayList<DTO_CategoryProduct> list = tmp.getList();
-        String[] array = new String[list.size()];
-
-        String[] listCI;
-        String ar = null;
-        for (int i = 0; i < array.length; i++) {
-            array[i] = Integer.toString(list.get(i).getId());
-            String[] array1 = {"--Select--"};
-            String[] result = Arrays.copyOf(array1, array1.length + array.length);
-            System.arraycopy(array, 0, result, array1.length, array.length);
-            ar = Arrays.toString(result).substring(1);
-            ar = ar.substring(0, ar.length() - 1);
-        }
-
-        listCI = ar.split(", ");
-
-        input_timkiemmaloai.setModel(new DefaultComboBoxModel<>(listCI));
-    }
+//    public void cbbMaLoai() throws Exception {
+//        DTO_CategoryProduct pro = new DTO_CategoryProduct();
+//        BUS_CategoryProduct tmp = new BUS_CategoryProduct();
+//        ArrayList<DTO_CategoryProduct> list = tmp.getList();
+//        String[] array = new String[list.size()];
+//
+//        String[] listCI;
+//        String ar = null;
+//        for (int i = 0; i < array.length; i++) {
+//            array[i] = Integer.toString(list.get(i).getId());
+//            String[] array1 = {"--Select--"};
+//            String[] result = Arrays.copyOf(array1, array1.length + array.length);
+//            System.arraycopy(array, 0, result, array1.length, array.length);
+//            ar = Arrays.toString(result).substring(1);
+//            ar = ar.substring(0, ar.length() - 1);
+//        }
+//
+//        listCI = ar.split(", ");
+//
+//        input_timkiemmaloai.setModel(new DefaultComboBoxModel<>(listCI));
+//    }
 
     /**
      * @param args the command line arguments
@@ -587,8 +605,9 @@ public class CategoryProductGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableLoaiHangHoa;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btn_huytimkiemloaisanpham;
-    private javax.swing.JButton btn_luuloaisanpham;
+    private javax.swing.JButton btn_resetsanpham;
     private javax.swing.JButton btn_sualoaisanpham;
     private javax.swing.JButton btn_themloaisanpham;
     private javax.swing.JButton btn_timkiemloaisanpham;
@@ -597,7 +616,7 @@ public class CategoryProductGUI extends javax.swing.JFrame {
     private GUI.Components.Header header1;
     private javax.swing.JTextField input_maloai;
     private javax.swing.JTextField input_tenloai;
-    private javax.swing.JComboBox<String> input_timkiemmaloai;
+    private javax.swing.JTextField input_timkiemmaloai;
     private javax.swing.JTextField input_timkiemtenloai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
