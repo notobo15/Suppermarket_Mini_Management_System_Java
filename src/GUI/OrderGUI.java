@@ -6,8 +6,10 @@ package GUI;
 
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
+import BUS.BUS_Suppilier;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
+import DTO.DTO_Suppilier;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,17 +34,18 @@ public class OrderGUI extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         try {
-            addRowToJTable();
+            BUS_Order bus_order = new BUS_Order();
+            list = bus_order.getList();
+            addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         OrderIDTxt.setEditable(false);
     }
 
-    public void addRowToJTable() throws SQLException {
-        BUS_Order bus_order = new BUS_Order();
-        ArrayList<DTO_Order> list = bus_order.getList();
+    public void addRowToJTable(ArrayList<DTO_Order> list) throws SQLException {
         DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        model.setRowCount(0);
         Object rowData[] = new Object[5];
 
         for (int i = 0; i < list.size(); i++) {
@@ -50,7 +53,6 @@ public class OrderGUI extends javax.swing.JFrame {
             rowData[0] = list.get(i).getOrderId();
             rowData[1] = list.get(i).getAccountId();
             rowData[2] = list.get(i).getOrderDate();
-//            rowData[3] = list.get(i).getStatus();
             rowData[3] = list.get(i).getCustomerId();
             model.addRow(rowData);
         }
@@ -61,7 +63,7 @@ public class OrderGUI extends javax.swing.JFrame {
         BUS_OrderDetail bus_detail = new BUS_OrderDetail();
         ArrayList<DTO_OrderDetail> get_all = bus_detail.getList();
         ArrayList<DTO_OrderDetail> list = new ArrayList<>();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) ChiTietTable.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
 
@@ -98,7 +100,6 @@ public class OrderGUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         XoaBtn = new javax.swing.JButton();
         SuaBtn = new javax.swing.JButton();
-        ResetBtn = new javax.swing.JButton();
         OrderIDLbl = new javax.swing.JLabel();
         AccIDLbl = new javax.swing.JLabel();
         CustomerIDLbl = new javax.swing.JLabel();
@@ -118,11 +119,9 @@ public class OrderGUI extends javax.swing.JFrame {
         jtf_account_id = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jtf_customer_id = new javax.swing.JTextField();
-        header1 = new GUI.Components.Header();
-        clockGUI1 = new GUI.Components.ClockGUI();
         jButton18 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ChiTietTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -158,35 +157,30 @@ public class OrderGUI extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 231, 224));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        XoaBtn.setText("Xóa");
+        XoaBtn.setBackground(new java.awt.Color(204, 174, 220));
+        XoaBtn.setText("XÓA");
         XoaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 XoaBtnActionPerformed(evt);
             }
         });
 
-        SuaBtn.setText("Sửa");
+        SuaBtn.setBackground(new java.awt.Color(204, 174, 220));
+        SuaBtn.setText("SỬA");
         SuaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SuaBtnActionPerformed(evt);
             }
         });
 
-        ResetBtn.setText("Reset");
-        ResetBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResetBtnActionPerformed(evt);
-            }
-        });
-
         OrderIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        OrderIDLbl.setText("Order ID");
+        OrderIDLbl.setText("Mã đơn hàng");
 
         AccIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AccIDLbl.setText("Account ID");
+        AccIDLbl.setText("Mã tài khoản");
 
         CustomerIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        CustomerIDLbl.setText("Customer ID");
+        CustomerIDLbl.setText("Mã khách hàng");
 
         ThongTinLbl.setBackground(new java.awt.Color(255, 255, 255));
         ThongTinLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -194,7 +188,7 @@ public class OrderGUI extends javax.swing.JFrame {
         ThongTinLbl.setText("Thông tin");
 
         OrderDateLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        OrderDateLbl.setText("Order date");
+        OrderDateLbl.setText("Thời gian đặt");
 
         CustomerIDTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,76 +200,67 @@ public class OrderGUI extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ThongTinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(ThongTinLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(OrderIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(OrderDateCal, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(AccIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(OrderIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(CustomerIDTxt)
+                    .addComponent(OrderDateCal, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(AccIDLbl)
-                .addGap(6, 6, 6)
-                .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(CustomerIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120)
+                .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(1, 1, 1)
                 .addComponent(ThongTinLbl)
-                .addGap(6, 6, 6)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(OrderIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(OrderDateCal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(OrderIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(OrderDateCal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AccIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(CustomerIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(40, 40, 40)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CustomerIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(107, 107, 107))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 231, 213));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        TimKiemBtn.setBackground(new java.awt.Color(204, 174, 220));
         TimKiemBtn.setText("Tìm kiếm");
         TimKiemBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -283,20 +268,32 @@ public class OrderGUI extends javax.swing.JFrame {
             }
         });
 
+        HuyTimKiemBtn.setBackground(new java.awt.Color(204, 174, 220));
         HuyTimKiemBtn.setText("Hủy tìm kiếm");
+        HuyTimKiemBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HuyTimKiemBtnActionPerformed(evt);
+            }
+        });
 
         TimKiemLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TimKiemLbl.setForeground(new java.awt.Color(255, 0, 51));
         TimKiemLbl.setText("Tìm kiếm");
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel23.setText("Order ID");
+        jLabel23.setText("Mã đơn hàng");
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel26.setText("Account ID");
+        jLabel26.setText("Mã tài khoản");
+
+        jtf_account_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtf_account_idActionPerformed(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel27.setText("Customer ID");
+        jLabel27.setText("Mã khách hàng");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -308,19 +305,22 @@ public class OrderGUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtf_customer_id)
-                            .addComponent(jtf_account_id)
-                            .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TimKiemBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel23))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtf_account_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,17 +329,21 @@ public class OrderGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtf_account_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_account_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -358,7 +362,7 @@ public class OrderGUI extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ChiTietTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -366,7 +370,7 @@ public class OrderGUI extends javax.swing.JFrame {
                 "ID", "Order ID", "ProductID", "Giá", "Số Lượng"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(ChiTietTable);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("ĐƠN HÀNG");
@@ -380,19 +384,16 @@ public class OrderGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -403,28 +404,21 @@ public class OrderGUI extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(533, 533, 533)
-                        .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton18)
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(33, 33, 33)
+                        .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,20 +455,9 @@ public class OrderGUI extends javax.swing.JFrame {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
         OrderDateCal.setDate(date);
     }
-    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
-        try {
-            ////        jDateChooser1.
-            OrderIDTxt.setText("");
-            AccIDTxt.setText("");
-            CustomerIDTxt.setText("");
-            displayDate();
-        } catch (ParseException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ResetBtnActionPerformed
-
     private void DonHangTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonHangTableMouseClicked
         // TODO add your handling code here:
+        OrderIDTxt.setEditable(false);
         int i = DonHangTable.getSelectedRow();
         System.out.println(i);
         OrderIDTxt.setText(DonHangTable.getModel().getValueAt(i, 0).toString());
@@ -502,14 +485,10 @@ public class OrderGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         BUS_Order bus = new BUS_Order();
         DTO_Order dto = new DTO_Order();
-        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ!!");
-        // new AlertMessageYN();
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ?");
         if (a == JOptionPane.YES_OPTION) {
-            //acc.setAccountName(tfAccountname.getText());
             dto.setAccountId(Integer.parseInt(AccIDTxt.getText()));
             dto.setCustomerId(Integer.parseInt(CustomerIDTxt.getText()));
-            dto.setOrderId(Integer.parseInt(OrderIDTxt.getText()));
-
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
             dto.setOrderDate(temp);
             int i = DonHangTable.getSelectedRow();
@@ -521,20 +500,36 @@ public class OrderGUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+        DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        model.setRowCount(0);
+        try {
+            addRowToJTable(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_SuaBtnActionPerformed
 
     private void XoaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaBtnActionPerformed
         // TODO add your handling code here:
-        BUS_Order odr = new BUS_Order();
-        int i = DonHangTable.getSelectedRow();
-        int id = (int) DonHangTable.getModel().getValueAt(i, 0);
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa đơn hàng này chứ?");
+        if (a == JOptionPane.YES_OPTION) {
+            BUS_Order odr = new BUS_Order();
+            int i = DonHangTable.getSelectedRow();
+            int id = (int) DonHangTable.getModel().getValueAt(i, 0);
+            try {
+                odr.delete(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        model.setRowCount(0);
         try {
-            odr.delete(id);
+            addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_XoaBtnActionPerformed
 
     private void CustomerIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDTxtActionPerformed
@@ -558,32 +553,65 @@ public class OrderGUI extends javax.swing.JFrame {
 
     private void TimKiemBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TimKiemBtnMouseClicked
         // TODO add your handling code here:
-
         ArrayList<DTO_Order> filter = new ArrayList<>();
+        ArrayList<DTO_Order> filter_orderID = new ArrayList<>();
+        ArrayList<DTO_Order> filter_accID = new ArrayList<>();
+        ArrayList<DTO_Order> filter_CustomerID = new ArrayList<>();
         String order_id = jtf_order_id.getText();
         String account_id = jtf_account_id.getText();
         String cusstomer_id = jtf_customer_id.getText();
-        if (order_id.length() != 0) {
-            filter.clear();
+        if (cusstomer_id.length() != 0) {
+            filter_CustomerID.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountId() == Integer.parseInt(id)) {
-                    filter_id.add(list.get(i));
+                if (list.get(i).getCustomerId() == Integer.parseInt(cusstomer_id)) {
+                    filter_CustomerID.add(list.get(i));
                 }
             }
-            filter = filter_id;
-
+            filter = filter_CustomerID;
         }
-        if (ten.length() != 0) {
-            filter.clear();
+        if (account_id.length() != 0) {
+            filter_accID.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountName().toLowerCase().contains(ten.toLowerCase())) {
-                    filter_ten.add(list.get(i));
+                if (list.get(i).getAccountId() == Integer.parseInt(account_id)) {
+                    filter_accID.add(list.get(i));
                 }
             }
-            filter = filter_ten;
-
+            filter = filter_accID;
+        }
+        if (order_id.length() != 0) {
+            filter_orderID.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getOrderId() == Integer.parseInt(order_id)) {
+                    filter_orderID.add(list.get(i));
+                }
+            }
+            filter = filter_orderID;
+        }
+        System.out.println(filter);
+        try {
+            addRowToJTable(filter);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_TimKiemBtnMouseClicked
+
+    private void jtf_account_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_account_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtf_account_idActionPerformed
+
+    private void HuyTimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HuyTimKiemBtnActionPerformed
+        // TODO add your handling code here:
+        jtf_account_id.setText("");
+        jtf_customer_id.setText("");
+        jtf_order_id.setText("");
+        BUS_Order oder = new BUS_Order();
+        try {
+            list = oder.getList();
+            addRowToJTable(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_HuyTimKiemBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -624,6 +652,7 @@ public class OrderGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AccIDLbl;
     private javax.swing.JTextField AccIDTxt;
+    private javax.swing.JTable ChiTietTable;
     private javax.swing.JLabel CustomerIDLbl;
     private javax.swing.JTextField CustomerIDTxt;
     private javax.swing.JLabel DonHangLbl;
@@ -633,14 +662,11 @@ public class OrderGUI extends javax.swing.JFrame {
     private javax.swing.JLabel OrderDateLbl;
     private javax.swing.JLabel OrderIDLbl;
     private javax.swing.JTextField OrderIDTxt;
-    private javax.swing.JButton ResetBtn;
     private javax.swing.JButton SuaBtn;
     private javax.swing.JLabel ThongTinLbl;
     private javax.swing.JButton TimKiemBtn;
     private javax.swing.JLabel TimKiemLbl;
     private javax.swing.JButton XoaBtn;
-    private GUI.Components.ClockGUI clockGUI1;
-    private GUI.Components.Header header1;
     private javax.swing.JButton jButton18;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -651,7 +677,6 @@ public class OrderGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jtf_account_id;
     private javax.swing.JTextField jtf_customer_id;
     private javax.swing.JTextField jtf_order_id;
