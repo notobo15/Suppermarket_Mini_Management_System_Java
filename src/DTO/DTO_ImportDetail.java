@@ -9,6 +9,13 @@ public class DTO_ImportDetail {
 	public DTO_ImportDetail() {
 		super();
 	}
+        public DTO_ImportDetail(int importId, int productId, float price, float quanity) {
+		super();
+		this.productId = productId;
+		this.price = price;
+		this.quanity = quanity;
+		this.importId = importId;
+	}
 	public DTO_ImportDetail(int id, int productId, float price, float quanity, int importId, boolean status) {
 		super();
 		this.id = id;

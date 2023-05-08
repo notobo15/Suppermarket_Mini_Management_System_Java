@@ -188,6 +188,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jtf_so_luong_product = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jtf_gia_nhap = new javax.swing.JTextField();
+        jButton18 = new javax.swing.JButton();
         header1 = new GUI.Components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,7 +198,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Title.setText("TẠO ĐƠN NHẬP HÀNG");
         jPanel2.add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, -1, -1));
-        jPanel2.add(clockGUI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(986, 1, 209, -1));
+        jPanel2.add(clockGUI1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, 209, -1));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setMaximumSize(new java.awt.Dimension(1000, 1000));
@@ -503,6 +504,22 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jtf_gia_nhap.setText("0");
         jPanel2.add(jtf_gia_nhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, 150, 50));
 
+        jButton18.setBackground(new java.awt.Color(255, 193, 7));
+        jButton18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/back.png"))); // NOI18N
+        jButton18.setLabel("BACK");
+        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton18MouseClicked(evt);
+            }
+        });
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 0, -1, 50));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -542,8 +559,13 @@ public class NhapHangGUI extends javax.swing.JFrame {
     private void DatHangBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatHangBtnActionPerformed
         try {
             // TODO add your handling code here
+            BUS_Customer bus_customer = new BUS_Customer();
+            String cus = jcb_khach_hang.getSelectedItem().toString();
+            int a = cus.charAt(0);
+            int cus_id = Character.getNumericValue(a);
 
-            new InPhieuNhap(list_product).setVisible(true);
+            DTO_Customer customer = bus_customer.getSingleById(cus_id);
+            new InPhieuNhap(list_product,customer).setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -776,7 +798,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void btn_cap_nhap_giaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cap_nhap_giaMouseClicked
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         try {
             float price = Float.parseFloat(jtf_update_gia.getText());
             System.out.println(price);
@@ -802,8 +824,23 @@ public class NhapHangGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
+        // TODO add your handling code here:
+
+        this.dispose();
+        try {
+            new HomeGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton18MouseClicked
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -866,6 +903,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -45,6 +45,7 @@ public class PhieuNhap extends javax.swing.JFrame {
     public void addRowToJTableThongTin() throws SQLException {
         BUS_ImportProduct bus_importproduct = new BUS_ImportProduct();
         ArrayList<DTO_ImportProduct> list = bus_importproduct.getList();
+        System.out.println(list);
         DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
         Object rowData[] = new Object[5];
         
@@ -129,7 +130,6 @@ public class PhieuNhap extends javax.swing.JFrame {
         MaNhapDetail = new javax.swing.JTextField();
         Title = new javax.swing.JLabel();
         clockGUI1 = new GUI.Components.ClockGUI();
-        header1 = new GUI.Components.Header();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 725));
@@ -532,27 +532,7 @@ public class PhieuNhap extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1188, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel2);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -822,7 +802,6 @@ public class PhieuNhap extends javax.swing.JFrame {
     private javax.swing.JButton XoaBtn;
     private javax.swing.JButton XoaDetailBtn;
     private GUI.Components.ClockGUI clockGUI1;
-    private GUI.Components.Header header1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

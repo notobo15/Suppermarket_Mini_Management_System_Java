@@ -96,12 +96,18 @@ public class ThongKeGUI extends javax.swing.JFrame {
      public void showLineChart(){
         //create dataset for the graph
          DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(200000, "Amount", "january");
-        dataset.setValue(150000, "Amount", "february");
-        dataset.setValue(18000, "Amount", "march");
-        dataset.setValue(100000, "Amount", "april");
-        dataset.setValue(80000, "Amount", "may");
-        dataset.setValue(250000, "Amount", "june");
+        dataset.setValue(200000, "Amount", "tháng 1");
+        dataset.setValue(150000, "Amount", "tháng 2");
+        dataset.setValue(18000, "Amount", "tháng 3");
+        dataset.setValue(100000, "Amount", "tháng 4");
+        dataset.setValue(80000, "Amount", "tháng 5");
+        dataset.setValue(0, "Amount", "tháng 6");
+        dataset.setValue(0, "Amount", "tháng 7");
+        dataset.setValue(0, "Amount", "tháng 8");
+        dataset.setValue(0, "Amount", "tháng 9");
+        dataset.setValue(0, "Amount", "tháng 10");
+        dataset.setValue(0, "Amount", "tháng 11");
+        dataset.setValue(0, "Amount", "tháng 12");
         
         //create chart
         JFreeChart linechart = ChartFactory.createLineChart("Doanh thu theo tháng","Tháng","Tiền", 
@@ -125,12 +131,18 @@ public class ThongKeGUI extends javax.swing.JFrame {
     }
      public void showBarChart(){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(200, "Amount", "january");
-        dataset.setValue(150, "Amount", "february");
-        dataset.setValue(18, "Amount", "march");
-        dataset.setValue(100, "Amount", "april");
-        dataset.setValue(80, "Amount", "may");
-        dataset.setValue(250, "Amount", "june");
+         dataset.setValue(200, "Amount", "tháng 1");
+        dataset.setValue(150, "Amount", "tháng 2");
+        dataset.setValue(18, "Amount", "tháng 3");
+        dataset.setValue(100, "Amount", "tháng 4");
+        dataset.setValue(80, "Amount", "tháng 5");
+        dataset.setValue(0, "Amount", "tháng 6");
+        dataset.setValue(0, "Amount", "tháng 7");
+        dataset.setValue(0, "Amount", "tháng 8");
+        dataset.setValue(0, "Amount", "tháng 9");
+        dataset.setValue(0, "Amount", "tháng 10");
+        dataset.setValue(0, "Amount", "tháng 11");
+        dataset.setValue(0, "Amount", "tháng 12");
         
         JFreeChart chart = ChartFactory.createBarChart("Số lượng đơn hàng","Tháng","Số lượng", 
                 dataset, PlotOrientation.VERTICAL, false,true,false);

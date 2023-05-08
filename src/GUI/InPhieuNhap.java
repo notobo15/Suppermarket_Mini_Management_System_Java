@@ -4,8 +4,13 @@
  */
 package GUI;
 
+import BUS.BUS_ImportDetail;
+import BUS.BUS_ImportProduct;
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
+import DTO.DTO_Customer;
+import DTO.DTO_ImportDetail;
+import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
 import DTO.DTO_Product;
@@ -18,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import GUI.*;
 import java.awt.print.PrinterException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,14 +37,17 @@ import javax.swing.JTextArea;
 public class InPhieuNhap extends javax.swing.JFrame {
 
     private ArrayList<DTO_Product> list = new ArrayList<>();
+    private Session session = new Session();
+    private DTO_Customer cus = null;
 
     /**
      * Creates new form CustomerGUI
      */
-    public InPhieuNhap(ArrayList<DTO_Product> list) throws SQLException {
+    public InPhieuNhap(ArrayList<DTO_Product> list, DTO_Customer cus) throws SQLException {
         initComponents();
         this.list = list;
-        writeDetail();
+        this.cus = cus;
+        writeDetail("0");
         this.setLocationRelativeTo(null);
     }
 
@@ -145,18 +154,19 @@ public class InPhieuNhap extends javax.swing.JFrame {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
     }
 
-    private void writeDetail() throws SQLException {
+    private void writeDetail(String id) throws SQLException {
         ta1.setText("");
-
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
         ta1.setText(ta1.getText() + "                      PHẦN MỀM QUẢN LÝ SIÊU THỊ MINI                      \n\n");
         ta1.setText(ta1.getText() + "    ĐỊA CHỈ: 123, Phường 5, Quận 5, Hồ Chí Minh                           \n");
         ta1.setText(ta1.getText() + "    SỐ ĐIỆN THOẠI: 0987654321                                             \n");
         ta1.setText(ta1.getText() + "                               --------------------------                        \n");
         ta1.setText(ta1.getText() + "                                       PHIẾU NHẬP                                \n\n");
-        ta1.setText(ta1.getText() + "    ID:   1122312                                                         \n");
-        ta1.setText(ta1.getText() + "    THỜI GIAN:  00:00:00 1-1-2012                                           \n");
-        ta1.setText(ta1.getText() + "    NHÂN VIÊN: NGUYỄN VĂN A                                              \n");
-        ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: NGUYỄN VẮN A                                              \n");
+        ta1.setText(ta1.getText() + "    ID:   " + id + "                                                         \n");
+        ta1.setText(ta1.getText() + "    THỜI GIAN: " + dateFormat.format(date) + "                                            \n");
+        ta1.setText(ta1.getText() + "    NHÂN VIÊN:" + session.getName() + "                                              \n");
+        ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + cus.getName() + "                                              \n");
 
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 
@@ -181,11 +191,24 @@ public class InPhieuNhap extends javax.swing.JFrame {
         if (ta1.getText().equals("")) {
             AlertWarning aw = new AlertWarning("Chưa chọn hóa đơn!");
             aw.setVisible(true);
-        } else
-        try {
+        } else {
 
+        }
+        BUS_ImportProduct bus_import = new BUS_ImportProduct();
+        BUS_ImportDetail bus_import_detail = new BUS_ImportDetail();
+        DTO_ImportProduct import_product = new DTO_ImportProduct(cus.getCustomerId(), session.getId());
+        try {
+            int id = Integer.parseInt(bus_import.add(import_product));
+            writeDetail("" + id);
             ta1.print();
+            for (int i = 0; i < list.size(); i++) {
+                DTO_ImportDetail detail = new DTO_ImportDetail(id, list.get(i).getProductId(), list.get(i).getPrice(), list.get(i).getQuantity());
+                bus_import_detail.add(detail);
+            }
+            this.dispose();
         } catch (PrinterException ex) {
+            Logger.getLogger(InPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(InPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPrintActionPerformed
@@ -196,7 +219,7 @@ public class InPhieuNhap extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 
     /**

@@ -8,6 +8,11 @@ public class DTO_ImportProduct {
 	public DTO_ImportProduct() {
 		super();
 	}
+        public DTO_ImportProduct(int suppilierId, int accountId) {
+		super();
+		this.suppilierId = suppilierId;
+		this.accountId = accountId;
+	}
 	public DTO_ImportProduct(int id, int suppilierId, int accountId, String importDate, boolean status) {
 		super();
 		this.id = id;

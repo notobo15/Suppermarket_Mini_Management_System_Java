@@ -31,10 +31,10 @@ public class BUS_ImportProduct {
     public String add(DTO_ImportProduct acc) throws SQLException {
     	boolean isExist = dao.checkExistById(acc.getId());
         if (!isExist) {
-            boolean isSuccess = dao.create(acc);
-            if (isSuccess) {
-            	new AlertWarning("Tạo import thành công").setVisible(true);
-                return "tao thanh cong";
+             int id = dao.create(acc);
+            if (id > 0) {
+//            	new AlertWarning("Tạo import thành công").setVisible(true);
+                return "" + id;
             } else {
             	new AlertWarning("Tạo import không thành công").setVisible(true);
                 return "tao khong thanh cong";

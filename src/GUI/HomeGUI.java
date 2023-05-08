@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BUS.BUS_Role;
+import DTO.DTO_Role;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +19,27 @@ public class HomeGUI extends javax.swing.JFrame {
     /**
      * Creates new form HomeGUI
      */
-    public HomeGUI() {
+    public HomeGUI() throws SQLException {
         initComponents();
         Session s = new Session();
-        lblId.setText(""+s.getId());
+        lblId.setText("" + s.getId());
         lblName.setText(s.getName());
-        lblRole.setText(""+s.getRole());
+
+        BUS_Role bus = new BUS_Role();
+        DTO_Role role = bus.getSingleById(s.getId());
+        lblRole.setText(role.getName());
+        s.setRole_name(role.getName());
+        if (s.getId() == 3) {
+            btnThongKe.setVisible(false);
+            btnNhaCungCap.setVisible(false);
+            btnNhapHang.setVisible(false);
+            btnTaiKhoan.setVisible(false);
+//                btn.setVisible(false);
+
+        } else if (s.getId() == 2) {
+            btnTaoDonHang.setVisible(false);
+            btnDonHang.setVisible(false);
+        }
     }
 
     /**
@@ -197,10 +214,10 @@ public class HomeGUI extends javax.swing.JFrame {
         pnBody.add(btnTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(875, 50, 200, 100));
 
         btnNhapHang.setBackground(new java.awt.Color(51, 0, 102));
-        btnNhapHang.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnNhapHang.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
         btnNhapHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/create-order-white-48.png"))); // NOI18N
-        btnNhapHang.setText("NHẬP HÀNG");
+        btnNhapHang.setText("TẠO NHẬP HÀNG");
         btnNhapHang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNhapHang.setFocusable(false);
         btnNhapHang.setRequestFocusEnabled(false);
@@ -216,7 +233,7 @@ public class HomeGUI extends javax.swing.JFrame {
         btnKhuyenMai.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnKhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
         btnKhuyenMai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/discount-white-48.png"))); // NOI18N
-        btnKhuyenMai.setText("KHUYẾN MÃI");
+        btnKhuyenMai.setText("NHẬP HÀNG");
         btnKhuyenMai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnKhuyenMai.setFocusable(false);
         btnKhuyenMai.setRequestFocusEnabled(false);
@@ -373,7 +390,7 @@ public class HomeGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnTaoDonHangActionPerformed
 
     private void btnDonHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonHangActionPerformed
@@ -382,7 +399,7 @@ public class HomeGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDonHangActionPerformed
 
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
-       this.dispose();
+        this.dispose();
         try {
             new CustomerGUI().setVisible(true);
         } catch (Exception ex) {
@@ -401,13 +418,12 @@ public class HomeGUI extends javax.swing.JFrame {
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         this.dispose();
-        new PhieuNhap().setVisible(true);
+        try {
+            new NhapHangGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnNhapHangActionPerformed
-
-    private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
-        this.dispose();
-        new DiscountCategoryGUI().setVisible(true);
-    }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     private void btnHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangHoaActionPerformed
         this.dispose();
@@ -430,8 +446,15 @@ public class HomeGUI extends javax.swing.JFrame {
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
         // TODO add your handling code here:
+         this.dispose();
+        new ThongKeGUI().setVisible(true);
+        
     }//GEN-LAST:event_btnThongKeActionPerformed
 
+    private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
+        this.dispose();
+        new DiscountCategoryGUI().setVisible(true);
+    }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,7 +486,11 @@ public class HomeGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomeGUI().setVisible(true);
+                try {
+                    new HomeGUI().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(HomeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JTextArea;
+
 /**
  *
  * @author ADMIN
@@ -34,14 +35,15 @@ public class InHoaDon extends javax.swing.JFrame {
     private ArrayList<DTO_Product> list = new ArrayList<>();
     private Session session = new Session();
     private DTO_Customer cus = null;
+
     /**
      * Creates new form CustomerGUI
      */
     public InHoaDon(ArrayList<DTO_Product> list, DTO_Customer cus) throws SQLException {
         initComponents();
         this.list = list;
-         this.cus = cus;
-        writeDetail();
+        this.cus = cus;
+        writeDetail("0");
         this.setLocationRelativeTo(null);
     }
 
@@ -148,19 +150,19 @@ public class InHoaDon extends javax.swing.JFrame {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
     }
 
-    private void writeDetail() throws SQLException {
+    private void writeDetail(String id) throws SQLException {
         ta1.setText("");
-DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
         ta1.setText(ta1.getText() + "                      PHẦN MỀM QUẢN LÝ SIÊU THỊ MINI                      \n\n");
         ta1.setText(ta1.getText() + "    ĐỊA CHỈ: 123, Phường 5, Quận 5, Hồ Chí Minh                           \n");
         ta1.setText(ta1.getText() + "    SỐ ĐIỆN THOẠI: 0987654321                                             \n");
         ta1.setText(ta1.getText() + "                               --------------------------                        \n");
         ta1.setText(ta1.getText() + "                                       HÓA ĐƠN                                 \n\n");
-        ta1.setText(ta1.getText() + "    ID:   1122312                                                         \n");
-        ta1.setText(ta1.getText() + "    THỜI GIAN:  "+dateFormat.format(date)+"                                           \n");
-        ta1.setText(ta1.getText() + "    NHÂN VIÊN: "+session.getName()+"                                              \n");
-        ta1.setText(ta1.getText() + "    KHÁCH HÀNG: "+cus.getName()+"                                             \n");
+        ta1.setText(ta1.getText() + "    ID:   " + id + "                                                         \n");
+        ta1.setText(ta1.getText() + "    THỜI GIAN:  " + dateFormat.format(date) + "                                           \n");
+        ta1.setText(ta1.getText() + "    NHÂN VIÊN: " + session.getName() + "                                              \n");
+        ta1.setText(ta1.getText() + "    KHÁCH HÀNG: " + cus.getName() + "                                             \n");
 
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 
@@ -188,27 +190,27 @@ Date date = new Date();
             aw.setVisible(true);
         } else
         try {
-             
-            ta1.print();
+
+            
+
             BUS_Order bus_order = new BUS_Order();
             BUS_OrderDetail bus_order_detail = new BUS_OrderDetail();
-            
             DTO_Order order = new DTO_Order(session.getId(), cus.getCustomerId());
+            
             try {
                 int id = Integer.parseInt(bus_order.add(order));
-                
+                writeDetail(""+id);
+                ta1.print();
                 for (int i = 0; i < list.size(); i++) {
-                     DTO_OrderDetail detail = new DTO_OrderDetail(id, list.get(i).getProductId(), list.get(i).getPrice(), list.get(i).getQuantity());
+                    DTO_OrderDetail detail = new DTO_OrderDetail(id, list.get(i).getProductId(), list.get(i).getPrice(), list.get(i).getQuantity());
                     bus_order_detail.add(detail);
                 }
                 this.dispose();
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            
+
         } catch (PrinterException ex) {
             Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
         }

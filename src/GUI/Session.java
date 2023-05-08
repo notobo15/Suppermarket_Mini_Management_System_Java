@@ -8,16 +8,19 @@ public class Session {
     private static int id;
     private static String name;
     private static int role;
-    
+    private static String role_name;
     public Session(int id,String name,int role)
     {
         Session.id=id;
         Session.name=name;
         Session.role=role;
+        
     }
-
+    
     public Session()
     {
+      
+
         
     }
     public int getId()
@@ -44,4 +47,13 @@ public class Session {
     {
         Session.role=role;
     }
+
+    public String getRole_name() {
+        return role_name;
+    }
+
+    public  void setRole_name(String role_name) {
+        Session.role_name = role_name;
+    }
+    
 }

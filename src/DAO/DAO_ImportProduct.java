@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import DTO.DTO_ImportProduct;
 import UTILS.ConnectDB;
+import java.sql.Statement;
 
 public class DAO_ImportProduct {
 
@@ -60,24 +61,28 @@ public class DAO_ImportProduct {
 		return importProduct;
 	}
 
-	public boolean create(DTO_ImportProduct newObj) throws SQLException {
+	public int create(DTO_ImportProduct newObj) throws SQLException {
 		ConnectDB con = new ConnectDB();
-		try {
-			String query = "INSERT INTO import_product(suppilier_id, import_date, account_id)" + "VALUES (?, ?, ?);";
+		int id = 0;
+                try {
+			String query = "INSERT INTO import_product(suppilier_id,account_id)" + "VALUES (?, ?);";
 
-			PreparedStatement ptm = con.getConnection().prepareStatement(query);
+			PreparedStatement ptm = con.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ptm.setInt(1, newObj.getSuppilierId());
-			ptm.setString(2, newObj.getImportDate());
-			ptm.setInt(3, newObj.getAccountId());
+			ptm.setInt(2, newObj.getAccountId());
 
-			int result = ptm.executeUpdate();
+			ptm.executeUpdate();
+			ResultSet rs = ptm.getGeneratedKeys();
+			 if (rs.next()){
+                            id=rs.getInt(1);
+                        }
 			con.closeConnection();
-			return result > 0;
+			return id;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return id;
 	}
 
 	public boolean updateById(DTO_ImportProduct newObj) throws SQLException {

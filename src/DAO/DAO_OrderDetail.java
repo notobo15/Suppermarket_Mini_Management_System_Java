@@ -20,7 +20,7 @@ public class DAO_OrderDetail {
 			rs = ptm.executeQuery();
 			while (rs.next()) {
 				int orderDetId = rs.getInt("order_det_id");
-				int orderId = rs.getInt("order_det_id");
+				int orderId = rs.getInt("order_id");
 				int productId = rs.getInt("product_id");
 				float price = rs.getFloat("price");
 				float quantity = rs.getFloat("quantity");

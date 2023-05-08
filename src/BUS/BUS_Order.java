@@ -34,7 +34,7 @@ public class BUS_Order {
         if (!isExist) {
             int id = dao.create(acc);
             if (id > 0) {
-                new AlertWarning("Tạo order thành công").setVisible(true);
+//                new AlertWarning("Tạo order thành công").setVisible(true);
                 return ""+id;
             } else {
                 new AlertWarning("Tạo order không thành công").setVisible(true);
