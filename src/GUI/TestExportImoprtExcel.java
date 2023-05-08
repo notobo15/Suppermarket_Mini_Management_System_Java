@@ -282,7 +282,6 @@ public class TestExportImoprtExcel extends javax.swing.JFrame {
 
                         }
                         Object rowData[] = new Object[7];
-                        System.out.println(item.get(0));
                         rowData[0] = item.get(0);
                         rowData[1] = item.get(1);
                         rowData[2] = item.get(2);

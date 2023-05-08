@@ -64,6 +64,7 @@ import static org.apache.poi.ss.usermodel.CellType.NUMERIC;
 import static org.apache.poi.ss.usermodel.CellType.STRING;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+
 /**
  *
  * @author EV
@@ -83,10 +84,14 @@ public class ProductGUI extends javax.swing.JFrame {
             Logger.getLogger(SuppilierGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
+        
+        input_productId.setEnabled(false);
+        input_productId.setText("0");
         btn_themsanpham.setEnabled(true);
         btn_suasanpham.setEnabled(false);
         btn_xoasanpham.setEnabled(false);
-
+        btn_themDB.setEnabled(false);
     }
 
     public void clear() {
@@ -98,7 +103,7 @@ public class ProductGUI extends javax.swing.JFrame {
         input_noiban.setText("");
         input_maloai.setText("");
         input_soluong.setText("");
-
+        input_img.setText("");
         Date date;
 
         try {
@@ -192,6 +197,7 @@ public class ProductGUI extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         btn_xuatExcel = new javax.swing.JButton();
+        btn_themDB = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
 
@@ -308,7 +314,7 @@ public class ProductGUI extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(input_hansudung, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 1, Short.MAX_VALUE))
                     .addComponent(input_gia)
                     .addComponent(input_trongluong)
                     .addComponent(input_noiban)
@@ -348,8 +354,8 @@ public class ProductGUI extends javax.swing.JFrame {
                             .addComponent(input_noiban, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(input_maloai))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(input_maloai, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
@@ -516,6 +522,16 @@ public class ProductGUI extends javax.swing.JFrame {
             }
         });
 
+        btn_themDB.setBackground(new java.awt.Color(0, 204, 204));
+        btn_themDB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_themDB.setForeground(new java.awt.Color(255, 255, 255));
+        btn_themDB.setText("Thêm Vào DB");
+        btn_themDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_themDBMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -524,25 +540,29 @@ public class ProductGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_nhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_nhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_themDB, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(btn_xuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_themDB, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -600,6 +620,7 @@ public class ProductGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_huytimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(102, 102, 102)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -631,12 +652,11 @@ public class ProductGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1)
@@ -649,6 +669,7 @@ public class ProductGUI extends javax.swing.JFrame {
                         .addGap(76, 76, 76)
                         .addComponent(jButton18)))
                 .addContainerGap())
+            .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -664,8 +685,8 @@ public class ProductGUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -776,7 +797,6 @@ public class ProductGUI extends javax.swing.JFrame {
                 row.createCell(8, CellType.STRING).setCellValue("so luong");
                 row.createCell(9, CellType.STRING).setCellValue("tinh trang");
                 row.createCell(10, CellType.STRING).setCellValue("han su dung");
-         
 
                 for (int i = 0; i < list.size(); i++) {
                     rowPos++;
@@ -815,6 +835,7 @@ public class ProductGUI extends javax.swing.JFrame {
 
     private void btn_nhapExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nhapExcelActionPerformed
         // TODO add your handling code here:
+        btn_themDB.setEnabled(true);
         try {
 
             JFileChooser jfile = new JFileChooser();
@@ -848,7 +869,7 @@ public class ProductGUI extends javax.swing.JFrame {
                     model.removeRow(0);
                 }
                 int i = 0;
-                ArrayList<DTO_Product> list = null;
+                ArrayList<DTO_Product> list = new ArrayList<>();
                 for (Row row : sheet) {
                     DTO_Product acc = new DTO_Product();
                     if (i > 0) {
@@ -857,6 +878,7 @@ public class ProductGUI extends javax.swing.JFrame {
 
                             switch (evaluator.evaluateInCell(cell).getCellType()) {
                                 case BOOLEAN:
+                                    item.add("" + cell.getBooleanCellValue());
 //                                System.out.println(cell.getBooleanCellValue());
                                     break;
                                 case NUMERIC:
@@ -887,10 +909,10 @@ public class ProductGUI extends javax.swing.JFrame {
                         rowData[4] = item.get(4);
                         rowData[5] = item.get(5);
                         rowData[6] = item.get(6);
-                        rowData[0] = item.get(7);
-                        rowData[1] = item.get(8);
-                        rowData[2] = item.get(9);
-                        rowData[3] = item.get(10);             
+                        rowData[7] = item.get(7);
+                        rowData[8] = item.get(8);
+                        rowData[9] = item.get(9);
+                        rowData[10] = item.get(10);
                         model.addRow(rowData);
 
                     }
@@ -901,8 +923,8 @@ public class ProductGUI extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
+
+
     }//GEN-LAST:event_btn_nhapExcelActionPerformed
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
@@ -919,6 +941,34 @@ public class ProductGUI extends javax.swing.JFrame {
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void btn_themDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_themDBMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel model = (DefaultTableModel) TableSanPham.getModel();
+        ArrayList<DTO_Product> list = new ArrayList<>();
+        BUS_Product bus_product = new BUS_Product();
+        for (int count = 0; count < model.getRowCount(); count++) {
+            DTO_Product pro = new DTO_Product();
+            pro.setName(model.getValueAt(count, 1).toString());
+            pro.setDescription(model.getValueAt(count, 2).toString());
+            pro.setPrice(Float.parseFloat((String) model.getValueAt(count, 3)));
+            pro.setImg(model.getValueAt(count, 4).toString());
+            pro.setMass(model.getValueAt(count, 5).toString());
+            pro.settrademark(model.getValueAt(count, 6).toString());
+            pro.setCategoryId((int) Float.parseFloat((String) model.getValueAt(count, 7)));
+            pro.setQuantity(Float.parseFloat((String) model.getValueAt(count, 8)));
+            pro.setExpireDate(model.getValueAt(count, 10).toString());
+
+            try {
+                bus_product.add(pro);
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+    }//GEN-LAST:event_btn_themDBMouseClicked
 
     private void btn_xoasanphamActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_xoasanphamActionPerformed
         // TODO add your handling code here:
@@ -966,6 +1016,14 @@ public class ProductGUI extends javax.swing.JFrame {
     private void btn_resetsanphamActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_resetsanphamActionPerformed
         // TODO add your handling code here:
         clear();
+        input_productId.setEnabled(false);
+        input_productId.setText("0");
+        ImageIcon imageIcon = new ImageIcon(""); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it 
+        Image newimg = image.getScaledInstance(180, 150, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+        imageIcon = new ImageIcon(newimg);  // transform it back
+        jlb_img.setIcon(imageIcon);
+
         btn_themsanpham.setEnabled(true);
         btn_suasanpham.setEnabled(false);
         btn_xoasanpham.setEnabled(false);
@@ -1146,6 +1204,7 @@ public class ProductGUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_nhapExcel;
     private javax.swing.JButton btn_resetsanpham;
     private javax.swing.JButton btn_suasanpham;
+    private javax.swing.JButton btn_themDB;
     private javax.swing.JButton btn_themsanpham;
     private javax.swing.JButton btn_timkiemsanpham;
     private javax.swing.JButton btn_xoasanpham;

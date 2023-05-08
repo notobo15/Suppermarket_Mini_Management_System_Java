@@ -828,7 +828,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
-        // TODO add your handling code here:
+        // TODO add your handling code here:    
 
         this.dispose();
         try {

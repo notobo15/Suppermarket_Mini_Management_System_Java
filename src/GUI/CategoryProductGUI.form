@@ -319,7 +319,7 @@
                       <Component id="btn_timkiemloaisanpham" max="32767" attributes="0"/>
                       <Component id="btn_huytimkiemloaisanpham" pref="144" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="105" max="32767" attributes="0"/>
+                  <EmptySpace pref="107" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
