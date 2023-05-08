@@ -1,4 +1,4 @@
-package DTO;
+    package DTO;
 
 public class DTO_ImportDetail {
 	private int id, productId;

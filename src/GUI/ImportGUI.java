@@ -4,9 +4,14 @@
  */
 package GUI;
 
+import BUS.BUS_Account;
+import BUS.BUS_ImportDetail;
+import BUS.BUS_ImportProduct;
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
 import BUS.BUS_Suppilier;
+import DTO.DTO_ImportDetail;
+import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
 import DTO.DTO_Suppilier;
@@ -29,13 +34,14 @@ import java.util.GregorianCalendar;
  */
 public class ImportGUI extends javax.swing.JFrame {
 
-    private ArrayList<DTO_Order> list = new ArrayList<>();
+    private ArrayList<DTO_ImportProduct> list = new ArrayList<>();
+
     public ImportGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
         try {
-            BUS_Order bus_order = new BUS_Order();
-            list = bus_order.getList();
+            BUS_ImportProduct bus = new BUS_ImportProduct();
+            list = bus.getList();
             addRowToJTable(list);
         } catch (SQLException ex) {
             Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,44 +49,45 @@ public class ImportGUI extends javax.swing.JFrame {
         ImportIDTxt.setEditable(false);
     }
 
-    public void addRowToJTable(ArrayList<DTO_Order> list) throws SQLException {
+    public void addRowToJTable(ArrayList<DTO_ImportProduct> list) throws SQLException {
         DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
         model.setRowCount(0);
-        Object rowData[] = new Object[5];
+        Object rowData[] = new Object[4];
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getOrderId());
-            rowData[0] = list.get(i).getOrderId();
-            rowData[1] = list.get(i).getAccountId();
-            rowData[2] = list.get(i).getOrderDate();
-            rowData[3] = list.get(i).getCustomerId();
+            System.out.println(list.get(i).getId());
+            rowData[0] = list.get(i).getId();
+            rowData[1] = list.get(i).getImportDate();
+            rowData[2] = list.get(i).getSuppilierId();
+            rowData[3] = list.get(i).getAccountId();
             model.addRow(rowData);
         }
     }
 
-    public void renderOrderDetail(int order_id) throws SQLException {
+    public void renderOrderDetail(int id) throws SQLException {
 
-        BUS_OrderDetail bus_detail = new BUS_OrderDetail();
-        ArrayList<DTO_OrderDetail> get_all = bus_detail.getList();
-        ArrayList<DTO_OrderDetail> list = new ArrayList<>();
+        BUS_ImportDetail bus_detail = new BUS_ImportDetail();
+        ArrayList<DTO_ImportDetail> get_all = bus_detail.getList();
+        ArrayList<DTO_ImportDetail> list = new ArrayList<>();
+
+        System.out.print(get_all);
         DefaultTableModel model = (DefaultTableModel) ChiTietTable.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
-
         for (int i = 0; i < get_all.size(); i++) {
-            System.out.println(get_all.get(i));
-            if (get_all.get(i).getOrder_id() == order_id) {
+//            System.out.println(get_all.get(i));
+            if (get_all.get(i).getImportId() == id) {
                 list.add(get_all.get(i));
             }
         }
+//                System.out.print(list);
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getOrder_id() == order_id) {
-                rowData[0] = list.get(i).getId();
-                rowData[1] = list.get(i).getOrder_id();
-                rowData[2] = list.get(i).getProduct_id();
-                rowData[3] = list.get(i).getQuanity();
-                rowData[4] = list.get(i).getPrice();
-            }
+            System.out.println(list.get(i));
+            rowData[0] = list.get(i).getId();
+            rowData[1] = list.get(i).getImportId();
+            rowData[2] = list.get(i).getProductId();
+            rowData[3] = list.get(i).getQuanity();
+            rowData[4] = list.get(i).getPrice();
             model.addRow(rowData);
         }
     }
@@ -116,20 +123,23 @@ public class ImportGUI extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         MaNhapTxt = new javax.swing.JTextField();
-        MaSPTxt = new javax.swing.JTextField();
+        MaNCCTxt = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
-        jtf_customer_id = new javax.swing.JTextField();
+        accTxt = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        NgayNhap = new com.toedter.calendar.JDateChooser();
         jButton18 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         ChiTietTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        header1 = new GUI.Components.Header();
+        clockGUI1 = new GUI.Components.ClockGUI();
+        btnRefresh1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        DonHangLbl.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        DonHangLbl.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         DonHangLbl.setText("NHẬP HÀNG");
 
         ThongTinTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -140,15 +150,7 @@ public class ImportGUI extends javax.swing.JFrame {
             new String [] {
                 "Import_ID", "Date", "Supplier_ID", "Account_ID"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         ThongTinTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ThongTinTableMouseClicked(evt);
@@ -192,6 +194,8 @@ public class ImportGUI extends javax.swing.JFrame {
         OrderDateLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         OrderDateLbl.setText("Ngày");
 
+        ImportIDTxt.setEditable(false);
+
         AccountIDTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AccountIDTxtActionPerformed(evt);
@@ -210,7 +214,7 @@ public class ImportGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(AccIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(OrderIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(ImportIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,7 +260,7 @@ public class ImportGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 231, 213));
@@ -294,12 +298,6 @@ public class ImportGUI extends javax.swing.JFrame {
             }
         });
 
-        MaSPTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MaSPTxtActionPerformed(evt);
-            }
-        });
-
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel27.setText("Mã tài khoản");
 
@@ -329,9 +327,9 @@ public class ImportGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(MaNhapTxt)
-                                    .addComponent(MaSPTxt)
-                                    .addComponent(jtf_customer_id)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))))
+                                    .addComponent(MaNCCTxt)
+                                    .addComponent(accTxt)
+                                    .addComponent(NgayNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))))
                     .addComponent(TimKiemLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -345,12 +343,12 @@ public class ImportGUI extends javax.swing.JFrame {
                     .addComponent(MaNhapTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(MaSPTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(MaNCCTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -359,7 +357,7 @@ public class ImportGUI extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -396,68 +394,87 @@ public class ImportGUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(ChiTietTable);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("THÔNG TIN PHIẾU NHẬP");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("CHI TIẾT PHIẾU NHẬP");
+
+        btnRefresh1.setBackground(new java.awt.Color(204, 204, 204));
+        btnRefresh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset-32px.png"))); // NOI18N
+        btnRefresh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefresh1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(419, 419, 419)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton18)))
+                                .addGap(9, 9, 9))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnRefresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(338, 338, 338)))
-                .addComponent(jButton18)
-                .addGap(21, 21, 21))
+                        .addGap(491, 491, 491)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRefresh1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(clockGUI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -486,11 +503,11 @@ public class ImportGUI extends javax.swing.JFrame {
         int i = ThongTinTable.getSelectedRow();
         System.out.println(i);
         ImportIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 0).toString());
-        SupplierIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 1).toString());
+        SupplierIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 2).toString());
 //        jTextField17.setText(jTable1.getModel().getValueAt(i, 3).toString());
         Date date;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(ThongTinTable.getModel().getValueAt(i, 2).toString());
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(ThongTinTable.getModel().getValueAt(i, 1).toString());
             OrderDateCal.setDate(date);
         } catch (ParseException ex) {
             Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -508,42 +525,38 @@ public class ImportGUI extends javax.swing.JFrame {
 
     private void SuaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaBtnActionPerformed
         // TODO add your handling code here:
-        BUS_Order bus = new BUS_Order();
-        DTO_Order dto = new DTO_Order();
+        BUS_ImportProduct bus = new BUS_ImportProduct();
+        DTO_ImportProduct dto = new DTO_ImportProduct();
         int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ?");
         if (a == JOptionPane.YES_OPTION) {
-            dto.setAccountId(Integer.parseInt(SupplierIDTxt.getText()));
-            dto.setCustomerId(Integer.parseInt(AccountIDTxt.getText()));
+            dto.setSuppilierId(Integer.parseInt(SupplierIDTxt.getText()));
+            dto.setAccountId(Integer.parseInt(AccountIDTxt.getText()));
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
-            dto.setOrderDate(temp);
-            int i = ThongTinTable.getSelectedRow();
-            int id = (int) ThongTinTable.getModel().getValueAt(i, 0);
-            dto.setOrderId(id);
-
+            dto.setImportDate(temp);
             try {
                 bus.update(dto);
             } catch (SQLException ex) {
                 Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
-        model.setRowCount(0);
-        try {
-            addRowToJTable(list);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
+            model.setRowCount(0);
+            try {
+                addRowToJTable(list);
+            } catch (SQLException ex) {
+                Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_SuaBtnActionPerformed
 
     private void XoaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaBtnActionPerformed
         // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa đơn hàng này chứ?");
+        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa chứ?");
         if (a == JOptionPane.YES_OPTION) {
-            BUS_Order odr = new BUS_Order();
+            BUS_ImportProduct bus = new BUS_ImportProduct();
             int i = ThongTinTable.getSelectedRow();
             int id = (int) ThongTinTable.getModel().getValueAt(i, 0);
             try {
-                odr.delete(id);
+                bus.delete(id);
             } catch (SQLException ex) {
                 Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -578,58 +591,77 @@ public class ImportGUI extends javax.swing.JFrame {
 
     private void TimKiemBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TimKiemBtnMouseClicked
         // TODO add your handling code here:
-        ArrayList<DTO_Order> filter = new ArrayList<>();
-        ArrayList<DTO_Order> filter_orderID = new ArrayList<>();
-        ArrayList<DTO_Order> filter_accID = new ArrayList<>();
-        ArrayList<DTO_Order> filter_CustomerID = new ArrayList<>();
-        String order_id = MaNhapTxt.getText();
-        String account_id = MaSPTxt.getText();
-        String cusstomer_id = jtf_customer_id.getText();
-        if (cusstomer_id.length() != 0) {
-            filter_CustomerID.clear();
+        ArrayList<DTO_ImportProduct> filter = new ArrayList<>();
+        ArrayList<DTO_ImportProduct> filter_ImportID = new ArrayList<>();
+        ArrayList<DTO_ImportProduct> filter_accID = new ArrayList<>();
+        ArrayList<DTO_ImportProduct> filter_SupplierID = new ArrayList<>();
+        ArrayList<DTO_ImportProduct> filter_date = new ArrayList<>();
+        String importid = MaNhapTxt.getText();
+        String supllierid = MaNCCTxt.getText();
+        String accid = accTxt.getText();
+        Date d = NgayNhap.getDate();
+        String date = "";
+        if (d != null) {
+            date = new SimpleDateFormat("yyyy-MM-dd").format(d);
+        
+        }
+
+        
+        if (importid.length() != 0) {
+            filter.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getCustomerId() == Integer.parseInt(cusstomer_id)) {
-                    filter_CustomerID.add(list.get(i));
+                if (list.get(i).getId() == Integer.parseInt(importid)) {
+                    filter_ImportID.add(list.get(i));
                 }
             }
-            filter = filter_CustomerID;
+            filter = filter_ImportID;
         }
-        if (account_id.length() != 0) {
-            filter_accID.clear();
+        if (accid.length() != 0) {
+            filter.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getAccountId() == Integer.parseInt(account_id)) {
+                if (list.get(i).getAccountId() == Integer.parseInt(accid)) {
                     filter_accID.add(list.get(i));
                 }
             }
             filter = filter_accID;
         }
-        if (order_id.length() != 0) {
-            filter_orderID.clear();
+        if (supllierid.length() != 0) {
+            filter.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getOrderId() == Integer.parseInt(order_id)) {
-                    filter_orderID.add(list.get(i));
+                if (list.get(i).getSuppilierId() == Integer.parseInt(supllierid)) {
+                    filter_SupplierID.add(list.get(i));
                 }
             }
-            filter = filter_orderID;
+            filter = filter_SupplierID;
         }
-        System.out.println(filter);
-        try {
-            addRowToJTable(filter);
-        } catch (SQLException ex) {
-            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
+        if (date.length() != 0) {
+            filter.clear();
+            for (int i = 0; i < list.size(); i++) {
+                System.out.print(list.get(i).getImportDate());
+                if (list.get(i).getImportDate().contains(date)) {
+                    System.out.print(list.get(i));
+                    filter_date.add(list.get(i));
+                }
+            }
+            filter = filter_date;
+            
         }
+            System.out.println(filter);
+            try {
+                addRowToJTable(filter);
+            } catch (SQLException ex) {
+                Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_TimKiemBtnMouseClicked
-
-    private void MaSPTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaSPTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MaSPTxtActionPerformed
 
     private void HuyTimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HuyTimKiemBtnActionPerformed
         // TODO add your handling code here:
-        MaSPTxt.setText("");
-        jtf_customer_id.setText("");
+        MaNCCTxt.setText("");
+        accTxt.setText("");
         MaNhapTxt.setText("");
-        BUS_Order oder = new BUS_Order();
+        Date date = new Date();
+        NgayNhap.setDate(date);
+        BUS_ImportProduct oder = new BUS_ImportProduct();
         try {
             list = oder.getList();
             addRowToJTable(list);
@@ -641,6 +673,29 @@ public class ImportGUI extends javax.swing.JFrame {
     private void MaNhapTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaNhapTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MaNhapTxtActionPerformed
+
+    private void btnRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefresh1ActionPerformed
+        // TODO add your handling code here:
+        ImportIDTxt.setText("");
+        AccountIDTxt.setText("");
+        SupplierIDTxt.setText("");
+        MaNCCTxt.setText("");
+        accTxt.setText("");
+        MaNhapTxt.setText("");
+        OrderDateCal.setDate(null);
+        NgayNhap.setDate(null);
+        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
+        model.setRowCount(0);
+        DefaultTableModel model2 = (DefaultTableModel) ChiTietTable.getModel();
+        model2.setRowCount(0);
+            BUS_ImportProduct bus = new BUS_ImportProduct();
+        try {
+            list = bus.getList();
+            addRowToJTable(list);
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRefresh1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -688,8 +743,9 @@ public class ImportGUI extends javax.swing.JFrame {
     private javax.swing.JLabel DonHangLbl;
     private javax.swing.JButton HuyTimKiemBtn;
     private javax.swing.JTextField ImportIDTxt;
+    private javax.swing.JTextField MaNCCTxt;
     private javax.swing.JTextField MaNhapTxt;
-    private javax.swing.JTextField MaSPTxt;
+    private com.toedter.calendar.JDateChooser NgayNhap;
     private com.toedter.calendar.JDateChooser OrderDateCal;
     private javax.swing.JLabel OrderDateLbl;
     private javax.swing.JLabel OrderIDLbl;
@@ -700,8 +756,11 @@ public class ImportGUI extends javax.swing.JFrame {
     private javax.swing.JButton TimKiemBtn;
     private javax.swing.JLabel TimKiemLbl;
     private javax.swing.JButton XoaBtn;
+    private javax.swing.JTextField accTxt;
+    private javax.swing.JButton btnRefresh1;
+    private GUI.Components.ClockGUI clockGUI1;
+    private GUI.Components.Header header1;
     private javax.swing.JButton jButton18;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
@@ -712,6 +771,5 @@ public class ImportGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jtf_customer_id;
     // End of variables declaration//GEN-END:variables
 }

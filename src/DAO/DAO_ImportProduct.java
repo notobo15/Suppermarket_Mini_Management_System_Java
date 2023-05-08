@@ -20,9 +20,9 @@ public class DAO_ImportProduct {
 					.prepareStatement("SELECT * FROM import_product where status = 1");
 			rs = ptm.executeQuery();
 			while (rs.next()) {
-				int id = rs.getInt("order_id");
+				int id = rs.getInt("import_id");
 				int accountId = rs.getInt("account_id");
-				String orderDate = rs.getString("order_date");
+				String orderDate = rs.getString("date");
 				int suppilierId = rs.getInt("suppilier_id");
 				Boolean status = rs.getBoolean("status");
 
