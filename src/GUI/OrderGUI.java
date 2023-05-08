@@ -493,7 +493,7 @@ public class OrderGUI extends javax.swing.JFrame {
             dto.setOrderDate(temp);
             int i = DonHangTable.getSelectedRow();
             int id = (int) DonHangTable.getModel().getValueAt(i, 0);
-            dto.setAccountId(id);
+            dto.setOrderId(id);
 
             try {
                 bus.update(dto);
