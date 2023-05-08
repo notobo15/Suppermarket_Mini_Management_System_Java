@@ -14,6 +14,7 @@ import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
 import DTO.DTO_Product;
+import DTO.DTO_Suppilier;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,7 @@ public class InPhieuNhap extends javax.swing.JFrame {
     private ArrayList<DTO_Product> list = new ArrayList<>();
     private Session session = new Session();
     private DTO_Customer cus = null;
+    private DTO_Suppilier sup = null;
 
     /**
      * Creates new form CustomerGUI
@@ -48,6 +50,13 @@ public class InPhieuNhap extends javax.swing.JFrame {
         this.list = list;
         this.cus = cus;
         writeDetail("0");
+        this.setLocationRelativeTo(null);
+    }
+    public InPhieuNhap(ArrayList<DTO_Product> list, DTO_Suppilier sup,DTO_ImportProduct imp) throws SQLException {
+        initComponents();
+        this.list = list;
+        this.sup = sup;
+        writeDetail(""+imp.getId());
         this.setLocationRelativeTo(null);
     }
 
@@ -166,7 +175,15 @@ public class InPhieuNhap extends javax.swing.JFrame {
         ta1.setText(ta1.getText() + "    ID:   " + id + "                                                         \n");
         ta1.setText(ta1.getText() + "    THỜI GIAN: " + dateFormat.format(date) + "                                            \n");
         ta1.setText(ta1.getText() + "    NHÂN VIÊN:" + session.getName() + "                                              \n");
-        ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + cus.getName() + "                                              \n");
+        if (sup.getName() != null) {
+                    ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + sup.getName() + "                                              \n");
+
+        }
+          if (cus != null) {
+                    ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + cus.getName() + "                                              \n");
+
+        }
+
 
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
 

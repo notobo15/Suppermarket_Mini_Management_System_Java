@@ -7,6 +7,7 @@ package GUI;
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
 import DTO.DTO_Customer;
+import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
 import DTO.DTO_Product;
@@ -44,9 +45,25 @@ public class InHoaDon extends javax.swing.JFrame {
         this.list = list;
         this.cus = cus;
         writeDetail("0");
+        
         this.setLocationRelativeTo(null);
     }
-
+   public InHoaDon(ArrayList<DTO_Product> list, DTO_Customer cus, DTO_Order order) throws SQLException {
+        initComponents();
+        this.list = list;
+        this.cus = cus;
+        writeDetail(""+order.getOrderId());
+        
+        this.setLocationRelativeTo(null);
+    }
+   public InHoaDon(ArrayList<DTO_Product> list, DTO_Customer cus, DTO_ImportProduct order) throws SQLException {
+        initComponents();
+        this.list = list;
+        this.cus = cus;
+        writeDetail(""+order.getId());
+        
+        this.setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,7 +187,7 @@ public class InHoaDon extends javax.swing.JFrame {
         ta1.setText(ta1.getText() + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
         float sum = 0;
         for (int i = 0; i < list.size(); i++) {
-            float thanh_tien = list.get(i).getQuantity() * list.get(i).getPrice();
+            double thanh_tien = list.get(i).getQuantity() * list.get(i).getPrice();
             sum += thanh_tien;
             int stt = i + 1;
             ta1.setText(ta1.getText() + list.get(i).getName() + "\n");

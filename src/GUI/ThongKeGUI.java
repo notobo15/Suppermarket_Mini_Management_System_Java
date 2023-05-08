@@ -177,6 +177,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
         header1 = new GUI.Components.Header();
         jPanel3 = new javax.swing.JPanel();
         Title = new javax.swing.JPanel();
+        jButton18 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnSanPham = new javax.swing.JPanel();
         lblSanPham = new javax.swing.JLabel();
@@ -213,6 +214,22 @@ public class ThongKeGUI extends javax.swing.JFrame {
 
         Title.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Title.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton18.setBackground(new java.awt.Color(255, 193, 7));
+        jButton18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/back.png"))); // NOI18N
+        jButton18.setLabel("BACK");
+        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton18MouseClicked(evt);
+            }
+        });
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+        Title.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 10, -1, 50));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -318,6 +335,21 @@ public class ThongKeGUI extends javax.swing.JFrame {
         showLineChart();
     }//GEN-LAST:event_btnDoanhThuMouseClicked
 
+    private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
+        // TODO add your handling code here:
+
+        this.dispose();
+        try {
+            new HomeGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(NhapHangGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton18MouseClicked
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -354,16 +386,12 @@ public class ThongKeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    // private GUI.Components.Header header1;
-    // private GUI.Components.Header header2;
-    // private GUI.Components.ThongKeChartTable thongKeChartTable1;
-    // private GUI.Components.ThongKeChartTable thongKeChartTable2;
-    // private GUI.Components.ThongKeSoLuong thongKeSoLuong1;
     private javax.swing.JPanel Title;
     private javax.swing.JPanel btnDoanhThu;
     private javax.swing.JPanel btnDonHang;
     private javax.swing.JPanel btnSanPham;
     private GUI.Components.Header header1;
+    private javax.swing.JButton jButton18;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
