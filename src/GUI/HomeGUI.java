@@ -453,7 +453,7 @@ public class HomeGUI extends javax.swing.JFrame {
 
     private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
         this.dispose();
-        new DiscountCategoryGUI().setVisible(true);
+        new ImportGUI().setVisible(true);
     }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     /**

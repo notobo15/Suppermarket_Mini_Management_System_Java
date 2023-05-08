@@ -5,15 +5,19 @@
 package GUI;
 
 import BUS.BUS_Account;
+import BUS.BUS_Customer;
 import BUS.BUS_ImportDetail;
 import BUS.BUS_ImportProduct;
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
+import BUS.BUS_Product;
 import BUS.BUS_Suppilier;
+import DTO.DTO_Customer;
 import DTO.DTO_ImportDetail;
 import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
 import DTO.DTO_OrderDetail;
+import DTO.DTO_Product;
 import DTO.DTO_Suppilier;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,6 +39,8 @@ import java.util.GregorianCalendar;
 public class ImportGUI extends javax.swing.JFrame {
 
     private ArrayList<DTO_ImportProduct> list = new ArrayList<>();
+    private Session session = new Session();
+    private ArrayList<DTO_ImportDetail> list_import_detail = new ArrayList<>();
 
     public ImportGUI() {
         initComponents();
@@ -80,6 +86,8 @@ public class ImportGUI extends javax.swing.JFrame {
                 list.add(get_all.get(i));
             }
         }
+        
+        list_import_detail = list;
 //                System.out.print(list);
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
@@ -106,7 +114,6 @@ public class ImportGUI extends javax.swing.JFrame {
         ThongTinTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         XoaBtn = new javax.swing.JButton();
-        SuaBtn = new javax.swing.JButton();
         OrderIDLbl = new javax.swing.JLabel();
         AccIDLbl = new javax.swing.JLabel();
         CustomerIDLbl = new javax.swing.JLabel();
@@ -116,6 +123,7 @@ public class ImportGUI extends javax.swing.JFrame {
         SupplierIDTxt = new javax.swing.JTextField();
         AccountIDTxt = new javax.swing.JTextField();
         OrderDateCal = new com.toedter.calendar.JDateChooser();
+        btnPrint = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         TimKiemBtn = new javax.swing.JButton();
         HuyTimKiemBtn = new javax.swing.JButton();
@@ -169,14 +177,6 @@ public class ImportGUI extends javax.swing.JFrame {
             }
         });
 
-        SuaBtn.setBackground(new java.awt.Color(204, 174, 220));
-        SuaBtn.setText("SỬA");
-        SuaBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SuaBtnActionPerformed(evt);
-            }
-        });
-
         OrderIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         OrderIDLbl.setText("Mã nhập");
 
@@ -199,6 +199,15 @@ public class ImportGUI extends javax.swing.JFrame {
         AccountIDTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AccountIDTxtActionPerformed(evt);
+            }
+        });
+
+        btnPrint.setBackground(new java.awt.Color(204, 174, 220));
+        btnPrint.setText("IN");
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
             }
         });
 
@@ -233,9 +242,9 @@ public class ImportGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120)
-                .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128))
+                .addGap(97, 97, 97)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(168, 168, 168))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,8 +267,8 @@ public class ImportGUI extends javax.swing.JFrame {
                     .addComponent(AccountIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -523,31 +532,6 @@ public class ImportGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ThongTinTableMouseClicked
 
-    private void SuaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaBtnActionPerformed
-        // TODO add your handling code here:
-        BUS_ImportProduct bus = new BUS_ImportProduct();
-        DTO_ImportProduct dto = new DTO_ImportProduct();
-        int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ?");
-        if (a == JOptionPane.YES_OPTION) {
-            dto.setSuppilierId(Integer.parseInt(SupplierIDTxt.getText()));
-            dto.setAccountId(Integer.parseInt(AccountIDTxt.getText()));
-            String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
-            dto.setImportDate(temp);
-            try {
-                bus.update(dto);
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
-            model.setRowCount(0);
-            try {
-                addRowToJTable(list);
-            } catch (SQLException ex) {
-                Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_SuaBtnActionPerformed
-
     private void XoaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaBtnActionPerformed
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa chứ?");
@@ -697,6 +681,34 @@ public class ImportGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRefresh1ActionPerformed
 
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+        try {
+            BUS_ImportDetail bus_detail = new BUS_ImportDetail();
+            BUS_Product bus_product = new BUS_Product();
+            int i1 = ThongTinTable.getSelectedRow();
+           
+            ArrayList<DTO_ImportDetail> list_importDetail = bus_detail.getList();
+
+            ArrayList<DTO_Product> list_product2 = new ArrayList<>();
+
+            for (int i = 0; i < list_import_detail.size(); i++) {
+                DTO_Product pro = bus_product.getSingleById(list_importDetail.get(i).getProductId());
+                pro.setQuantity(list_import_detail.get(i).getQuanity());
+                list_product2.add(pro);
+            }
+            System.out.println(list_product2);
+            int cusID = (int) ThongTinTable.getModel().getValueAt(i1, 2);
+            BUS_Suppilier bus_sup = new BUS_Suppilier();
+            DTO_Suppilier sup = bus_sup.getSingleById(cusID);
+            
+            new InPhieuNhap(list_product2, sup, list.get(i1)).setVisible(true);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnPrintActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -749,7 +761,6 @@ public class ImportGUI extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser OrderDateCal;
     private javax.swing.JLabel OrderDateLbl;
     private javax.swing.JLabel OrderIDLbl;
-    private javax.swing.JButton SuaBtn;
     private javax.swing.JTextField SupplierIDTxt;
     private javax.swing.JLabel ThongTinLbl;
     private javax.swing.JTable ThongTinTable;
@@ -757,6 +768,7 @@ public class ImportGUI extends javax.swing.JFrame {
     private javax.swing.JLabel TimKiemLbl;
     private javax.swing.JButton XoaBtn;
     private javax.swing.JTextField accTxt;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnRefresh1;
     private GUI.Components.ClockGUI clockGUI1;
     private GUI.Components.Header header1;
