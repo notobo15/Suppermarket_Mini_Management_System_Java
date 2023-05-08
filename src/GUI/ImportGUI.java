@@ -27,10 +27,10 @@ import java.util.GregorianCalendar;
  *
  * @author ADMIN
  */
-public class OrderGUI extends javax.swing.JFrame {
+public class ImportGUI extends javax.swing.JFrame {
 
     private ArrayList<DTO_Order> list = new ArrayList<>();
-    public OrderGUI() {
+    public ImportGUI() {
         initComponents();
         this.setLocationRelativeTo(null);
         try {
@@ -38,13 +38,13 @@ public class OrderGUI extends javax.swing.JFrame {
             list = bus_order.getList();
             addRowToJTable(list);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        OrderIDTxt.setEditable(false);
+        ImportIDTxt.setEditable(false);
     }
 
     public void addRowToJTable(ArrayList<DTO_Order> list) throws SQLException {
-        DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
         model.setRowCount(0);
         Object rowData[] = new Object[5];
 
@@ -96,7 +96,7 @@ public class OrderGUI extends javax.swing.JFrame {
 
         DonHangLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        DonHangTable = new javax.swing.JTable();
+        ThongTinTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         XoaBtn = new javax.swing.JButton();
         SuaBtn = new javax.swing.JButton();
@@ -105,9 +105,9 @@ public class OrderGUI extends javax.swing.JFrame {
         CustomerIDLbl = new javax.swing.JLabel();
         ThongTinLbl = new javax.swing.JLabel();
         OrderDateLbl = new javax.swing.JLabel();
-        OrderIDTxt = new javax.swing.JTextField();
-        AccIDTxt = new javax.swing.JTextField();
-        CustomerIDTxt = new javax.swing.JTextField();
+        ImportIDTxt = new javax.swing.JTextField();
+        SupplierIDTxt = new javax.swing.JTextField();
+        AccountIDTxt = new javax.swing.JTextField();
         OrderDateCal = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         TimKiemBtn = new javax.swing.JButton();
@@ -115,52 +115,46 @@ public class OrderGUI extends javax.swing.JFrame {
         TimKiemLbl = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jtf_order_id = new javax.swing.JTextField();
-        jtf_account_id = new javax.swing.JTextField();
+        MaNhapTxt = new javax.swing.JTextField();
+        MaSPTxt = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jtf_customer_id = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jButton18 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         ChiTietTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         DonHangLbl.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        DonHangLbl.setText("ĐƠN HÀNG");
+        DonHangLbl.setText("NHẬP HÀNG");
 
-        DonHangTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        DonHangTable.setModel(new javax.swing.table.DefaultTableModel(
+        ThongTinTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ThongTinTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Order ID", "Account ID", "Order date", "Customer ID"
+                "Import_ID", "Date", "Supplier_ID", "Account_ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        DonHangTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        ThongTinTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DonHangTableMouseClicked(evt);
+                ThongTinTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(DonHangTable);
+        jScrollPane1.setViewportView(ThongTinTable);
 
         jPanel3.setBackground(new java.awt.Color(255, 231, 224));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -182,13 +176,13 @@ public class OrderGUI extends javax.swing.JFrame {
         });
 
         OrderIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        OrderIDLbl.setText("Mã đơn hàng");
+        OrderIDLbl.setText("Mã nhập");
 
         AccIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AccIDLbl.setText("Mã tài khoản");
+        AccIDLbl.setText("Mã nhà cung cấp");
 
         CustomerIDLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        CustomerIDLbl.setText("Mã khách hàng");
+        CustomerIDLbl.setText("Mã tài khoản");
 
         ThongTinLbl.setBackground(new java.awt.Color(255, 255, 255));
         ThongTinLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -196,11 +190,11 @@ public class OrderGUI extends javax.swing.JFrame {
         ThongTinLbl.setText("Thông tin");
 
         OrderDateLbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        OrderDateLbl.setText("Thời gian đặt");
+        OrderDateLbl.setText("Ngày");
 
-        CustomerIDTxt.addActionListener(new java.awt.event.ActionListener() {
+        AccountIDTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CustomerIDTxtActionPerformed(evt);
+                AccountIDTxtActionPerformed(evt);
             }
         });
 
@@ -215,21 +209,21 @@ public class OrderGUI extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(AccIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(OrderIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                    .addComponent(OrderIDLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ImportIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SupplierIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(CustomerIDTxt)
+                    .addComponent(AccountIDTxt)
                     .addComponent(OrderDateCal, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -250,19 +244,19 @@ public class OrderGUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(OrderDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(OrderIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ImportIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(OrderDateCal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AccIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SupplierIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AccIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CustomerIDLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CustomerIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AccountIDTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SuaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(XoaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(107, 107, 107))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 231, 213));
@@ -273,11 +267,6 @@ public class OrderGUI extends javax.swing.JFrame {
         TimKiemBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TimKiemBtnMouseClicked(evt);
-            }
-        });
-        TimKiemBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TimKiemBtnActionPerformed(evt);
             }
         });
 
@@ -294,27 +283,35 @@ public class OrderGUI extends javax.swing.JFrame {
         TimKiemLbl.setText("Tìm kiếm");
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel23.setText("Mã đơn hàng");
+        jLabel23.setText("Mã nhập");
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel26.setText("Mã tài khoản");
+        jLabel26.setText("Mã nhà cung cấp");
 
-        jtf_account_id.addActionListener(new java.awt.event.ActionListener() {
+        MaNhapTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_account_idActionPerformed(evt);
+                MaNhapTxtActionPerformed(evt);
+            }
+        });
+
+        MaSPTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MaSPTxtActionPerformed(evt);
             }
         });
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel27.setText("Mã khách hàng");
+        jLabel27.setText("Mã tài khoản");
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel28.setText("Ngày nhập");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TimKiemLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,153 +321,143 @@ public class OrderGUI extends javax.swing.JFrame {
                                 .addGap(63, 63, 63)
                                 .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel23))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtf_account_id, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(MaNhapTxt)
+                                    .addComponent(MaSPTxt)
+                                    .addComponent(jtf_customer_id)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))))
+                    .addComponent(TimKiemLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(TimKiemLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MaNhapTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MaSPTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jtf_order_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtf_account_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtf_customer_id, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(HuyTimKiemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
+
+        jButton18.setBackground(new java.awt.Color(255, 193, 7));
+        jButton18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/back.png"))); // NOI18N
+        jButton18.setLabel("BACK");
+        jButton18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton18MouseClicked(evt);
+            }
+        });
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
 
         ChiTietTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Order_ID", "Product_ID", "Quantity", "Price"
+                "ID", "ImportID", "ProductID", "Quantity", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
         jScrollPane2.setViewportView(ChiTietTable);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("ĐƠN HÀNG");
+        jLabel1.setText("THÔNG TIN PHIẾU NHẬP");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("CHI TIẾT ĐƠN HÀNG");
-
-        jButton1.setBackground(new java.awt.Color(102, 255, 102));
-        jButton1.setText("In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/reset-32px.png"))); // NOI18N
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("CHI TIẾT PHIẾU NHẬP");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(160, 160, 160)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(419, 419, 419)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(479, 479, 479)
-                                .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(419, 419, 419)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(338, 338, 338)))
+                .addComponent(jButton18)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(DonHangLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRefresh)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
@@ -493,31 +480,31 @@ public class OrderGUI extends javax.swing.JFrame {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dd);
         OrderDateCal.setDate(date);
     }
-    private void DonHangTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DonHangTableMouseClicked
+    private void ThongTinTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongTinTableMouseClicked
         // TODO add your handling code here:
-        OrderIDTxt.setEditable(false);
-        int i = DonHangTable.getSelectedRow();
+        ImportIDTxt.setEditable(false);
+        int i = ThongTinTable.getSelectedRow();
         System.out.println(i);
-        OrderIDTxt.setText(DonHangTable.getModel().getValueAt(i, 0).toString());
-        AccIDTxt.setText(DonHangTable.getModel().getValueAt(i, 1).toString());
+        ImportIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 0).toString());
+        SupplierIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 1).toString());
 //        jTextField17.setText(jTable1.getModel().getValueAt(i, 3).toString());
         Date date;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(DonHangTable.getModel().getValueAt(i, 2).toString());
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(ThongTinTable.getModel().getValueAt(i, 2).toString());
             OrderDateCal.setDate(date);
         } catch (ParseException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CustomerIDTxt.setText(DonHangTable.getModel().getValueAt(i, 3).toString());
+        AccountIDTxt.setText(ThongTinTable.getModel().getValueAt(i, 3).toString());
 
         try {
-            renderOrderDetail((int) DonHangTable.getModel().getValueAt(i, 0));
+            renderOrderDetail((int) ThongTinTable.getModel().getValueAt(i, 0));
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
-    }//GEN-LAST:event_DonHangTableMouseClicked
+    }//GEN-LAST:event_ThongTinTableMouseClicked
 
     private void SuaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuaBtnActionPerformed
         // TODO add your handling code here:
@@ -525,12 +512,12 @@ public class OrderGUI extends javax.swing.JFrame {
         DTO_Order dto = new DTO_Order();
         int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sửa chứ?");
         if (a == JOptionPane.YES_OPTION) {
-            dto.setAccountId(Integer.parseInt(AccIDTxt.getText()));
-            dto.setCustomerId(Integer.parseInt(CustomerIDTxt.getText()));
+            dto.setAccountId(Integer.parseInt(SupplierIDTxt.getText()));
+            dto.setCustomerId(Integer.parseInt(AccountIDTxt.getText()));
             String temp = new SimpleDateFormat("yyyy-MM-dd").format(OrderDateCal.getDate());
             dto.setOrderDate(temp);
-            int i = DonHangTable.getSelectedRow();
-            int id = (int) DonHangTable.getModel().getValueAt(i, 0);
+            int i = ThongTinTable.getSelectedRow();
+            int id = (int) ThongTinTable.getModel().getValueAt(i, 0);
             dto.setOrderId(id);
 
             try {
@@ -538,12 +525,12 @@ public class OrderGUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
         model.setRowCount(0);
         try {
             addRowToJTable(list);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
     }//GEN-LAST:event_SuaBtnActionPerformed
@@ -553,26 +540,41 @@ public class OrderGUI extends javax.swing.JFrame {
         int a = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa đơn hàng này chứ?");
         if (a == JOptionPane.YES_OPTION) {
             BUS_Order odr = new BUS_Order();
-            int i = DonHangTable.getSelectedRow();
-            int id = (int) DonHangTable.getModel().getValueAt(i, 0);
+            int i = ThongTinTable.getSelectedRow();
+            int id = (int) ThongTinTable.getModel().getValueAt(i, 0);
             try {
                 odr.delete(id);
             } catch (SQLException ex) {
-                Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) ThongTinTable.getModel();
         model.setRowCount(0);
         try {
             addRowToJTable(list);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_XoaBtnActionPerformed
 
-    private void CustomerIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerIDTxtActionPerformed
+    private void AccountIDTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccountIDTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CustomerIDTxtActionPerformed
+    }//GEN-LAST:event_AccountIDTxtActionPerformed
+
+    private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked
+        // TODO add your handling code here:
+
+        this.dispose();
+        try {
+            new HomeGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton18MouseClicked
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton18ActionPerformed
 
     private void TimKiemBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TimKiemBtnMouseClicked
         // TODO add your handling code here:
@@ -580,13 +582,13 @@ public class OrderGUI extends javax.swing.JFrame {
         ArrayList<DTO_Order> filter_orderID = new ArrayList<>();
         ArrayList<DTO_Order> filter_accID = new ArrayList<>();
         ArrayList<DTO_Order> filter_CustomerID = new ArrayList<>();
-        String order_id = jtf_order_id.getText();
-        String account_id = jtf_account_id.getText();
-        String customer_id = jtf_customer_id.getText();
-        if (customer_id.length() != 0) {
+        String order_id = MaNhapTxt.getText();
+        String account_id = MaSPTxt.getText();
+        String cusstomer_id = jtf_customer_id.getText();
+        if (cusstomer_id.length() != 0) {
             filter_CustomerID.clear();
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getCustomerId() == Integer.parseInt(customer_id)) {
+                if (list.get(i).getCustomerId() == Integer.parseInt(cusstomer_id)) {
                     filter_CustomerID.add(list.get(i));
                 }
             }
@@ -614,60 +616,31 @@ public class OrderGUI extends javax.swing.JFrame {
         try {
             addRowToJTable(filter);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_TimKiemBtnMouseClicked
 
-    private void jtf_account_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_account_idActionPerformed
+    private void MaSPTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaSPTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_account_idActionPerformed
+    }//GEN-LAST:event_MaSPTxtActionPerformed
 
     private void HuyTimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HuyTimKiemBtnActionPerformed
         // TODO add your handling code here:
-        jtf_account_id.setText("");
+        MaSPTxt.setText("");
         jtf_customer_id.setText("");
-        jtf_order_id.setText("");
+        MaNhapTxt.setText("");
         BUS_Order oder = new BUS_Order();
         try {
             list = oder.getList();
             addRowToJTable(list);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImportGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_HuyTimKiemBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void MaNhapTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaNhapTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-    public void clear() {
-        OrderIDTxt.setText("");
-        AccIDTxt.setText("");
-        CustomerIDTxt.setText("");
-        jtf_order_id.setText("");
-        jtf_customer_id.setText("");
-        jtf_account_id.setText("");
-    }
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        clear();
-        XoaBtn.setEnabled(true);
-        SuaBtn.setEnabled(false);
-        try {
-
-            DefaultTableModel model = (DefaultTableModel) DonHangTable.getModel();
-            model.setRowCount(0);
-            BUS_Order bus = new BUS_Order();
-            list = bus.getList();
-            addRowToJTable(list);
-            DefaultTableModel model2 = (DefaultTableModel) ChiTietTable.getModel();
-            model2.setRowCount(0);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void TimKiemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimKiemBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TimKiemBtnActionPerformed
+    }//GEN-LAST:event_MaNhapTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -686,56 +659,59 @@ public class OrderGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ImportGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ImportGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ImportGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ImportGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrderGUI().setVisible(true);
+                new ImportGUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AccIDLbl;
-    private javax.swing.JTextField AccIDTxt;
+    private javax.swing.JTextField AccountIDTxt;
     private javax.swing.JTable ChiTietTable;
     private javax.swing.JLabel CustomerIDLbl;
-    private javax.swing.JTextField CustomerIDTxt;
     private javax.swing.JLabel DonHangLbl;
-    private javax.swing.JTable DonHangTable;
     private javax.swing.JButton HuyTimKiemBtn;
+    private javax.swing.JTextField ImportIDTxt;
+    private javax.swing.JTextField MaNhapTxt;
+    private javax.swing.JTextField MaSPTxt;
     private com.toedter.calendar.JDateChooser OrderDateCal;
     private javax.swing.JLabel OrderDateLbl;
     private javax.swing.JLabel OrderIDLbl;
-    private javax.swing.JTextField OrderIDTxt;
     private javax.swing.JButton SuaBtn;
+    private javax.swing.JTextField SupplierIDTxt;
     private javax.swing.JLabel ThongTinLbl;
+    private javax.swing.JTable ThongTinTable;
     private javax.swing.JButton TimKiemBtn;
     private javax.swing.JLabel TimKiemLbl;
     private javax.swing.JButton XoaBtn;
-    private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton18;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jtf_account_id;
     private javax.swing.JTextField jtf_customer_id;
-    private javax.swing.JTextField jtf_order_id;
     // End of variables declaration//GEN-END:variables
 }
