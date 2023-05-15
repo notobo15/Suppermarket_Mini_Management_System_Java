@@ -189,7 +189,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jtf_gia_nhap = new javax.swing.JTextField();
         jButton18 = new javax.swing.JButton();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -278,6 +278,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jcb_khach_hang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jcb_khach_hang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Thêm NCC Mới");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -293,6 +294,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(0, 153, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton2.setText("Thêm SP");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -411,6 +413,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jLabel7.setText("Tổng số tiền");
         jPanel10.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, 140, 31));
 
+        btn_xoa_product.setBackground(new java.awt.Color(255, 193, 7));
         btn_xoa_product.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btn_xoa_product.setText("Xoá sản phẩm");
         btn_xoa_product.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -420,6 +423,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(btn_xoa_product, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, 70));
 
+        btn_clear_cart.setBackground(new java.awt.Color(255, 193, 7));
         btn_clear_cart.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btn_clear_cart.setText("Làm sạch");
         btn_clear_cart.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -434,6 +438,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(btn_clear_cart, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 200, 70));
 
+        DatHangBtn.setBackground(new java.awt.Color(0, 204, 153));
         DatHangBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         DatHangBtn.setText("IN HÓA ĐƠN & NHẬP HÀNG");
         DatHangBtn.setToolTipText("");
@@ -444,6 +449,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(DatHangBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 270, 70));
 
+        btn_cap_nhat_quantity.setBackground(new java.awt.Color(153, 204, 255));
         btn_cap_nhat_quantity.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btn_cap_nhat_quantity.setText("Cập Nhật");
         btn_cap_nhat_quantity.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -460,6 +466,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
         jLabel4.setText("VNĐ");
         jPanel10.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 60, 30));
 
+        btn_cap_nhap_gia.setBackground(new java.awt.Color(153, 204, 255));
         btn_cap_nhap_gia.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btn_cap_nhap_gia.setText("Cập Nhật");
         btn_cap_nhap_gia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -479,6 +486,7 @@ public class NhapHangGUI extends javax.swing.JFrame {
 
         jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 287, 540, 281));
 
+        ThemGHBtn.setBackground(new java.awt.Color(0, 255, 255));
         ThemGHBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         ThemGHBtn.setText("Thêm");
         ThemGHBtn.addMouseListener(new java.awt.event.MouseAdapter() {

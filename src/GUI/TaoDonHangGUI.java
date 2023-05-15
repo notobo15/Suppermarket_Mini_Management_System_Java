@@ -176,7 +176,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jtf_so_luong_product = new javax.swing.JTextField();
         jButton18 = new javax.swing.JButton();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -265,6 +265,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jcb_khach_hang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jcb_khach_hang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setBackground(new java.awt.Color(0, 255, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Thêm Khách Hàng Mới");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -394,7 +395,8 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         jLabel7.setText("Tổng số tiền");
         jPanel10.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 140, 31));
 
-        btn_xoa_product.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btn_xoa_product.setBackground(new java.awt.Color(255, 193, 7));
+        btn_xoa_product.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btn_xoa_product.setText("Xoá sản phẩm");
         btn_xoa_product.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -403,7 +405,8 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(btn_xoa_product, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, 70));
 
-        btn_clear_cart.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btn_clear_cart.setBackground(new java.awt.Color(255, 193, 7));
+        btn_clear_cart.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btn_clear_cart.setText("Làm sạch giỏ hàng");
         btn_clear_cart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -417,7 +420,8 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(btn_clear_cart, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 200, 70));
 
-        DatHangBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        DatHangBtn.setBackground(new java.awt.Color(0, 153, 255));
+        DatHangBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DatHangBtn.setText("IN HÓA ĐƠN & ĐẶT HÀNG");
         DatHangBtn.setToolTipText("");
         DatHangBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -427,6 +431,8 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
         });
         jPanel10.add(DatHangBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 260, 100));
 
+        btn_cap_nhat_quantity.setBackground(new java.awt.Color(0, 204, 255));
+        btn_cap_nhat_quantity.setForeground(new java.awt.Color(255, 255, 255));
         btn_cap_nhat_quantity.setText("Cập Nhật");
         btn_cap_nhat_quantity.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -444,6 +450,7 @@ public class TaoDonHangGUI extends javax.swing.JFrame {
 
         jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 287, 540, 281));
 
+        ThemGHBtn.setBackground(new java.awt.Color(153, 255, 153));
         ThemGHBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ThemGHBtn.setText("Thêm vào giỏ hàng");
         ThemGHBtn.addMouseListener(new java.awt.event.MouseAdapter() {

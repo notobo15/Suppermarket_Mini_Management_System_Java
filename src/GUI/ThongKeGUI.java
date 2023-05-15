@@ -5,13 +5,23 @@
 package GUI;
 
 import BUS.BUS_CategoryProduct;
+import BUS.BUS_Order;
+import BUS.BUS_OrderDetail;
 import BUS.BUS_Product;
 import DTO.DTO_CategoryProduct;
+import DTO.DTO_Order;
+import DTO.DTO_OrderDetail;
 import DTO.DTO_Product;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,141 +36,232 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+
 public class ThongKeGUI extends javax.swing.JFrame {
+
     Random rand = new Random();
+
     /**
      * Creates new form ThongKeGUI
      */
     public ThongKeGUI() {
         initComponents();
     }
-    private void hideExcept(JPanel p1,JPanel p2)
-    {
-        btnSanPham.setBackground(new Color(242,242,242));
-        btnDonHang.setBackground(new Color(242,242,242));
-        btnDoanhThu.setBackground(new Color(242,242,242));
-        p1.setBackground(new Color(255,255,255));
+
+    private void hideExcept(JPanel p1, JPanel p2) {
+        btnSanPham.setBackground(new Color(242, 242, 242));
+        btnDonHang.setBackground(new Color(242, 242, 242));
+        btnDoanhThu.setBackground(new Color(242, 242, 242));
+        p1.setBackground(new Color(255, 255, 255));
         p1.setEnabled(false);
         pnlTron.setVisible(false);
         pnlCot.setVisible(false);
         pnlDuong.setVisible(false);
         p2.setVisible(true);
     }
-    private void showPieChart() throws SQLException{
+
+    private void showPieChart() throws SQLException {
+
+        DefaultPieDataset barDataset = new DefaultPieDataset();
+
         BUS_CategoryProduct bus_categoryproduct = new BUS_CategoryProduct();
         ArrayList<DTO_CategoryProduct> list = bus_categoryproduct.getList();
         BUS_Product bus_product = new BUS_Product();
         ArrayList<DTO_Product> arr = bus_product.getList();
-        DefaultPieDataset barDataset = new DefaultPieDataset( );
-        
-        for (int i = 0; i < list.size(); i++)
-        {
-            for(int j=0;j<arr.size();j++)
-            {
-                if(arr.get(j).getCategoryId()==list.get(i).getId())
-                {
-                    //create dataset
-                    barDataset.setValue( list.get(i).getName() , arr.get(j).getQuantity() );  
+
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < list.size(); i++) {
+            int s = 0;
+            for (int j = 0; j < arr.size(); j++) {
+                if (arr.get(j).getCategoryId() == list.get(i).getId()) {
+                    s += 1;
                 }
+            }
+            map.put(list.get(i).getId(), s);
+            s = 0;
+        }
+        HashMap<String, Integer> result = new HashMap<String, Integer>();
+        for (int i : map.keySet()) {
+            for (int j = 0; j < list.size(); j++) {
+                if (list.get(j).getId() == i) {
+                    result.put(list.get(j).getName(), map.get(i));
+
+                }
+
             }
         }
 
-      //create chart
-       JFreeChart piechart = ChartFactory.createPieChart("Số lượng loại sản phẩm",barDataset, false,true,false);//explain
-      
-        PiePlot piePlot =(PiePlot) piechart.getPlot();
-      
-       //changing pie chart blocks colors
-       for (int i = 0; i < list.size(); i++)
-        {
-            for(int j=0;j<arr.size();j++)
-            {
-                if(arr.get(j).getCategoryId()==list.get(i).getId())
-                {
+        for (String i : result.keySet()) {
+            System.out.println("key: " + i + " value: " + result.get(i));
+            barDataset.setValue(i, result.get(i));
+        }
+
+//        for (int i = 0; i < list.size(); i++) {
+//            for (int j = 0; j < arr.size(); j++) {
+//                if (arr.get(j).getCategoryId() == list.get(i).getId()) {
+//                    //create dataset
+//                    barDataset.setValue(list.get(i).getName(), arr.get(j).getQuantity());
+//                }
+//            }
+//        }
+        //create chart
+        JFreeChart piechart = ChartFactory.createPieChart("Số lượng loại sản phẩm", barDataset, false, true, false);//explain
+
+        PiePlot piePlot = (PiePlot) piechart.getPlot();
+
+        //changing pie chart blocks colors
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < arr.size(); j++) {
+                if (arr.get(j).getCategoryId() == list.get(i).getId()) {
                     float r = rand.nextFloat();
                     float g = rand.nextFloat();
                     float b = rand.nextFloat();
-                    piePlot.setSectionPaint(list.get(i).getName(), new Color(r,g,b)); 
+                    piePlot.setSectionPaint(list.get(i).getName(), new Color(r, g, b));
                 }
             }
         }
 
         piePlot.setBackgroundPaint(Color.white);
-        
+
         //create chartPanel to display chart(graph)
         ChartPanel barChartPanel = new ChartPanel(piechart);
         pnlTron.removeAll();
         pnlTron.add(barChartPanel, BorderLayout.CENTER);
         pnlTron.validate();
     }
-     public void showLineChart(){
+
+    private float tinhDanhThuTheoThang(int thang) throws SQLException {
+        float total = 0;
+        BUS_Order bus_order = new BUS_Order();
+        BUS_OrderDetail bus_order_detail = new BUS_OrderDetail();
+
+        ArrayList<DTO_OrderDetail> list_order_detail = bus_order_detail.getList();
+        ArrayList<DTO_Order> list_order = bus_order.getList();
+        ArrayList<Integer> list_order_id = new ArrayList<>();
+        for (int j = 0; j < list_order.size(); j++) {
+            String[] splited = list_order.get(j).getOrderDate().split("\\s+");
+            String[] date = splited[0].split("-");
+            int month = Integer.parseInt(date[1]);
+            if (month == thang) {
+                list_order_id.add(list_order.get(j).getOrderId());
+            }
+        }
+        for (int i = 0; i < list_order_id.size(); i++) {
+            for (int j = 0; j < list_order_detail.size(); j++) {
+                if (list_order_detail.get(j).getOrder_id() == list_order_id.get(i)) {
+                    total += list_order_detail.get(j).getPrice();
+                }
+
+            }
+
+        }
+
+        return total;
+
+    }
+
+    public void showLineChart() throws SQLException {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        BUS_Order bus_order = new BUS_Order();
+        BUS_OrderDetail bus_order_detail = new BUS_OrderDetail();
+        ArrayList<DTO_OrderDetail> list_order_detail = bus_order_detail.getList();
+        ArrayList<DTO_Order> list_order = bus_order.getList();
+
+        for (int i = 1; i <= 12; i++) {
+           dataset.setValue(tinhDanhThuTheoThang(i), "Amount", "tháng "+i);
+        }
         //create dataset for the graph
-         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(200000, "Amount", "tháng 1");
-        dataset.setValue(150000, "Amount", "tháng 2");
-        dataset.setValue(18000, "Amount", "tháng 3");
-        dataset.setValue(100000, "Amount", "tháng 4");
-        dataset.setValue(80000, "Amount", "tháng 5");
-        dataset.setValue(0, "Amount", "tháng 6");
-        dataset.setValue(0, "Amount", "tháng 7");
-        dataset.setValue(0, "Amount", "tháng 8");
-        dataset.setValue(0, "Amount", "tháng 9");
-        dataset.setValue(0, "Amount", "tháng 10");
-        dataset.setValue(0, "Amount", "tháng 11");
-        dataset.setValue(0, "Amount", "tháng 12");
-        
+//        dataset.setValue(200000, "Amount", "tháng 1");
+//        dataset.setValue(150000, "Amount", "tháng 2");
+//        dataset.setValue(18000, "Amount", "tháng 3");
+//        dataset.setValue(100000, "Amount", "tháng 4");
+//        dataset.setValue(80000, "Amount", "tháng 5");
+//        dataset.setValue(0, "Amount", "tháng 6");
+//        dataset.setValue(0, "Amount", "tháng 7");
+//        dataset.setValue(0, "Amount", "tháng 8");
+//        dataset.setValue(0, "Amount", "tháng 9");
+//        dataset.setValue(0, "Amount", "tháng 10");
+//        dataset.setValue(0, "Amount", "tháng 11");
+//        dataset.setValue(0, "Amount", "tháng 12");
+
         //create chart
-        JFreeChart linechart = ChartFactory.createLineChart("Doanh thu theo tháng","Tháng","Tiền", 
-                dataset, PlotOrientation.VERTICAL, false,true,false);
-        
+        JFreeChart linechart = ChartFactory.createLineChart("Doanh thu theo tháng", "Tháng", "Tiền",
+                dataset, PlotOrientation.VERTICAL, false, true, false);
+
         //create plot object
-         CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
-       // lineCategoryPlot.setRangeGridlinePaint(Color.BLUE);
+        CategoryPlot lineCategoryPlot = linechart.getCategoryPlot();
+        // lineCategoryPlot.setRangeGridlinePaint(Color.BLUE);
         lineCategoryPlot.setBackgroundPaint(Color.white);
-        
+
         //create render object to change the moficy the line properties like color
         LineAndShapeRenderer lineRenderer = (LineAndShapeRenderer) lineCategoryPlot.getRenderer();
-        Color lineChartColor = new Color(204,0,51);
+        Color lineChartColor = new Color(204, 0, 51);
         lineRenderer.setSeriesPaint(0, lineChartColor);
-        
-         //create chartPanel to display chart(graph)
+
+        //create chartPanel to display chart(graph)
         ChartPanel lineChartPanel = new ChartPanel(linechart);
         pnlDuong.removeAll();
         pnlDuong.add(lineChartPanel, BorderLayout.CENTER);
         pnlDuong.validate();
     }
-     public void showBarChart(){
+
+    public void showBarChart() throws SQLException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-         dataset.setValue(200, "Amount", "tháng 1");
-        dataset.setValue(150, "Amount", "tháng 2");
-        dataset.setValue(18, "Amount", "tháng 3");
-        dataset.setValue(100, "Amount", "tháng 4");
-        dataset.setValue(80, "Amount", "tháng 5");
-        dataset.setValue(0, "Amount", "tháng 6");
-        dataset.setValue(0, "Amount", "tháng 7");
-        dataset.setValue(0, "Amount", "tháng 8");
-        dataset.setValue(0, "Amount", "tháng 9");
-        dataset.setValue(0, "Amount", "tháng 10");
-        dataset.setValue(0, "Amount", "tháng 11");
-        dataset.setValue(0, "Amount", "tháng 12");
-        
-        JFreeChart chart = ChartFactory.createBarChart("Số lượng đơn hàng","Tháng","Số lượng", 
-                dataset, PlotOrientation.VERTICAL, false,true,false);
-        
+        BUS_Order bus_order = new BUS_Order();
+        ArrayList<DTO_Order> list_order = bus_order.getList();
+
+        System.out.println("GUI.ThongKeGUI.showBarChart()" + list_order);
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 1; i <= 12; i++) {
+            int s = 0;
+            for (int j = 0; j < list_order.size(); j++) {
+
+                String[] splited = list_order.get(j).getOrderDate().split("\\s+");
+                String[] date = splited[0].split("-");
+                int month = Integer.parseInt(date[1]);
+                System.out.println(date[1]);
+                if (month == i) {
+                    s += 1;
+                }
+            }
+            map.put(i, s);
+            s = 0;
+        }
+        for (int i : map.keySet()) {
+            System.out.println("key: " + i + " value: " + map.get(i));
+            dataset.setValue(map.get(i), "Amount", "tháng " + i);
+        }
+
+//        dataset.setValue(200, "Amount", "tháng 1");
+//        dataset.setValue(150, "Amount", "tháng 2");
+//        dataset.setValue(18, "Amount", "tháng 3");
+//        dataset.setValue(100, "Amount", "tháng 4");
+//        dataset.setValue(80, "Amount", "tháng 5");
+//        dataset.setValue(0, "Amount", "tháng 6");
+//        dataset.setValue(0, "Amount", "tháng 7");
+//        dataset.setValue(0, "Amount", "tháng 8");
+//        dataset.setValue(0, "Amount", "tháng 9");
+//        dataset.setValue(0, "Amount", "tháng 10");
+//        dataset.setValue(0, "Amount", "tháng 11");
+//        dataset.setValue(0, "Amount", "tháng 12");
+        JFreeChart chart = ChartFactory.createBarChart("Số lượng đơn hàng", "Tháng", "Số lượng",
+                dataset, PlotOrientation.VERTICAL, false, true, false);
+
         CategoryPlot categoryPlot = chart.getCategoryPlot();
         //categoryPlot.setRangeGridlinePaint(Color.BLUE);
         categoryPlot.setBackgroundPaint(Color.WHITE);
         BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
-        Color clr3 = new Color(204,0,51);
+        Color clr3 = new Color(204, 0, 51);
         renderer.setSeriesPaint(0, clr3);
-        
+
         ChartPanel barpChartPanel = new ChartPanel(chart);
         pnlCot.removeAll();
         pnlCot.add(barpChartPanel, BorderLayout.CENTER);
         pnlCot.validate();
-        
-        
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,7 +275,7 @@ public class ThongKeGUI extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         jPanel3 = new javax.swing.JPanel();
         Title = new javax.swing.JPanel();
         jButton18 = new javax.swing.JButton();
@@ -326,13 +427,21 @@ public class ThongKeGUI extends javax.swing.JFrame {
     private void btnDonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDonHangMouseClicked
         // TODO add your handling code here:
         hideExcept(btnDonHang, pnlCot);
-        showBarChart();
+        try {
+            showBarChart();
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDonHangMouseClicked
 
     private void btnDoanhThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoanhThuMouseClicked
         // TODO add your handling code here:
         hideExcept(btnDoanhThu, pnlDuong);
-        showLineChart();
+        try {
+            showLineChart();
+        } catch (SQLException ex) {
+            Logger.getLogger(ThongKeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDoanhThuMouseClicked
 
     private void jButton18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton18MouseClicked

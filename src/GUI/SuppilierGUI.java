@@ -89,7 +89,7 @@ public class SuppilierGUI extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jtf_id = new javax.swing.JTextField();
         jtf_ten = new javax.swing.JTextField();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         clockGUI1 = new GUI.Components.ClockGUI();
         btnrefresh = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();

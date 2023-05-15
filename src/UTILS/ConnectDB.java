@@ -23,7 +23,7 @@ public class ConnectDB {
     public Connection setupConnection() {
         try {
             String url = "jdbc:mysql://" + server + "/" + dbName+ "?useUnicode=yes&characterEncoding=UTF-8";
-            System.out.println(url  );
+//            System.out.println(url  );
             conn = DriverManager.getConnection(url, userName, pass);
             return conn;
         } catch (SQLException e) {

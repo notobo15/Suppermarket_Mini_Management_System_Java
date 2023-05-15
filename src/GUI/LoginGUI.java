@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  * @author minht
  */
 public class LoginGUI extends javax.swing.JFrame {
+
     /**
      * Creates new form LoginGUI
      */
@@ -30,47 +31,48 @@ public class LoginGUI extends javax.swing.JFrame {
      * @return
      * @throws SQLException
      */
-    public boolean ValidUsername(String username) throws SQLException
-    {
+    public boolean ValidUsername(String username) throws SQLException {
         BUS_Account bus_account = new BUS_Account();
         ArrayList<DTO_Account> list = bus_account.getList();
-        for (int i = 0; i < list.size(); i++)
-          {
-              if(username.equals(list.get(i).getAccountName()))
-              {
-                  if(!list.get(i).getStatus()) 
-                  {
-                          AlertWarning aw=new AlertWarning("Tài khoản đã bị khóa!");
-                          aw.setVisible(true);
-                          return false;
-                  }
-                  Session session = new Session(list.get(i).getAccountId(),list.get(i).getLastName()+" "+list.get(i).getFirstName(),list.get(i).getRoleId());
-                  
-                  return true;                 
-              }
-          }
-         AlertWarning aw=new AlertWarning("Tên đăng nhập không tồn tại!");
-         aw.setVisible(true);
+        for (int i = 0; i < list.size(); i++) {
+            if (username.equals(list.get(i).getAccountName())) {
+                if (!list.get(i).getStatus()) {
+                    AlertWarning aw = new AlertWarning("Tài khoản đã bị khóa!");
+                    aw.setVisible(true);
+                    return false;
+                } else {
+                    System.out.println("role : " + list.get(i).getRoleId());
+                    Session session = new Session(list.get(i).getAccountId(), list.get(i).getLastName() + " " + list.get(i).getFirstName(), list.get(i).getRoleId());
+
+                    System.out.println("GUsfasdfasfasfasd");
+                    return true;
+                }
+
+            }
+        }
+        AlertWarning aw = new AlertWarning("Tên đăng nhập không tồn tại!");
+        aw.setVisible(true);
         return false;
     }
-    public boolean ValidPassword(char[] password) throws SQLException
-    {
+
+    public boolean ValidPassword(char[] password) throws SQLException {
         BUS_Account bus_account = new BUS_Account();
         ArrayList<DTO_Account> list = bus_account.getList();
-        for (int i = 0; i < list.size(); i++)
-          {
-              char ch[]=list.get(i).getPasssword().toCharArray();
-              if(Arrays.equals(password, ch))
-                  return true;
-          }
-        AlertWarning aw=new AlertWarning("Mật khẩu không chính xác!");
+        for (int i = 0; i < list.size(); i++) {
+            char ch[] = list.get(i).getPasssword().toCharArray();
+            if (Arrays.equals(password, ch)) {
+                return true;
+            }
+        }
+        AlertWarning aw = new AlertWarning("Mật khẩu không chính xác!");
         aw.setVisible(true);
-         return false;
+        return false;
     }
-    public boolean ValidAccount(String username,char[] password) throws SQLException
-    {
+
+    public boolean ValidAccount(String username, char[] password) throws SQLException {
         return ValidUsername(username) && ValidPassword(password);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,27 +148,24 @@ public class LoginGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String u=txtUsername.getText();
-        char[] p=txtPassword.getPassword();
-        if(txtUsername.getText().isEmpty() || txtPassword.getPassword().length == 0)
-        {
-            AlertWarning aw=new AlertWarning("Tên đăng nhập hoặc mật khẩu trống");
+        String u = txtUsername.getText();
+        char[] p = txtPassword.getPassword();
+        if (txtUsername.getText().isEmpty() || txtPassword.getPassword().length == 0) {
+            AlertWarning aw = new AlertWarning("Tên đăng nhập hoặc mật khẩu trống");
             aw.setVisible(true);
-        }
-        else
-        {
+        } else {
             try {
-            if(ValidAccount(u,p))
-            {
-                this.dispose();
-                new HomeGUI().setVisible(true);
+                if (ValidAccount(u, p)) {
+
+                    this.dispose();
+                    new HomeGUI().setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }
-        
-        
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

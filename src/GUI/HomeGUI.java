@@ -24,9 +24,12 @@ public class HomeGUI extends javax.swing.JFrame {
         Session s = new Session();
         lblId.setText("" + s.getId());
         lblName.setText(s.getName());
-
+        System.out.println("GUI.HomeGUI.<init>()"+ s.getName() );
+        System.out.println("GUI.HomeGUI.<init>()"+ s.getId() );
+        System.out.println("GUI.HomeGUI.<init>()"+ s.getRole());
+        
         BUS_Role bus = new BUS_Role();
-        DTO_Role role = bus.getSingleById(s.getId());
+        DTO_Role role = bus.getSingleById(s.getRole());
         lblRole.setText(role.getName());
         s.setRole_name(role.getName());
         if (s.getId() == 3) {

@@ -18,7 +18,7 @@ public class DAO_Account {
 			rs = ptm.executeQuery();
 			while (rs.next()) {
 				int account_id = rs.getInt("account_id");
-				String account_name = rs.getString("account_name");
+				String account_name = rs.getString("account_name"); 
 				String password = rs.getString("password");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
@@ -27,10 +27,11 @@ public class DAO_Account {
 				String address = rs.getString("address");
 				String gender = rs.getString("gender");
 				Boolean status = rs.getBoolean("status");
+                                int role_id = rs.getInt("role_id");
 
 				DTO_Account dto_acc = new DTO_Account(account_id, account_id, account_name, password, first_name,
 						last_name, phone, address, gender, birth_date, status);
-
+                                dto_acc.setRoleId(role_id);
 				list.add(dto_acc);
 			}
 			con.closeConnection();

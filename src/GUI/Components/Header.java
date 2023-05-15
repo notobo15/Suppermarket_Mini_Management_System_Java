@@ -6,15 +6,22 @@ package GUI.Components;
 
 import BUS.BUS_Role;
 import DTO.DTO_Role;
+import GUI.CustomerGUI;
+import GUI.ProductGUI;
 import GUI.Session;
+import GUI.SuppilierGUI;
+import GUI.TaoDonHangGUI;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
  * @author notobo
  */
 public class Header extends javax.swing.JPanel {
-
+    private JFrame jf_panel;
     /**
      * Creates new form Header
      */
@@ -27,8 +34,17 @@ public class Header extends javax.swing.JPanel {
          if (session.getRole() == 3) {
             btn_ncc.setVisible(false);
         }
-// 
-
+    }
+        public Header(JFrame jf_panel) {
+        this.jf_panel = jf_panel;
+        initComponents();
+        Session session = new Session();
+        jlb_id.setText("" + session.getId());
+        jlb_ten.setText("" + session.getName());
+        jlb_role.setText(session.getRole_name());
+         if (session.getRole() == 3) {
+            btn_ncc.setVisible(false);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -155,18 +171,39 @@ public class Header extends javax.swing.JPanel {
 
     private void btn_san_phamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_san_phamActionPerformed
         // TODO add your handling code here:
+        
+        jf_panel.dispose();
+        new ProductGUI().setVisible(true);
     }//GEN-LAST:event_btn_san_phamActionPerformed
 
     private void btn_tao_don_hangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tao_don_hangActionPerformed
         // TODO add your handling code here:
+                jf_panel.dispose();
+        try {
+            new TaoDonHangGUI().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_tao_don_hangActionPerformed
 
     private void btn_nccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nccActionPerformed
         // TODO add your handling code here:
+                jf_panel.dispose();
+        try {
+            new SuppilierGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_nccActionPerformed
 
     private void btn_khach_hangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_khach_hangActionPerformed
         // TODO add your handling code here:
+                jf_panel.dispose();
+        try {
+            new CustomerGUI().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Header.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_khach_hangActionPerformed
 
 

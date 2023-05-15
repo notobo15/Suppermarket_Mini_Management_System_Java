@@ -149,7 +149,7 @@ public class AccountGUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jtf_search_user = new javax.swing.JTextField();
         jtf_search_id = new javax.swing.JTextField();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         clockGUI1 = new GUI.Components.ClockGUI();
         btnRefresh = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();

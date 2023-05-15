@@ -131,7 +131,7 @@ public class OrderGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JButton();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         jButton18 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

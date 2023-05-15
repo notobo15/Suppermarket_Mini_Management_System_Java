@@ -141,7 +141,7 @@ public class ImportGUI extends javax.swing.JFrame {
         ChiTietTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         clockGUI1 = new GUI.Components.ClockGUI();
         btnRefresh1 = new javax.swing.JButton();
 

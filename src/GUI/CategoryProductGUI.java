@@ -103,7 +103,7 @@ public class CategoryProductGUI extends javax.swing.JFrame {
         input_timkiemmaloai = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         clockGUI1 = new GUI.Components.ClockGUI();
-        header1 = new GUI.Components.Header();
+        header1 = new GUI.Components.Header(this);
         btnRefresh = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
 

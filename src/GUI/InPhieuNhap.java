@@ -39,8 +39,8 @@ public class InPhieuNhap extends javax.swing.JFrame {
 
     private ArrayList<DTO_Product> list = new ArrayList<>();
     private Session session = new Session();
-    private DTO_Customer cus = null;
-    private DTO_Suppilier sup = null;
+    private DTO_Customer cus = new DTO_Customer() ;
+    private DTO_Suppilier sup = new DTO_Suppilier();
 
     /**
      * Creates new form CustomerGUI
@@ -179,7 +179,7 @@ public class InPhieuNhap extends javax.swing.JFrame {
                     ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + sup.getName() + "                                              \n");
 
         }
-          if (cus != null) {
+          if (cus.getName() != null) {
                     ta1.setText(ta1.getText() + "    NHÀ CUNG CẤP: " + cus.getName() + "                                              \n");
 
         }
