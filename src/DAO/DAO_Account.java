@@ -29,7 +29,7 @@ public class DAO_Account {
 				Boolean status = rs.getBoolean("status");
                                 int role_id = rs.getInt("role_id");
 
-				DTO_Account dto_acc = new DTO_Account(account_id, account_id, account_name, password, first_name,
+				DTO_Account dto_acc = new DTO_Account(account_id, role_id, account_name, password, first_name,
 						last_name, phone, address, gender, birth_date, status);
                                 dto_acc.setRoleId(role_id);
 				list.add(dto_acc);
