@@ -6,6 +6,7 @@ package GUI;
 
 import BUS.BUS_Order;
 import BUS.BUS_OrderDetail;
+import BUS.BUS_Product;
 import DTO.DTO_Customer;
 import DTO.DTO_ImportProduct;
 import DTO.DTO_Order;
@@ -214,6 +215,15 @@ public class InHoaDon extends javax.swing.JFrame {
             BUS_OrderDetail bus_order_detail = new BUS_OrderDetail();
             DTO_Order order = new DTO_Order(session.getId(), cus.getCustomerId());
             
+            BUS_Product bus_product = new BUS_Product();
+            for (int i = 0; i < list.size(); i++) {
+                boolean a = bus_product.truQuantiy(list.get(i).getProductId(), list.get(i).getQuantity());
+                System.out.println(a);
+            }
+            
+            
+            
+            
             try {
                 int id = Integer.parseInt(bus_order.add(order));
                 writeDetail(""+id);
@@ -229,6 +239,8 @@ public class InHoaDon extends javax.swing.JFrame {
             }
 
         } catch (PrinterException ex) {
+            Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(InHoaDon.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPrintActionPerformed

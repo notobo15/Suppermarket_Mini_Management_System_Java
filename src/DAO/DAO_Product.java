@@ -146,6 +146,40 @@ public class DAO_Product {
 		}
 		return false;
 	}
+        
+        public boolean themSoLuong(int id, float quantity) throws SQLException {
+		int rs;
+		ConnectDB con = new ConnectDB();
+		try {
+			PreparedStatement ptm = con.getConnection() //UPDATE `product` SET quantity  = quantity + 1 WHERE product_id = 1
+					.prepareStatement("UPDATE product SET quantity  = quantity + ? WHERE product_id = ?");
+			ptm.setInt(1, id);
+                        ptm.setFloat(2, quantity);
+			rs = ptm.executeUpdate();
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+         public boolean truSoLuong(int id, float quantity) throws SQLException {
+		int rs;
+		ConnectDB con = new ConnectDB();
+		try {
+			PreparedStatement ptm = con.getConnection() //UPDATE `product` SET quantity  = quantity + 1 WHERE product_id = 1
+					.prepareStatement("UPDATE product SET quantity  = quantity - ? WHERE product_id = ?");
+			ptm.setInt(1, id);
+                        ptm.setFloat(2, quantity);
+			rs = ptm.executeUpdate();
+			con.closeConnection();
+			return rs > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	public boolean checkExistById(int id) throws SQLException {
 		boolean isExist = false;

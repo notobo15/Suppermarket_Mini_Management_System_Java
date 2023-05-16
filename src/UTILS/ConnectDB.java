@@ -34,8 +34,8 @@ public class ConnectDB {
     }
 
     public void checkDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Khong tim thay Driver mysql !!!");

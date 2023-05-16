@@ -26,6 +26,8 @@ public class BUS_Product {
 		}
 
 	}
+        
+        
 
 	public String add(DTO_Product acc) throws SQLException {
 		boolean isExist = dao.checkExistById(acc.getProductId());
@@ -86,6 +88,30 @@ public class BUS_Product {
 		} else {
 			new AlertWarning("khôi phục product id " + id + "không thành công!").setVisible(true);
 			return "Delete khong thanh cong";
+		}
+
+	}
+        
+        public boolean themQuantiy(int id, float quantity) throws SQLException {
+		boolean isDeleted = dao.themSoLuong(id, quantity);
+		if (isDeleted) {
+//			new AlertWarning("Đã khôi phục product id " + id + " thành công!").setVisible(true);
+			return true;
+		} else {
+//			new AlertWarning("khôi phục product id " + id + "không thành công!").setVisible(true);
+			return false;
+		}
+
+	}
+        
+        public boolean truQuantiy(int id, float quantity) throws SQLException {
+		boolean isDeleted = dao.truSoLuong(id, quantity);
+		if (isDeleted) {
+//			new AlertWarning("Đã khôi phục product id " + id + " thành công!").setVisible(true);
+			return true;
+		} else {
+//			new AlertWarning("khôi phục product id " + id + "không thành công!").setVisible(true);
+			return false;
 		}
 
 	}
